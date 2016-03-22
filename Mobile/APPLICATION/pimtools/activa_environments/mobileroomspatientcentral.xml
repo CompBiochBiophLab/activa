@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AMBIENTS COUNT="10">
+	<AMBIENT 
+		NAMESPA="Ambiente para chico 1" 
+		NAMEENG="Boy's ambient 1"  
+		URL="http://c0186349.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito de la habitacion de un chico."
+		DESCENG="Free ambient of a boy's room."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente para chico 2" 
+		NAMEENG="Boy's ambient 2"  
+		URL="http://c0186213.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito de la habitacion de un chico."
+		DESCENG="Free ambient of a boy's room."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente para chico 3" 
+		NAMEENG="Boy's ambient 3"  
+		URL="http://c0186348.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito de la habitacion de un chico."
+		DESCENG="Free ambient of a boy's room."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente para chico 4" 
+		NAMEENG="Boy's ambient 4"  
+		URL="http://c0181592.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito de la habitacion de un chico."
+		DESCENG="Free ambient of a boy's room."
+	/>
+	<AMBIENT 
+		NAMESPA="Entorno 3D para chicos"  
+		NAMEENG="3D environment for boys" 
+		URL="http://c0186214.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null"
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Disfruta de un ambiente 3D ActivA para chicos disponible tambien en la web."
+		DESCENG="Enjoy an ActivA 3D environment for boys also available on web."
+	/>
+	<AMBIENT 
+		NAMESPA="Entorno 3D para chicos con monitorización médica"  
+		NAMEENG="3D environment for boys with medical monitoring" 
+		URL="http://c188939.r39.cf1.rackcdn.com" 
+		PRICE="null"
+		EXTRASPA="Monitorizacion medica, ambiente web"
+		EXTRAENG="Health monitoring, web environment"
+		DESCSPA="Disfruta de un ambiente 3D ActivA para chicos con monitorizacion medica a traves de sensores Bluetooth."
+		DESCENG="Enjoy an ActivA 3D environment for boys, now with health monitoring through Bluetooth sensors."
+	/>
+	<AMBIENT 
+		NAMESPA="Entorno 3D para chicas"  
+		NAMEENG="3D environment for girls" 
+		URL="http://c0186350.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null"
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Disfruta de un ambiente 3D ActivA para chicas disponible tambien en la web."
+		DESCENG="Enjoy an ActivA 3D environment for girls also available on web."
+	/>
+	<AMBIENT 
+		NAMESPA="Entorno 3D para chicas con monitorización médica"  
+		NAMEENG="3D environment for girls with medical monitoring" 
+		URL="http://c188946.r46.cf1.rackcdn.com" 
+		PRICE="null"
+		EXTRASPA="Monitorizacion medica, ambiente web"
+		EXTRAENG="Health monitoring, web environment"
+		DESCSPA="Disfruta de un ambiente 3D ActivA para chicas con monitorizacion medica a traves de sensores Bluetooth."
+		DESCENG="Enjoy an ActivA 3D environment for girls, now with health monitoring through Bluetooth sensors."
+	/>
+	<AMBIENT 
+		NAMESPA="Entorno 3D por defecto"  
+		NAMEENG="3D environment by default" 
+		URL="http://c0186351.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null"
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Disfruta de un ambiente 3D ActivA por defecto disponible tambien en la web."
+		DESCENG="Enjoy an ActivA 3D environment by default also available on web."
+	/>
+	<AMBIENT 
+		NAMESPA="Entorno 3D por defecto con monitorización médica"  
+		NAMEENG="3D environment by default with medical monitoring" 
+		URL="http://c188945.r45.cf1.rackcdn.com" 
+		PRICE="null"
+		EXTRASPA="Monitorizacion medica, ambiente web"
+		EXTRAENG="Health monitoring, web environment"
+		DESCSPA="Disfruta de un ambiente 3D ActivA por defecto con monitorizacion medica a traves de sensores Bluetooth."
+		DESCENG="Enjoy an ActivA 3D environment by default, now with health monitoring through Bluetooth sensors."
+	/>
+	<AMBIENT 
+		NAMESPA="Entorno 3D generado"  
+		NAMEENG="Generated 3D environment" 
+		URL="http://c213671.r71.cf1.rackcdn.com" 
+		PRICE="null"
+		EXTRASPA="Monitorizacion medica, ambiente web"
+		EXTRAENG="Health monitoring, web environment"
+		DESCSPA="Disfruta de un ambiente 3D ActivA por defecto con monitorizacion medica a traves de sensores Bluetooth."
+		DESCENG="Enjoy an ActivA 3D environment by default, now with health monitoring through Bluetooth sensors."
+	/>
+</AMBIENTS>

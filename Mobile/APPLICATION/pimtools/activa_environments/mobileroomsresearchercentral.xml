@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AMBIENTS COUNT="4">
+	<AMBIENT 
+		NAMESPA="Ambiente 2D para investigador 1" 
+		NAMEENG="Researcher 2D environment 1"  
+		URL="http://c0187022.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito para el laboratorio."
+		DESCENG="Free environment for the laboratory."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente 2D para investigador 2" 
+		NAMEENG="Researcher 2D environment 2"  
+		URL="http://c0187023.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito para el laboratorio."
+		DESCENG="Free environment for the laboratory."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente 3D para investigador original" 
+		NAMEENG="Original researcher 3D environment"  
+		URL="http://c0187236.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Ambiente para el laboratorio tambien disponible en web."
+		DESCENG="Environment for the laboratory."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente 3D para investigador" 
+		NAMEENG="Researcher 3D environment"  
+		URL="http://c0187024.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Ambiente para el laboratorio tambien disponible en web."
+		DESCENG="Environment for the laboratory."
+	/>
+</AMBIENTS>

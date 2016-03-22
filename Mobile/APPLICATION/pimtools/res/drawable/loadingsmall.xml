@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/render_logo_movil0000s" android:duration="125" />
+    <item android:drawable="@drawable/render_logo_movil0001s" android:duration="125" />
+    <item android:drawable="@drawable/render_logo_movil0002s" android:duration="125" />
+    <item android:drawable="@drawable/render_logo_movil0003s" android:duration="125" />
+    <item android:drawable="@drawable/render_logo_movil0004s" android:duration="125" />
+</animation-list>

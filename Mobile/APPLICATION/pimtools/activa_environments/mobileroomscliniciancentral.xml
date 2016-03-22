@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AMBIENTS COUNT="4">
+	<AMBIENT 
+		NAMESPA="Ambiente 2D para clinico 1" 
+		NAMEENG="Clinician 2D environment 1"  
+		URL="http://c0186977.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito para la oficina."
+		DESCENG="Free environment for the office."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente 2D para clinico 2" 
+		NAMEENG="Clinician 2D environment 2"  
+		URL="http://c0186976.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="No"
+		EXTRAENG="No"
+		DESCSPA="Ambiente gratuito para la oficina."
+		DESCENG="Free environment for the office."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente 3D para clinico" 
+		NAMEENG="Clinician 3D environment"  
+		URL="http://c0186978.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Ambiente para la oficina disponible tambien en el futuro en la web."
+		DESCENG="Environment for the office also available at the future web."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente 3D para clinico extendido" 
+		NAMEENG="Extended clinician 3D environment"  
+		URL="http://c0187235.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Ambiente para la oficina disponible tambien en el futuro en la web."
+		DESCENG="Environment for the office also available at the future web."
+	/>
+	<AMBIENT 
+		NAMESPA="Ambiente 3D para clinico generado" 
+		NAMEENG="Geenrated clinician 3D environment"  
+		URL="http://c212871.r71.cf1.rackcdn.com" 
+		PRICE="null" 
+		EXTRASPA="Ambiente web"
+		EXTRAENG="Web environment"
+		DESCSPA="Ambiente para la oficina disponible tambien en el futuro en la web."
+		DESCENG="Environment for the office also available at the future web."
+	/>
+</AMBIENTS>

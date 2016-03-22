@@ -1,0 +1,9 @@
+Patient standard : http://c216887.r87.cf1.rackcdn.com
+Patient boy: http://c216888.r88.cf1.rackcdn.com
+Patient girl: http://c216890.r90.cf1.rackcdn.com
+
+Clinician standard: http://c216894.r94.cf1.rackcdn.com
+Clinician minimal: http://c216896.r96.cf1.rackcdn.com
+
+Researcher standard: http://c216898.r98.cf1.rackcdn.com
+researcher minimal: http://c216899.r99.cf1.rackcdn.com

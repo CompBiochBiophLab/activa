@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PIM Tool Pro</string>
+    <string name="app_version">1.0</string>
+	<string name="calendar">Calendario</string>
+	<string name="programs">Programas</string>
+	<string name="quest">Cuestionarios</string>
+	<string name="sensors">Sensores</string>
+	<string name="map">Mapas</string>
+	<string name="messages">Mensajes</string>
+	<string name="news">Noticias</string>
+	<string name="conf">Configuración</string>
+	<string name="notes">Notas</string>
+	<string name="patients">Pacientes</string>
+	<string name="projects">Proyectos</string>
+	<string name="papers">Publicaciones</string>
+	<string name="tools">Herramientas</string>
+	<string name="micro">Ambientes biologicos</string>
+	<string name="day">Dia</string>
+	<string name="week">Semana</string>
+	<string name="month">Mes</string>
+	<string name="autocalibration">Calibracion automatica</string>
+	<string name="manualcalibration">Calibracion manual</string>
+	<string name="addsite">Crear sitio</string>
+	<string name="deletesite">Borrar sitios</string>
+	<string name="linksite">Enlazar sitios</string>
+	<string name="unlinksite">Desenlazar sitios</string>
+	<string name="msgrec">Mensajes recibidos</string>
+	<string name="msgsent">Mensajes enviados</string>
+	<string name="contacts">Contactos</string>
+	<string name="refresh">Actualizar datos</string>
+	<string name="contactus">Contactanos</string>
+	<string name="tutorials">Tutoriales y videos</string>
+	<string name="about">Acerca de ...</string>
+	<string name="accountwarning">La sincronización de cuentas externas con la red ActivA es un proceso opcional, aunque ayuda a mejorar la experiencia en versiones futuras. Si quieres saltartelo, simplemente pulsa sobre el botón de OK o cierra la ventana pulsando el botón BACK del movil.</string>
+    <string name="registerwarning">Bienvenido a la aplicación ActivA. Antes de empezar a usar la aplicación, primero debes crear una cuenta ActivA o introducir una ya existente.</string>
+    <string name="registerwarning1">Crear cuenta</string>
+    <string name="registerwarning2">Introducir una ya existente</string>
+    <string name="passwordwarning">Para hacerte la aplicación mas fácil de usar las siguientes veces sin perder seguridad, tienes que introducir un patrón de contraseña que se te pedirá cada vez que arranques la aplicación.</string>
+    <string name="passwordwarning1">Dibuja tu patrón</string>
+    <string name="usertypeexpl">Escoge un tipo de usuario</string>
+    <string name="registerewebdatastart">Configurar aplicación</string>
+    <string name="languagerequest">Lenguaje: </string>
+    <string name="timezonerequest">Zona horaria: </string>
+    <string name="privacyrequest">Nivel de privacidad: </string>
+    <string name="addlink">Añadir link</string>
+    <string name="removelink">Borrar link</string>
+    <string name="oklink">Ok</string>
+    <string name="cancellink">Cancelar</string>
+    <string name="tomarketlink">Ir al mercado</string>
+    <string name="toastexternallinks">Para volver al entorno, pulsa el boton de BACK</string>
+    <string name="initialhelp">Bienvenido a ActivaCentral.\n\nMuevete desplazando el dedo sobre la pantalla para moverte por el entorno y pulsa sobre las zonas resaltadas para acercarte a los diferentes elementos de la habitación.\n\nUna vez hayas acercado la vista, pulsa sobre los elementos para acceder a su funcionalidad, manten pulsado sobre ellos para cambiar su funcionalidad o pulsa sobre el botón de vuelta para volver a la habitación.\n\nDisfruta de ActivaCentral</string>
+    <string-array name="freqarray">
+		<item>Nada</item>
+		<item>Diario</item>
+		<item>Semanal</item>
+		<item>Mensual</item>
+		<item>Anual</item>
+		<item>Lunes, miercoles y viernes</item>
+		<item>Martes y jueves</item>
+		<item>Dias laborables</item>
+	</string-array>
+    <string-array name="questtype">
+		<item>Simple</item>
+		<item>Multiple</item>
+		<item>Numerica</item>
+		<item>Textual</item>
+		<item>Informativa</item>
+	</string-array>
+    <string-array name="usertype">
+		<item>Paciente</item>
+		<item>Clínico</item>
+		<item>Investigador</item>
+	</string-array>
+    <string-array name="sextype">
+		<item>No especificado</item>
+		<item>Hombre</item>
+		<item>Mujer</item>
+	</string-array>
+    <string-array name="meastype">
+		<item>Pulsioximetria</item>
+		<item>Espirometria</item>
+		<item>Caminata de 6 minutos</item>
+		<item>Peso y antura</item>
+		<item>Ejercicio</item>
+	</string-array>
+    <string-array name="usertypewarn">
+		<item>Entra a tu entorno de paciente y descubrirás una nueva manera de gestionar tu informacion médica y personal o como tomar control de tu enfermedad. ¡Llega a tu doctor solo con un click! Y si quieres hacerlo a través del móvil ... ¡Hazlo!</item>
+		<item>Entra a tu entorno de clínico y serás capaz de configurar tu oficina virtual. Gestiona tus pacientes, estate en contacto con investigadores y recibe las últimas noticias de adelantos médicos que necesites para actualizarte.</item>
+		<item>Acelera tu investigación con sets de datos y acceso a herramientas poderosas.</item>
+	</string-array>
+    <string-array name="privacylevel">
+		<item>Pública</item>
+		<item>Privada</item>
+	</string-array>
+</resources>

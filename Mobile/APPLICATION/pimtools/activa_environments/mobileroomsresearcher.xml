@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AMBIENTS COUNT="4">
+	<AMBIENT 
+		NAMESPA="Laboratorio ActivA de estudiante 1" 
+		NAMEENG="ActivA research student 1"  
+		URL="http://c0187022.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="Areas:&lt;br&gt;
+Comunicaciones - Mail, Teléfono, Skype&lt;br&gt;
+Red - Calendario, Notas, Social, Mensajería&lt;br&gt;
+Media - Video, Camara, Tutoriales, Reproductor de musica, Estaciones de pusica, Fotos&lt;br&gt;
+Oficina - Busqueda, enciclopedia, mapas, cuestionarios&lt;br&gt;
+Información - Noticias&lt;br&gt;
+Personalización - Programa tus propios widgets&lt;br&gt;
+Futuro: Grupos, Publicaciones, Proyectos, Herramientas, Servicios...&lt;br&gt;"
+		EXTRAENG="Areas:&lt;br&gt;
+Comunications - Mail, Phone, Skype&lt;br&gt;
+Networking - Calendar, Notes, Social, Messaging&lt;br&gt;
+Media - Video, Camera, Tutorials, Music Player, Music Stations, Pictures&lt;br&gt;
+Office - Search, Dictionaries, Maps, Questionnaires&lt;br&gt;
+Information - News&lt;br&gt;
+Personalization - Program your own widgets&lt;br&gt;
+Future: Groups, Papers, Projects, Tools, Services...&lt;br&gt;"
+		DESCSPA="ActivA es una nueva forma de organizar tu oficina, tu laboratorio, tu vida. Se trata de una plataforma común para cualquiera relacionado con el campo del cuidado médica, de modo que pacientes, doctores e investigadores pueden comunicarse dentro de su circulo a través de estas herramientas en ambientes de facil uso."
+		DESCENG="ActivA at the base is a new way to organize your office, your lab, your life. It is a common platform for anyone in any facet of the health care field, so that patients, doctors and researchers can communicate within their peer group and across these tiers in user-friendly environments."
+	/>
+	<AMBIENT 
+		NAMESPA="Laboratorio ActivA de estudiante 2" 
+		NAMEENG="ActivA research student 2"   
+		URL="http://c0187023.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="null" 
+		EXTRASPA="Areas:&lt;br&gt;
+Comunicaciones - Mail, Teléfono, Skype&lt;br&gt;
+Red - Calendario, Notas, Social, Mensajería&lt;br&gt;
+Media - Video, Camara, Tutoriales, Reproductor de musica, Estaciones de pusica, Fotos&lt;br&gt;
+Oficina - Busqueda, enciclopedia, mapas, cuestionarios&lt;br&gt;
+Información - Noticias&lt;br&gt;
+Personalización - Programa tus propios widgets&lt;br&gt;
+Futuro: Grupos, Publicaciones, Proyectos, Herramientas, Servicios...&lt;br&gt;"
+		EXTRAENG="Areas:&lt;br&gt;
+Comunications - Mail, Phone, Skype&lt;br&gt;
+Networking - Calendar, Notes, Social, Messaging&lt;br&gt;
+Media - Video, Camera, Tutorials, Music Player, Music Stations, Pictures&lt;br&gt;
+Office - Search, Dictionaries, Maps, Questionnaires&lt;br&gt;
+Information - News&lt;br&gt;
+Personalization - Program your own widgets&lt;br&gt;
+Future: Groups, Papers, Projects, Tools, Services...&lt;br&gt;"
+		DESCSPA="ActivA es una nueva forma de organizar tu oficina, tu laboratorio, tu vida. Se trata de una plataforma común para cualquiera relacionado con el campo del cuidado médica, de modo que pacientes, doctores e investigadores pueden comunicarse dentro de su circulo a través de estas herramientas en ambientes de facil uso."
+		DESCENG="ActivA at the base is a new way to organize your office, your lab, your life. It is a common platform for anyone in any facet of the health care field, so that patients, doctors and researchers can communicate within their peer group and across these tiers in user-friendly environments."
+	/>
+	<AMBIENT 
+		NAMESPA="Equipo de investigación ActivA 3D" 
+		NAMEENG="ActivA research team 3D"  
+		URL="http://c0187236.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="0.99"
+		EXTRASPA="Areas:&lt;br&gt;
+Comunicaciones - Mail, Teléfono, Skype&lt;br&gt;
+Red - Calendario, Notas, Social, Mensajería&lt;br&gt;
+Media - Video, Camara, Tutoriales, Reproductor de musica, Estaciones de pusica, Fotos&lt;br&gt;
+Oficina - Busqueda, enciclopedia, mapas, cuestionarios&lt;br&gt;
+Información - Noticias&lt;br&gt;
+Personalización - Programa tus propios widgets&lt;br&gt;
+Futuro: Grupos, Publicaciones, Proyectos, Herramientas, Servicios...&lt;br&gt;"
+		EXTRAENG="Areas:&lt;br&gt;
+Comunications - Mail, Phone, Skype&lt;br&gt;
+Networking - Calendar, Notes, Social, Messaging&lt;br&gt;
+Media - Video, Camera, Tutorials, Music Player, Music Stations, Pictures&lt;br&gt;
+Office - Search, Dictionaries, Maps, Questionnaires&lt;br&gt;
+Information - News&lt;br&gt;
+Personalization - Program your own widgets&lt;br&gt;
+Future: Groups, Papers, Projects, Tools, Services...&lt;br&gt;"
+		DESCSPA="ActivA es una nueva forma de organizar tu oficina, tu laboratorio, tu vida. Se trata de una plataforma común para cualquiera relacionado con el campo del cuidado médica, de modo que pacientes, doctores e investigadores pueden comunicarse dentro de su circulo a través de estas herramientas en ambientes de facil uso."
+		DESCENG="ActivA at the base is a new way to organize your office, your lab, your life. It is a common platform for anyone in any facet of the health care field, so that patients, doctors and researchers can communicate within their peer group and across these tiers in user-friendly environments."
+	/>
+	<AMBIENT 
+		NAMESPA="Laboratorio de investigación ActivA 3D" 
+		NAMEENG="ActivA research lab 3D"  
+		URL="http://c0187024.cdn1.cloudfiles.rackspacecloud.com" 
+		PRICE="0.99"
+		EXTRASPA="Areas:&lt;br&gt;
+Comunicaciones - Mail, Teléfono, Skype&lt;br&gt;
+Red - Calendario, Notas, Social, Mensajería&lt;br&gt;
+Media - Video, Camara, Tutoriales, Reproductor de musica, Estaciones de pusica, Fotos&lt;br&gt;
+Oficina - Busqueda, enciclopedia, mapas, cuestionarios&lt;br&gt;
+Información - Noticias&lt;br&gt;
+Personalización - Programa tus propios widgets&lt;br&gt;
+Futuro: Grupos, Publicaciones, Proyectos, Herramientas, Servicios...&lt;br&gt;"
+		EXTRAENG="Areas:&lt;br&gt;
+Comunications - Mail, Phone, Skype&lt;br&gt;
+Networking - Calendar, Notes, Social, Messaging&lt;br&gt;
+Media - Video, Camera, Tutorials, Music Player, Music Stations, Pictures&lt;br&gt;
+Office - Search, Dictionaries, Maps, Questionnaires&lt;br&gt;
+Information - News&lt;br&gt;
+Personalization - Program your own widgets&lt;br&gt;
+Future: Groups, Papers, Projects, Tools, Services...&lt;br&gt;"
+		DESCSPA="ActivA es una nueva forma de organizar tu oficina, tu laboratorio, tu vida. Se trata de una plataforma común para cualquiera relacionado con el campo del cuidado médica, de modo que pacientes, doctores e investigadores pueden comunicarse dentro de su circulo a través de estas herramientas en ambientes de facil uso."
+		DESCENG="ActivA at the base is a new way to organize your office, your lab, your life. It is a common platform for anyone in any facet of the health care field, so that patients, doctors and researchers can communicate within their peer group and across these tiers in user-friendly environments."
+	/>
+</AMBIENTS>

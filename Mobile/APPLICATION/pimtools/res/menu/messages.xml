@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/tomsgrec"
+        android:title="@string/msgrec"
+        android:icon="@drawable/msgreceived" />
+    <item android:id="@+id/tomsgsent"
+        android:title="@string/msgsent"
+        android:icon="@drawable/msgsent" />
+    <item android:id="@+id/tocontacts"
+        android:title="@string/contacts"
+        android:icon="@drawable/msgcontacts" />
+    <item android:id="@+id/torefresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/refreshmenu" />
+</menu>

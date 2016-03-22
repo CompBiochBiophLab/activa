@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/toastseeambientroot"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+>
+	<ScrollView
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:scrollbarFadeDuration="60000"
+	android:padding="5dp"
+	>
+		<LinearLayout  
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="5dp"
+		android:orientation="vertical"
+		android:gravity="center_horizontal"
+		>
+		    <LinearLayout  
+			android:id="@+id/container"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:gravity="center_horizontal"
+			>
+			</LinearLayout>
+			<ImageButton 
+			android:id="@+id/paypal"
+			android:visibility="gone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/paypal"
+			android:background="@drawable/iconbg"
+			/>
+			<LinearLayout
+			android:id="@+id/download"
+			android:visibility="gone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center_horizontal"
+			>
+				<ImageButton 
+				android:id="@+id/ok"
+				android:layout_width="60px"
+				android:layout_height="60px"
+				android:src="@drawable/ok"
+				android:background="@drawable/iconbg"
+				/>
+				<ImageButton 
+				android:id="@+id/no"
+				android:layout_width="60px"
+				android:layout_height="60px"
+				android:src="@drawable/no"
+				android:background="@drawable/iconbg"
+				/>
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>

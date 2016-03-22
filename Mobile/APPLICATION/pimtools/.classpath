@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/o2hlink/pimtools/data/program/" kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="lib/achartengine-0.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/activ8-client.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/google-api-translate-java-0.94.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-user - RCP.jar"/>
+	<classpathentry kind="lib" path="lib/PayPal_MPL.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

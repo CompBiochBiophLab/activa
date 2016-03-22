@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>DroidCharts.jar - download now for free. File sharing. Software file sharing. Free file hosting. File upload. FileFactory.com</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="verify-v1" content="dpE1+tPZDHhp5ftYFue67Jx6oezN6//+0A+NA9qIDKU=" />
+	<meta name="robots" content="noodp" />
+	<meta name="googlebot" content="noodp" />
+			<meta name="keywords" content="file, sharing, file sharing, software file sharing, hosting, file hosting, free file hosting, files hosting, file share, free file sharing, online storage, free online storage, file online storage, file upload, files upload, upload, file storage, file host, free hosting, image hosting" />
+		<meta name="description" content="Download DroidCharts.jar for free. File sharing and software file sharing. 500GB of free space. Upload and share files." />
+		
+		
+	<link rel="shortcut icon" href="/favicon.ico"/> 
+	
+	<link rel="stylesheet" type="text/css" href="/css/site.css?v=115" />
+				<link rel="stylesheet" type="text/css" href="/css/about.css?v=115" />
+					<link rel="stylesheet" type="text/css" href="/css/file.css?v=115" />
+					<link rel="stylesheet" type="text/css" href="/css/premium.css?v=115" />
+					<link rel="stylesheet" type="text/css" href="/css/facebox.css?v=115" />
+			
+	<!-- jQuery -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+	<script type="text/javascript">
+	//	if (top != self) top.location.href = location.href;
+	</script>
+			<script type="text/javascript" src="http://js.filefactory.com/hostPageScript.js?v=115"></script>
+		
+		
+	<!-- Check for IE6 (used to disable the login dropdown) -->
+	<script type="text/javascript">
+		isLTEie6 = false;
+	</script>
+	<!--[if lte IE 6]>
+		<script type="text/javascript">
+	  		isLTEie6 = true;
+		</script>
+	<![endif]-->
+	<!-- End IE6 check -->
+</head>
+<body class="full">
+		
+				
+	<!-- Hide the drop shadow for IE browsers -->
+	<!--[if IE]>
+		<style type="text/css">
+			div#loginBoxShadow {
+				background: transparent;
+				padding: 0 !important;
+			}
+			
+			div#loginBox {
+				background: #F5F2F2 url('/img/layout/header/box.bg.png') top left repeat-x;
+				margin-left: 0px !important;
+				margin-top: -3px !important;
+			}
+		</style>
+	<![endif]-->
+	<div id="loginContainer">
+		<div id="loginBoxShadow">
+			<div id="loginBox">
+				<div style="position: relative;">
+					<div id="pointy"></div>
+					<div id="closeIcon">
+						<img id="closePanel" src="/img/layout/header/cross.png" alt="Close Panel" />
+					</div>
+				</div>
+				
+				<h2>Member Sign in</h2>
+				<form name="quickLogin" action="" method="POST" style="margin: 0;">
+					<input type="hidden" name="redirect" value="/file/b3e83db/n/DroidCharts.jar"/>
+					<ul>
+						<li>
+							<label>Email:</label>
+							<input type="text" name="email" title="Your Email"/>
+						</li>
+						<li>
+							<label>Password:</label>
+							<input type="password" name="password" title="Password"/>
+						</li>
+						<li class="button">
+							<input id="signinButton" type="submit" value="Sign in" />
+							<input id="signinButtonSSL" type="submit" value="Sign in with SSL" />
+						</li>
+					</ul>
+				</form>
+				<div style="clear: both;"></div>
+				
+				<p style="padding: 5px 0; margin: 5px 0 0; text-align: center;">
+					<a href="/member/forgotpass.php" id="forgotPassword">Forgot your password?</a> | <a href="/member/signup.php" id="createAccount">Join FileFactory</a>
+				</p> 
+				
+				<p style="padding: 5px 0; margin: 0; text-align: center; display: none;">
+					<a href="/member/signup.php" id="createAccount">Join FileFactory</a>
+				</p>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+	</div>	
+	
+	<!-- Page content -->
+	<div id="header" style="margin-bottom: 40px;">
+		<div id="logos">
+			<a href="/" id="home"><img src="/img/layout/header/logo.png" alt="FileFactory"/></a>
+		</div>
+
+		<div id="navigation">
+			<ul class="main">
+				<li class="tab">
+					<a href="/">Upload</a>
+				</li>
+				<li class="tab">
+					<a href="/premium/">Premium</a>
+				</li>
+				<li class="tab">
+					<a href="/make_money/">Make Money</a>
+				</li>
+				<li class="tab">
+					<a href="/tool/">Tools</a>
+				</li>
+				<li class="tab">
+					<a href="/help/">Help</a>
+				</li>
+			</ul>
+			<ul class="member">
+				<li class="tab">
+					<!-- UGO Logo -->
+				</li>
+									<li class="tab">
+						<a href="/member/signup.php">Join</a>
+					</li>
+					<li id="quicklogin" class="tab">
+						<a href="/member/login.php" id="quicksubmit">Sign in</a>
+					</li>
+					
+					<div style="position: absolute; right: 0; top: 0; margin-top: 50px;">
+						<a href="http://www.1up.com/"><img src="/img/ugo.png" alt="1UP Games Logo" /></a>
+					</div>
+					
+							</ul>		
+		</div>
+	</div>
+	
+	<div id="main">		
+		<div id="crumbtrail">
+									<a href="/" class="">Home</a>	
+												<span class="last">DroidCharts.jar</span>
+								</div>
+		
+				
+				
+		<div id="content">
+			
+							<h1><img style="vertical-align: middle; padding-bottom: 4px;" src="/img/manager/mime/generic.png" />&nbsp;DroidCharts.jar</h1>
+						
+			<div id="info" class="metadata">
+				<span>598.61 KB file uploaded 5 months, 1 week ago.</span>			
+								
+								
+									<p id="dlNotice" style="font-size: 2.5em; font-weight: bold; color: #f69404; margin: 0.5em 0; text-align: center; padding: 10px; background: #fde7c7; border: 3px solid #ffcb7e; -moz-border-radius: 3px; border-radius: 3px; webkit-border-radius: 3px; position: relative;">
+						<img style="position: absolute; top: 0; margin-top: 9px;" src="/img/file/download/icon.info.png" /> 
+						<span style="padding-left: 37px;">Click here to skip directly to the download link</span>
+					</p>
+							</div>
+			
+												<div id="aContainer">
+						<div style="font-family: 'Myriad Pro',arial,sans-serif; font-size: 21px; left: 0; margin-left: 239px; margin-top: 23px; position: absolute; top: 0;">
+							<span style="color: #000a8b;">Hate ads?!</span>
+							<a href="/member/signup.php"><span style="color: #cc0000;"><strong>Click here to create a <u>free</u> account to remove them forever!</strong></span></a>
+						</div>
+						<div class="b-1"><iframe width="728" height="90" src="/ads/google-728x90.html" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe></div>
+						<div class="b-2"><iframe width="728" height="90" src="/ads/ugo-728x90.html" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe></div>
+						<div class="s-1"><iframe width="300" height="250" src="/ads/google-300x250.html" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe></div>
+						<div class="s-2"><iframe width="300" height="250" src="/ads/ugo-300x250.html" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe></div>
+						
+													
+						</div>
+								
+				<div id="currencyModal" style="display: none;">
+	<div id="toggleCurrency">
+		<h2>Change Currency</h2>
+		<p style="font-size: 1.2em;">
+			If you'd prefer to purchase your premium subscription in another currency, please select it from the list below.		</p>
+		<p style="font-size: 1.2em; padding-top: 10px;">
+			<label for="currency">New currency:</label>
+			<select name="currency" id="currency" class="currency">
+									<option value="USD" >USD - United States Dollar</option>
+									<option value="AUD" >AUD - Australian Dollar</option>
+									<option value="GBP" >GBP - Great Britain Pounds</option>
+									<option value="EUR" selected="selected">EUR - Euro</option>
+									<option value="CAD" >CAD - Canadian Dollar</option>
+									<option value="JPY" >JPY - Japanese Yen</option>
+									<option value="NZD" >NZD - New Zealand Dollar</option>
+									<option value="SGD" >SGD - Singapore Dollar</option>
+							</select>
+		</p>
+	</div>
+</div>
+
+<div id="premium">
+	<div id="premiumLogo"></div>
+	<div id="premiumContainerLeft">
+		<a href="#" class="hitbox">&nbsp;</a>
+	</div>
+	<div id="premiumContainer">
+		<div id="premiumContainerText">
+			<div class="scrollPanel">
+				<!-- element with overflow applied -->
+				<div class="scroll">
+					<!-- the element that will be scrolled during the effect -->
+					<div class="scrollContainer">
+						<!-- our individual panels -->
+						<div class="panel" id="panel1">
+							<h2>Get files instantly - no waiting!</h2>
+							<p>
+								Upgrade to FileFactory Premium and you receive instant download links, so you can start downloading right away. No wait times. No hourly limits.							</p>
+							<p>
+								You can even switch on direct downloads which means your downloads start automatically. How simple and easy is that?							</p>
+							<p>
+								Buy a FileFactory Premium account today!							</p>
+						</div>
+						<div class="panel" id="panel2">
+							<h2>Download many files at once!</h2>
+							<p>
+								Only FileFactory Premium members can download several files at once. Upgade to get the files you want a lot sooner.							<p>
+								Max out your bandwidth connection and download 5, 10 or 15 or more files at a time. 
+							</p>
+							<p>
+								FileFactory Premium members always get the files they want right away, so why not join us today?							</p>
+						</div>
+						<div class="panel" id="panel3">
+							<h2>Download gigabytes of files daily!</h2>
+							<p>
+								Want to download heaps of movies, games, files and documents each day? Then upgrade to FileFactory Premium 
+								and download up to 24GB of files a day. 
+							</p>
+							<p>
+								That's more than 17 CD-ROMS of data which is more than enough for even the most serious downloaders.							</p>
+							<p>
+								You can even share your files with others using FileFactory TrafficShare.							</p>
+						</div>
+						<div class="panel" id="panel4">
+							<h2>Get ready for faster download speeds!</h2>
+							<p>
+								Want your downloads faster? Then upgrade to FileFactory Premium for the fastest possible speeds. Download files								faster and have them delivered to your desktop quicker!							</p>
+							<p>
+								Premium download speeds are not capped so you can download as fast as your connection will allow.							</p>
+							<p>
+								To ramp up your	speeds even faster, try using a download manager.							</p>
+						</div>
+						<div class="panel" id="panel5">
+							<h2>Remove all ads and popups!</h2>
+							<p>
+								FileFactory Premium members see absolutely no banner ads or popups, making it a clutter-free experience.							</p>
+							<p>
+								In order to provide a good quality free service, Basic users may see multiple ads on a page, as well as occasionally								receiving popups and popunders.							</p>
+							<p>
+								FileFactory Premium members have all advertising automatically disabled, so you								can browse with ease.							</p>
+						</div>
+						<div class="panel" id="panel6">
+							<h2>FileFactory TrafficShare</h2>
+							<p>
+								File sharing is now easy with FileFactory TrafficShare!							</p>
+							<p>
+								Now you can share your files instantly with colleagues, friends or family.							</p>
+							<p>
+								Share up to 24GB of files each day. Your users will be able to download files instantly, and will not see any ads.							</p>
+							<p>
+								Join FileFactory Premium today and start file sharing!							</p>
+						</div>
+					</div>
+				</div>
+			
+				<div class="sliderNav">
+					<a href="#panel1" class="current">1</a>
+					<a href="#panel2">2</a>
+					<a href="#panel3">3</a>
+					<a href="#panel4">4</a>
+					<a href="#panel5">5</a>
+					<a href="#panel6">6</a>
+				</div>
+			</div>
+		</div>
+		<div id="premiumContainerIcon">
+			<img src="/img/blank.gif" id="panel1-icon" style="display: none; position: absolute; top: 0; left: 0;" />
+			<img src="/img/blank.gif" id="panel2-icon" style="display: none; position: absolute; top: 0; left: 0;" />
+			<img src="/img/blank.gif" id="panel3-icon" style="display: none; position: absolute; top: 0; left: 0;" />
+			<img src="/img/blank.gif" id="panel4-icon" style="display: none; position: absolute; top: 0; left: 0;" />
+			<img src="/img/blank.gif" id="panel5-icon" style="display: none; position: absolute; top: 0; left: 0;" />
+			<img src="/img/blank.gif" id="panel6-icon" style="display: none; position: absolute; top: 0; left: 0;" />
+		</div>
+	</div>
+	<div id="premiumContainerRight">
+		<a href="#" class="hitbox">&nbsp;</a>
+	</div>
+	<div class="clear"></div>
+	
+	<div id="tableHeaders">
+		<span class="buyPremium">Buy Premium now! Select a plan</span>
+	</div>
+	<div id="featureTable">
+		<div class="row alert">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature1-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Get ready for faster download speeds!</h2>
+					<p>
+						Want your downloads faster? Then upgrade to FileFactory Premium for the fastest possible speeds. Download files						faster and have them delivered to your desktop quicker!					</p>
+					<p>
+						Premium download speeds are not capped so you can download as fast as your connection will allow. To ramp up your						speeds even faster, try using a download manager or	FileFactory Turbo.					</p>
+				</div>
+			</div>
+			<div class="feature">File download speed</div>
+			<div class="basic">Limited</div>
+			<div class="premium">Unlimited</div>
+		</div>
+		
+		<div class="row alert">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature2-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Download gigabytes of files daily!</h2>
+					<p>
+						Want to download heaps of movies, games, files and documents each day? Then upgrade to FileFactory Premium and download						up to 24GB of files a day.					</p>
+					<p>
+						That's more than 17 CD-ROMS of data which is more than enough for even the most serious downloaders.  You can track how						much data you’ve downloaded in your account.					</p>
+				</div>
+			</div>
+			<div class="feature">Download limits</div>
+			<div class="basic">150MB/hour</div>
+			<div class="premium">24GB/day</div>
+		</div>
+		
+		<div class="row alert">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature3-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Get files instantly – no waiting!</h2>
+					<p>
+						Want to download files instantly, with no waiting or restrictions? Then upgrade to FileFactory Premium and you receive instant download						links, so you can start downloading right away. Avoid pesky download timers and get into the fast lane.					</p>
+					<p>
+						You can even switch on direct downloads which means you don’t even have to visit a FileFactory web page to begin your download.					</p>
+				</div>
+			</div>
+			<div class="feature">Download wait time</div>
+			<div class="basic">30+ seconds</div>
+			<div class="premium">Instant</div>
+		</div>
+
+		<div class="row cross">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature4-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Get the file every time!</h2>
+					<p>
+						Sometimes when downloading a large file your Internet connection may drop out, meaning your download stops and you need to start your download						again from the beginning.					</p>
+					<p>
+						FileFactory Premium members can resume broken downloads if they’re using a download manager or FileFactory Turbo.  This makes downloading large						files a whole lot easier, and saves your bandwidth.					</p>
+				</div>
+			</div>
+			<div class="feature">Resume support</div>
+			<div class="basic">No</div>
+			<div class="premium">Yes</div>
+		</div>
+		
+		<div class="row alert">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature5-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Store up to 2,000GB of files!</h2>
+					<p>
+						Got heaps of files to share or store? Then upgrade to FileFactory Premium and never worry about storage space again.					</p>
+					<p>
+						2,000GB is the equivalent of over 2,800 CD-ROMS of data. That’s a lot of storage space!					</p>
+					<p>
+						You can see how much storage space you've used in your account management section.					</p>
+				</div>
+			</div>
+			<div class="feature">Storage limit</div>
+			<div class="basic">500GB</div>
+			<div class="premium">2000GB</div>
+		</div>
+		
+		<div class="row alert">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature6-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Get rid of all ads and popups!</h2>
+					<p>
+						FileFactory Premium members see absolutely no banner ads or popups, making it a clutter-free experience.					</p>
+					<p>
+						In order to provide a good quality free service, Basic users may see multiple ads on a page, as well as occasionally receiving popups and popunders. 					</p>
+					<p>
+						FileFactory Premium members have all advertising automatically disabled, so you can browse with ease.					</p>
+				</div>
+			</div>
+			<div class="feature">Banner ads and popups</div>
+			<div class="basic">Yes</div>
+			<div class="premium">No ads</div>
+		</div>
+		
+		<div class="row cross">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature7-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Download many files at once!</h2>
+					<p>
+						FileFactory Premium members can download multiple files at once, so you get the files you want a lot sooner. Max out your bandwidth connection and						download 5, 10 or 15 or more files at a time.					</p>
+					<p>
+						Basic members can only download one file at a time, so it might take a while to download a large						number of files. FileFactory Premium members always get the files they want right away.					</p>
+				</div>
+			</div>
+			<div class="feature">Simultaneous downloads</div>
+			<div class="basic">No</div>
+			<div class="premium">Yes</div>
+		</div>
+		
+		<div class="row cross">
+			<div class="infoOverlay">
+				<div id="infoOverlayIcon"><img src="/img/blank.gif" id="feature8-icon" /></div>
+				<div id="infoOverlayText">
+					<h2>Share files with TrafficShare</h2>
+					<p>
+						FileFactory TrafficShare is a bandwidth sharing feature available to FileFactory Premium members.					</p>
+					<p>
+						With FileFactory TrafficShare you can share your files with colleagues, friends or family, and they can download your files without waiting, and without seeing ads.					</p>
+					<p>
+						You get 24GB of bandwidth to share every day!					</p>
+				</div>
+			</div>
+			<div class="feature">Share files with TrafficShare</div>
+			<div class="basic">No</div>
+			<div class="premium">Yes</div>
+		</div>
+	</div>
+</div>
+<div id="priceTable">
+						<div class="row first row-1">
+							<div class="period">365 days</div>
+						<div class="price">
+				<span class="dollars">&euro;49</span>
+									<span class="small">(13 cents per day)</span>
+							</div>
+			<div class="buy">
+				<a href="/premium/package.php?packageID=8&amp;currency=EUR&amp;discountCode="><img class="buy-icon" src="/img/blank.gif" alt="Buy now" /></a>
+			</div>
+		</div>
+					<div class="row row-2">
+							<div class="period">180 days</div>
+						<div class="price">
+				<span class="dollars">&euro;29</span>
+									<span class="small">(16 cents per day)</span>
+							</div>
+			<div class="buy">
+				<a href="/premium/package.php?packageID=9&amp;currency=EUR&amp;discountCode="><img class="buy-icon" src="/img/blank.gif" alt="Buy now" /></a>
+			</div>
+		</div>
+					<div class="row row-3">
+							<div class="period">90 days</div>
+						<div class="price">
+				<span class="dollars">&euro;15</span>
+									<span class="small">(17 cents per day)</span>
+							</div>
+			<div class="buy">
+				<a href="/premium/package.php?packageID=10&amp;currency=EUR&amp;discountCode="><img class="buy-icon" src="/img/blank.gif" alt="Buy now" /></a>
+			</div>
+		</div>
+					<div class="row row-4">
+							<div class="period">30 days</div>
+						<div class="price">
+				<span class="dollars">&euro;7</span>
+									<span class="small">(23 cents per day)</span>
+							</div>
+			<div class="buy">
+				<a href="/premium/package.php?packageID=11&amp;currency=EUR&amp;discountCode="><img class="buy-icon" src="/img/blank.gif" alt="Buy now" /></a>
+			</div>
+		</div>
+		<div class="row last">
+		Prices currently displayed in EUR (<a class="toggleCurrency" href="#">change</a>)
+	</div>
+	<div id="priceTableProviders"></div>
+</div>
+<div id="tableFooters"></div>
+<!--<div id="dataPack">
+	<span id="dpHeading">
+		Need more data or disk space?	</span>
+	<span id="dpSub">
+		Buy more download bandwidth and disk space on demand with Data Packs.	</span>
+	<span id="dpButtonHeading">
+		Find out more <span id="dpGrey">or</span>
+	</span>
+	<span id="dpButton">
+		<span id="buttonText">Upgrade now</span>
+	</span>
+</div>-->
+
+<div style="text-align: center; font-size: 1.8em; font-family: 'Myriad Pro',arial,sans-serif; float: left; margin-top: 15px; width: 932px;">
+	<div style="margin: 0 auto; text-align: center;">
+		Need more payment options?  <a href="/reseller/">Choose from our list of FileFactory Premium Resellers</a>
+	</div>
+</div>			
+									<div class="b-3">
+						<iframe width="728" height="90" src="/ads/google-728x90-bottom.html" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+					</div>
+								
+				<div id="buttonContainer" style="position: relative;">
+					<div id="buttonContainerHighlight" style="position: absolute; left: 0; margin: -5px 0 0 0; background: #FDE7C7; border-top: 3px solid #FFCB7E; border-bottom: 3px solid #FFCB7E; height: 99px;z-index: -1; display: none;"></div>
+					<div class="upradeBtn">
+						<a href="/premium/"><img src="/img/file/download/button.upgrade.jpg" alt="Download instantly by upgrading to FileFactory Premium" /></a>
+					</div>
+					<div class="btnOr"></div>
+					<div class="basicBtn">
+												<div id="ffRecaptcha" style="display: none; margin-left: 10px;">
+													</div>
+						
+						<a id="basicLink" href="javascript:void(0);" style="outline: none;"><img src="/img/file/download/button.basic.png" alt="Download Now for free with FileFactory Basic" /></a>
+					</div>
+					<div id="captchaerror-container" style="color: #cc0000; font-size: 15px; font-weight: bold; left: 0; margin-left: 585px; margin-top: 35px; position: absolute; top: 0; width: 250px; line-height: 16px; text-align: left; display: none;">
+						Captcha Error<br />
+						<span id="captchaerror"></span>
+						<br /><br />Please try again.
+					</div>
+					<script type="text/javascript" src="http://api.recaptcha.net/js/recaptcha_ajax.js"></script>
+					<script type="text/javascript">
+						var checkCaptcha = 0;
+						
+						$("#recaptcha_response_field").live("keyup", function(e){
+							if (e.keyCode == 13) 
+							{
+								$("#basicLink").trigger('click');
+							}
+						});
+						
+						$("#basicLink").bind("click", function(e){
+							e.preventDefault();
+							
+							$("#captchaerror-container").fadeOut(250);
+							
+							// Either try to process the form, or display the captcha
+							if (checkCaptcha === 1 && $("#ffRecaptcha:visible").length)
+							{
+								if ($("#recaptcha_response_field").val() != "")
+								{
+									$.ajax({
+										type: "POST",
+										url: "/file/checkCaptcha.php",
+										dataType: "json",
+										data: ({
+											recaptcha_challenge_field:$("#recaptcha_challenge_field").val(),
+											recaptcha_response_field:$("#recaptcha_response_field").val(),
+											recaptcha_shortencode_field:$("#recaptcha_shortencode_field").val(),
+											check:'7ad1c2c6eb1fc6f9c7272dae369f88ac'
+										}),
+										success: function(response){
+											if (response.status == 'ok')
+											{
+												// Inject HTML link to follow in case document.location fails for some reason
+												$("#buttonContainer").find("div").remove();
+												
+												$("#buttonContainer").html('<a href="' + 'http://' + document.location.host + response.path + '">Transferring you now...</a>');
+												$("#buttonContainer").css({'font-size':'25px','font-weight':'bold','line-height':'50px'}).animate({'height':'50px'}, 250);
+												
+												// Redirect the user to the download page
+												window.location = 'http://' + document.location.host + response.path;
+											} else {
+												$("#captchaerror").text(response.message);
+												$("#captchaerror-container").fadeIn(250);
+												
+												Recaptcha.reload();
+											}
+										}
+									}); 
+								}
+								else
+								{
+									$("#captchaerror").text("You did not answer the captcha.");
+									$("#captchaerror-container").fadeIn(250);
+								}
+							}
+							else
+							{
+								// Show the captcha
+								checkCaptcha = 1;
+								
+								if ($("#buttonContainerHighlight").length) 
+								{
+									$("#buttonContainerHighlight").stop().fadeOut(100);
+								}
+								
+								Recaptcha.create("6LeN8roSAAAAAPdC1zy399Qei4b1BwmSBSsBN8zm", "ffRecaptcha", {
+									theme: "red",
+									tabindex: 0,
+									callback: function(){
+										$("#buttonContainer").animate({'height':'225px'}, 250, function(){
+											$("#buttonContainer").animate({'height':'225px'}, 250, function(){
+												$("#basicLink").animate({'marginLeft':'30px'}, 200);
+												$("#ffRecaptcha").fadeIn(250, function(){
+													Recaptcha.focus_response_field
+													$("#recaptcha_response_field").focus();
+												});
+											});
+										});
+									}
+								});
+							}
+						});
+					</script>
+				</div>
+				
+			
+							<div class="b-4">
+					<iframe width="728" height="15" src="/ads/google-728x15.html" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+				</div>
+			
+							<div id="tabContainer">
+					<div class="tabs">
+						<div class="options">
+							<a href="#share" class="current">Share</a>
+						</div>
+						<div class="content">
+							<div id="sharePanel" class="panel current">
+								<div>
+									<label>Text link</label>
+									<input type="text" class="autoselect share" value="http://www.filefactory.com/file/b3e83db/n/DroidCharts.jar"/>
+								</div>
+								<div>
+									<label>Forum (BBCode)</label>
+									<input type="text" class="autoselect share" value="[url=http://www.filefactory.com/file/b3e83db/n/DroidCharts.jar]Download DroidCharts.jar from FileFactory.com[/url]"/>
+								</div>
+								<div>
+									<label>Website (HTML)</label>
+									<input type="text" class="autoselect share" value="&lt;a href=&quot;http://www.filefactory.com/file/b3e83db/n/DroidCharts.jar&quot;&gt;Download DroidCharts.jar from FileFactory.com&lt;/a&gt;"/>
+								</div>
+							<div>	
+						</div>
+					</div>
+				</div>
+								
+ 			<div id="footer">
+			<a href="/locales/setlang.php">Change Language</a> - 
+			<a href="/help/sitemap.php">Site Map</a> -
+			<a href="/make_money/">Make Money</a> -
+			<a href="/premium/">Premium</a> -
+			<a href="http://support.filefactory.com/">FileFactory Support Center</a> -
+			<a href="/legal/terms.php">Terms and Conditions</a>
+			<p>&copy; FileFactory 2005 - 2011</p>
+		</div>
+	</div>
+</div>
+		<!-- Include all JS using the rel plugin -->
+		<script type="text/javascript" src="/js/jquery.js?v=115"></script>
+		<script type="text/javascript" src="/js/jquery/jquery.easing.1.3.js?v=115"></script>
+		<script type="text/javascript" src="/js/login.js?v=115"></script>
+					<script type="text/javascript" src="/js/shared.js?v=115"></script>
+					<script type="text/javascript" src="/js/locale/en_US.js?v=115"></script>
+					<script type="text/javascript" src="/js/premium.js?v=115"></script>
+					<script type="text/javascript" src="/js/file.js?v=115"></script>
+					<script type="text/javascript" src="/js/jquery/jquery.facebox.js?v=115"></script>
+					<script type="text/javascript" src="/js/jquery/jquery.hoverIntent.js?v=115"></script>
+					<script type="text/javascript" src="/js/jquery/jquery.scrollTo-min.js?v=115"></script>
+					<script type="text/javascript" src="/js/jquery/jquery.serialScroll-min.js?v=115"></script>
+					<script type="text/javascript" src="/js/jquery/jquery.localscroll-min.js?v=115"></script>
+				
+			<!-- Google Analytics -->
+	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		_uacct = "UA-928645-2";
+		urchinTracker();
+	</script>
+	
+	<!-- Start of StatCounter Code - All FF -->
+	<script type="text/javascript" language="javascript">
+		var sc_project=872265; 
+		var sc_partition=7; 
+		var sc_security="d25aa3f1"; 
+		var sc_invisible=1; 
+		var sc_remove_link=1; 
+	</script>
+	<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script>
+	<noscript><img src="http://c8.statcounter.com/counter.php?sc_project=872265&amp;java=0&amp;security=d25aa3f1&amp;invisible=1" alt="free web site hit counter" border="0"/></noscript>
+
+	<!-- Start Quantcast tag -->
+	<script type="text/javascript">
+		_qoptions={
+			qacct:"p-2cyR05ol6V-tM"
+		};
+	</script>
+	<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+	<noscript>
+		<img src="http://pixel.quantserve.com/pixel/p-2cyR05ol6V-tM.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+	</noscript>
+	<!-- End Quantcast tag -->
+	
+		
+	</body>
+</html>

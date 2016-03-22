@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/RelativeLayout01"
+android:layout_height="wrap_content"
+android:layout_width="fill_parent" 
+android:gravity="center" 
+android:orientation="vertical">
+	<TextView 
+	android:id="@+id/progresstext"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content" 
+	android:text="Desplegado">
+	</TextView>
+	<ProgressBar  
+    style="?android:attr/progressBarStyleHorizontal" 
+	android:id="@+id/progressbar"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+	</ProgressBar>
+</LinearLayout>
