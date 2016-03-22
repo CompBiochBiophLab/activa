@@ -1,0 +1,210 @@
+package com.o2hlink.activa.exterior;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.R;
+
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.provider.MediaStore;
+
+public class ExteriorManager {
+
+	public static final int APP_FACEBOOK = 0;
+	public static final int APP_TWITTER = 1;
+	public static final int APP_SKYPE = 2;
+	public static final int APP_MUSIC = 3;
+	public static final int APP_RADIOFM = 4;
+	public static final int APP_SPOTIFY = 5;
+	public static final int APP_DEEZER = 6;
+	public static final int APP_LASTFM = 7;
+	public static final int APP_VIDEOS = 8;
+	public static final int APP_YOUTUBE = 9;
+	public static final int APP_VIDEOCAMERA = 10;
+	public static final int APP_PICTURES = 11;
+	public static final int APP_CAMERA = 12;
+	
+	public static final int INTENT_RESULT_IMAGESELECTED = 11;
+	public static final int INTENT_RESULT_IMAGELOADED = 12;
+	public static final int INTENT_RESULT_VIDEOSELECTED = 13;
+	public static final int INTENT_RESULT_VIDEOLOADED = 14;
+	
+	public Hashtable<Integer, ExternalApp> externalApplications;
+	
+	public static ExteriorManager instance;
+	
+	private ExteriorManager () {
+		initExternalApps();
+	}
+	
+	public static ExteriorManager getInstance() {
+		if (instance != null) return instance;
+		else return new ExteriorManager();
+	}
+	
+	public static void freeInstance() {
+		instance = null;
+	}
+	
+	public boolean isApplicationInstalled(String packageName) {
+		boolean returned = false;
+		Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        final List<ResolveInfo> apps = Activa.myApp.getPackageManager().queryIntentActivities(mainIntent, 0);
+        Iterator<ResolveInfo> it = apps.iterator();
+        while (it.hasNext()) {
+        	ResolveInfo info = it.next();
+        	if (packageName.equals(info.activityInfo.packageName)) {
+        		returned = true;
+        		break;
+        	}
+        }
+        return returned;
+	}
+	
+	public void runApplication (int appid) {
+		ExternalApp app = externalApplications.get(appid);
+		if (app.externalApplication) {
+			if (isApplicationInstalled(app.packageName))
+				app.startApplication();
+			else app.redirectToMarket();
+		} 
+		else app.startApplication();
+	}
+	
+	public void runApplication (ExternalApp app) {
+		if (app.externalApplication) {
+			if (isApplicationInstalled(app.packageName))
+				app.startApplication();
+			else app.redirectToMarket();
+		} 
+		else app.startApplication();
+	}
+	
+	public void initExternalApps() {
+		this.externalApplications = new Hashtable<Integer, ExternalApp>();
+		ExternalApp app = new ExternalApp();
+		app.name = "Facebook";
+		app.icon = R.drawable.facebook;
+		app.packageName = "com.facebook.katana";
+		app.setActivity(new ComponentName("com.facebook.katana", "com.facebook.katana.LoginActivity"), 
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		this.externalApplications.put(APP_FACEBOOK, app);
+		app = new ExternalApp();
+		app.name = "Twitter";
+		app.icon = R.drawable.twitter;
+		app.packageName = "com.twitter.android";
+		app.setActivity(new ComponentName("com.twitter.android", "com.twitter.android.LoginActivity"), 
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		this.externalApplications.put(APP_TWITTER, app);
+		app = new ExternalApp();
+		app.name = "Skype";
+		app.icon = 0;
+		app.packageName = "com.skype.raider";
+		app.setActivity(new ComponentName("com.skype.raider", "com.skype.raider.ui.SplashScreenActivity"), 
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		this.externalApplications.put(APP_SKYPE, app);
+		app = new ExternalApp();
+		app.name = "Spotify";
+		app.icon = R.drawable.spotify;
+		app.packageName = "com.spotify.mobile.android.ui";
+		app.setActivity(new ComponentName("com.spotify.mobile.android.ui", "com.spotify.mobile.android.ui.Launcher"), 
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		this.externalApplications.put(APP_SPOTIFY, app);
+		app = new ExternalApp();
+		app.name = "Deezer";
+		app.icon = R.drawable.deezer;
+		app.packageName = "deezer.android.app";
+		app.setActivity(new ComponentName("deezer.android.app", "dz.ApplicationScreens"), 
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		this.externalApplications.put(APP_DEEZER, app);
+		app = new ExternalApp();
+		app.name = "LastFM";
+		app.icon = R.drawable.lastfm;
+		app.packageName = "fm.last.android";
+		app.setActivity(new ComponentName("fm.last.android", "fm.last.android.LastFm"), 
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		this.externalApplications.put(APP_LASTFM, app);
+		app = new ExternalApp();
+		app.name = "Youtube";
+		app.icon = R.drawable.youtube;
+		app.packageName = "com.google.android.youtube";
+		app.setActivity(new ComponentName("com.google.android.youtube", "com.google.android.youtube.HomeActivity"), 
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		this.externalApplications.put(APP_YOUTUBE, app);
+		app = new ExternalApp();
+		app.name = "Video camera";
+		app.icon = R.drawable.videocamera;
+		app.externalApplication = false;
+		app.packageName = null;
+		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+		app.setActivity(intent);
+		this.externalApplications.put(APP_VIDEOCAMERA, app);
+		app = new ExternalApp();
+		app.name = "Camera";
+		app.icon = R.drawable.camera;
+		app.externalApplication = false;
+		app.packageName = null;
+		intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+		app.setActivity(intent);
+		this.externalApplications.put(APP_CAMERA, app);
+		app = new ExternalApp();
+		app.name = "Music";
+		app.externalApplication = false;
+		app.icon = R.drawable.music;
+		app.packageName = null;
+//		intent = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		final List<ResolveInfo> apps = Activa.myApp.getPackageManager().queryIntentActivities(mainIntent, 0);
+		for (int i = 0; i < apps.size(); i++) {
+			ResolveInfo info = apps.get(i);
+			if (info.activityInfo.name.contains("Music")&&info.activityInfo.name.contains("music")) {
+				app.setActivity(new ComponentName(
+	                    info.activityInfo.applicationInfo.packageName,
+	                    info.activityInfo.name), 
+		                Intent.FLAG_ACTIVITY_NEW_TASK
+		                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+				break;
+			}
+		}
+		this.externalApplications.put(APP_MUSIC, app);
+		app = new ImageGallery();
+		app.name = "Picture gallery";
+		app.icon = R.drawable.pictures;
+		app.externalApplication = false;
+		app.packageName = null;
+		intent = new Intent(Intent.ACTION_GET_CONTENT);
+//		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		intent.setType("image/*");
+//		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		app.setActivity(intent);
+		this.externalApplications.put(APP_PICTURES, app);
+		app = new VideoGallery();
+		app.name = "Video gallery";
+		app.icon = R.drawable.videos;
+		app.externalApplication = false;
+		app.packageName = null;
+		intent = new Intent(Intent.ACTION_GET_CONTENT);
+//		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		intent.setType("video/*");
+//		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		app.setActivity(intent);
+		this.externalApplications.put(APP_VIDEOS, app);
+	}
+	
+}

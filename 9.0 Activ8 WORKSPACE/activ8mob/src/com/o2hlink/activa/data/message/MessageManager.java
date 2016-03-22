@@ -1,0 +1,194 @@
+package com.o2hlink.activa.data.message;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import com.o2hlink.activ8.client.entity.User;
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.ActivaUtil;
+import com.o2hlink.activa.data.calendar.Event;
+import com.o2hlink.activa.map.Mark;
+import com.o2hlink.activa.mobile.MobileManager;
+
+/**
+ * @author Adrian Rejas <P>
+ * 
+ * This class will deal with the receiving and sending of message by the user.
+ */
+public class MessageManager {
+
+	/**
+	 * Instance of the manager
+	 */
+	private static MessageManager instance;
+	
+	/**
+	 * List of received messages.
+	 */
+	public Hashtable<Long, O2Message> messageList;
+	
+	/**
+	 * List of contacts.
+	 */
+	public Hashtable<Long, Contact> contactList;
+	
+	/**
+	 * List of contacts used for services.
+	 */
+	public Hashtable<Long, User> contactListForServices;
+	
+	/**
+	 * Message showing at the moment
+	 */
+	public O2Message currentMessage;
+	
+	/**
+	 * Private basic constructor
+	 */
+	private MessageManager() {
+		this.messageList = new Hashtable<Long, O2Message>();
+		this.contactList = new Hashtable<Long, Contact>();
+		this.contactListForServices = new Hashtable<Long, User>();
+		this.currentMessage = null;
+	}
+	
+	/**
+	 * Public method for getting instance
+	 * 
+	 * @return
+	 */
+	public static MessageManager getInstance() {
+		if (MessageManager.instance == null) MessageManager.instance = new MessageManager();
+		return MessageManager.instance;
+	}
+	
+	/**
+	 * Method for freeing the instance of the manager.
+	 */
+	public static void freeInstance() {
+		MessageManager.instance = null;
+	}
+	
+	/**
+	 * Method for requesting to main server the reception of messages
+	 * 
+	 * @param date The date from which is solicited the messages
+	 */
+	public void requestReceivedMessages(Date date) {
+		this.messageList = new Hashtable<Long, O2Message>();
+		Activa.myProtocolManager.getMessages(date);
+	}
+	
+	/**
+	 * Method for requesting to main server the list of available contacts
+	 */
+	public void requestContactList() {
+		this.contactList = new Hashtable<Long, Contact>();
+		Activa.myProtocolManager.getContacts();
+	}
+	
+	public void extractMessagesFromXML(String xml) {
+		XmlPullParserFactory factory;
+		Event currentEvent;
+		try {
+			factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        boolean insideEvent = false;
+	        boolean end = true; 
+	        info.setInput(new StringReader(xml));
+	        int event = info.getEventType();
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("MESSAGE")) {
+	                	long id = Long.parseLong(info.getAttributeValue(info.getNamespace(),"ID"));
+	                	long sender = Long.parseLong(info.getAttributeValue(info.getNamespace(),"SENDER"));
+	                	long receiver = Activa.myMobileManager.user.getId();
+	                	String topic = info.getAttributeValue(info.getNamespace(),"TOPIC");
+	                	String text = info.getAttributeValue(info.getNamespace(),"TEXT");
+	                	Date date = ActivaUtil.XMLDateToDate(info.getAttributeValue(info.getNamespace(),"DATE"));
+	                	date.setHours(date.getHours() + 2);
+	                	if (!contactList.containsKey(sender)) createUnknownUser(sender);
+	                	O2Message message = new O2Message(id, sender, receiver, date, topic, text);
+	                	this.messageList.put(id, message);
+	                }
+	            } else if(event == XmlPullParser.END_TAG) {
+	            	if (info.getName().equalsIgnoreCase("MESSAGES")) {
+	            		return;
+	            	}
+	            }
+	            event = info.next();
+	        }
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void extractContactsFromXML(String xml) {
+		XmlPullParserFactory factory;
+		Event currentEvent;
+		Contact me = new Contact(Activa.myMobileManager.user.getFirstname() + " " + Activa.myMobileManager.user.getLastname() + " (mob)", Activa.myMobileManager.user.getId());
+		contactList.put((long)Activa.myMobileManager.user.getId(), me);
+		try {
+			factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        boolean insideEvent = false;
+	        boolean end = true; 
+	        info.setInput(new StringReader(xml));
+	        int event = info.getEventType();
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("CONTACT")) {
+	                	long id = Long.parseLong(info.getAttributeValue(info.getNamespace(),"ID"));
+	                	String name = info.getAttributeValue(info.getNamespace(),"NAME");
+	                	Contact contact = new Contact(name, id);
+	                	this.contactList.put(id, contact);
+	                }
+	            } else if(event == XmlPullParser.END_TAG) {
+	            	if (info.getName().equalsIgnoreCase("CONTACTS")) {
+	            		return;
+	            	}
+	            }
+	            event = info.next();
+	        }
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Contact getContactByName(String name) {
+		Enumeration<Contact> enumeration = contactList.elements();
+		Contact contact = null;
+		while (enumeration.hasMoreElements()) {
+			Contact temp = enumeration.nextElement();
+			if (name.equals(temp.name)) {
+				contact = temp;
+				break;
+			}
+		}
+		return contact;
+	}
+	
+	public void createUnknownUser(long user) {
+		Contact contact = new Contact(String.valueOf(user), user);
+		contactList.put(user, contact);
+	}
+	
+	
+}

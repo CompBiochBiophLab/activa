@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="activ8cln" default="deploy" basedir=".">
+	<!--
+	Deploys the application in a local server
+	-->
+	<!--
+	Properties
+	-->
+	<property environment="env" />
+	<property name="source.dir" value="${basedir}/war" />
+	<property name="jboss.dir" value="${env.JBOSS_HOME}" />
+	<property name="deploy.dir" value="${jboss.dir}/server/default/deploy" />
+	<property name="dest.dir" value="${deploy.dir}/patient.war" />
+	<!-- 
+	Deploy
+	-->
+	<target name="deploy">
+		<copy todir="${dest.dir}" overwrite="false">
+			<fileset dir="${source.dir}" />
+		</copy>
+		<copy file="${source.dir}/WEB-INF/web.xml" todir="${dest.dir}/WEB-INF" overwrite="true"/>
+	</target>
+</project>

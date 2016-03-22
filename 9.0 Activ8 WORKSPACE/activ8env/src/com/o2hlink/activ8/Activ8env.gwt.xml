@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='activ8env'>
+  <inherits name="com.o2hlink.activ8.client.Web"/>
+  <inherits name="com.o2hlink.activ8.client.Biological"/>
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+  <entry-point class='com.o2hlink.activ8.client.Activ8env'/>
+  <source path='client'/>
+</module>
+
+

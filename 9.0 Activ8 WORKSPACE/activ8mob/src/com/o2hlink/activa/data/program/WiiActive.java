@@ -1,0 +1,639 @@
+package com.o2hlink.activa.data.program;
+
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.CountDownTimer;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TableLayout.LayoutParams;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.R;
+import com.o2hlink.activa.background.SendSensorResult;
+import com.o2hlink.activa.background.SendWalkingResult;
+import com.o2hlink.activa.background.SendWiiResult;
+import com.o2hlink.activa.data.questionnaire.Question;
+import com.o2hlink.activa.data.sensor.Exercise;
+import com.o2hlink.activa.data.sensor.PulseOximeter;
+import com.o2hlink.activa.data.sensor.Sensor;
+import com.o2hlink.activa.data.sensor.SensorManager;
+import com.o2hlink.activa.ui.UIManager;
+
+public class WiiActive extends Program{
+	
+	Question borgAir;
+	
+	Question borgFatigue;
+	
+	long time;
+	
+	float borgAirPre = 0.0f;
+	
+	float borgAirPost = 0.0f;
+	
+	float borgFatiguePre = 0.0f;
+	
+	float borgFatiguePost = 0.0f;
+	
+	int numberOfExercises;
+	
+	int exerciseBeingDone;
+	
+	int challengeChosen;
+	
+	float hrAvrg = 0.0f;
+	
+	float hrPeak = 0.0f;
+	
+	float so2Avrg = 0.0f;
+	
+	float so2Peak = 0.0f;
+	
+	float totaltimeExe = 0.0f;
+	
+	String[][] instructions;
+
+	public WiiActive() {
+		this.name = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_TITLE;
+		this.id = ProgramManager.PROG_WIIACTIVE;
+		this.type = ProgramManager.PROGTYPE_FOREGROUND;
+		this.state = 0;
+		this.icon = R.drawable.wii;
+		this.time=3600000;
+		this.numberOfExercises = 0;
+		this.exerciseBeingDone = 0;
+		this.challengeChosen = 0;
+		this.description = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_DESC;
+		this.borgAir = new Question(0, Activa.myLanguageManager.PROGRAMS_WALKING_BORGAIR, 0, 2, false);
+		this.borgAir.borg = true;
+		this.borgFatigue = new Question(0, Activa.myLanguageManager.PROGRAMS_WALKING_BORGFATIGUE, 0, 2, false);
+		this.borgFatigue.borg = true;
+		initChallengeInstructions();
+	}
+	
+	private void initChallengeInstructions() {
+		this.instructions = new String[6][20];
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 20; j++) {
+				this.instructions[i][j] = "";
+			}
+		}
+		
+		this.instructions[0][0] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_WARMING;
+		this.instructions[0][1] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_VOLLEYBALL;
+		this.instructions[0][2] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLESJUMPS;
+		this.instructions[0][3] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDETOSIDE;
+		this.instructions[0][4] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_TENNIS;
+		this.instructions[0][5] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLES;
+		this.instructions[0][6] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_LUNGESKNEES;
+		this.instructions[0][7] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_COOLING;
+		
+		this.instructions[1][0] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_WARMING;
+		this.instructions[1][1] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACEKNEES;
+		this.instructions[1][2] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLESJUMPS;
+		this.instructions[1][3] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACEKNEES;
+		this.instructions[1][4] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_LUNGEJUMPS;
+		this.instructions[1][5] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SKATE;
+		this.instructions[1][6] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDETOSIDE;
+		this.instructions[1][7] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACE;
+		this.instructions[1][8] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLESJUMPS;
+		this.instructions[1][9] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_COOLING;
+		
+		this.instructions[2][0] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_WARMING;
+		this.instructions[2][1] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACE;
+		this.instructions[2][2] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CARDIOBOXING;
+		this.instructions[2][3] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_BICEPSCURLS;
+		this.instructions[2][4] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDELUNGES;
+		this.instructions[2][5] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_PADDLE;
+		this.instructions[2][6] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SKATE;
+		this.instructions[2][7] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SHOULDER;
+		this.instructions[2][8] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_COOLING;
+		
+		this.instructions[3][0] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_WARMING;
+		this.instructions[3][1] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_ABDOMINAL;
+		this.instructions[3][2] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_BICEPSCURLS;
+		this.instructions[3][3] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_TENNIS;
+		this.instructions[3][4] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_FISTKNEES;
+		this.instructions[3][5] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_BACKKICKS;
+		this.instructions[3][6] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_FISTKNEES;
+		this.instructions[3][7] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACEKICKS;
+		this.instructions[3][8] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_COOLING;	
+		
+		this.instructions[4][0] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_WARMING;
+		this.instructions[4][1] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACE;
+		this.instructions[4][2] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CARDIOBOXING;
+		this.instructions[4][3] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_PADDLEKICKS;
+		this.instructions[4][4] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACEKICKS;
+		this.instructions[4][5] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLESJUMPS;
+		this.instructions[4][6] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDETOSIDE;
+		this.instructions[4][7] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_LUNGEJUMPS;
+		this.instructions[4][8] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_BASEBALL;	
+		this.instructions[4][9] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLESJUMPS;		
+		this.instructions[4][10] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDETOSIDE;		
+		this.instructions[4][11] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_LUNGEJUMPS;	
+		this.instructions[4][12] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_LUNGESKNEES;		
+		this.instructions[4][13] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDETOSIDE;		
+		this.instructions[4][14] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_KICKTRICEPS;		
+		this.instructions[4][15] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_COOLING;	
+		
+		this.instructions[5][0] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_WARMING;
+		this.instructions[5][1] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACEKNEES;
+		this.instructions[5][2] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLES;
+		this.instructions[5][3] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SHORTKICKS;
+		this.instructions[5][4] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_INVERSELUNGES;
+		this.instructions[5][5] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_LUNGEJUMPS;
+		this.instructions[5][6] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDETOSIDE;
+		this.instructions[5][7] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_RACE;
+		this.instructions[5][8] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_LUNGES;	
+		this.instructions[5][9] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SIDESADDLESJUMPS;		
+		this.instructions[5][10] = Activa.myLanguageManager.PROGRAMS_WIIACTIVE_COOLING;				
+	}
+	
+	@Override
+	public void startProgram() {
+		this.state = 0;
+		Activa.myUIManager.state = UIManager.UI_STATE_PROGRAM;
+		nextStep();
+	}
+	
+	@Override
+	public void finishProgram() {
+		this.state = 0;
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_BORG_AIR_PRE, borgAirPre);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_BORG_AIR_POST, borgAirPost);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_BORG_FATIGUE_PRE, borgFatiguePre);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_BORG_FATIGUE_POST, borgFatiguePost);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_HR_AVRG, hrAvrg);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_HR_PEAK, hrPeak);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_SO2_AVRG, so2Avrg);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_SO2_PEAK, so2Peak);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_TIME_EXE, totaltimeExe);
+		((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.put(SensorManager.DATAID_CHALLENGE_CHOSEN, (float)challengeChosen);
+		if (Activa.myProgramManager.eventAssociated != null) Activa.myProgramManager.eventAssociated.state = 0;
+		Activa.myApp.setContentView(R.layout.sensorresult);
+		TextView textTitle = (TextView) Activa.myApp.findViewById(R.id.startText);
+		TextView text = (TextView) Activa.myApp.findViewById(R.id.textResult);
+		((TextView) Activa.myApp.findViewById(R.id.resultsWord)).setText(Activa.myLanguageManager.SENSORS_RESULTSWORD);
+		textTitle.setText(this.name);
+		text.setText("");
+		final Sensor sensor = Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE);
+		Enumeration<Integer> keys = sensor.results.keys();
+		while (keys.hasMoreElements()) {
+			int key = keys.nextElement();
+			String meas = SensorManager.getMeasurementName(key);
+			if (meas != null) {
+				text.append(meas + ": " + String.format("%.1f", (float)sensor.results.get(key)));
+				text.append(" " + SensorManager.getUnitForMeasurement(SensorManager.getUnitIDForMeasurementID(key)));
+				if (keys.hasMoreElements()) text.append("\n");
+			}
+		}
+		CountDownTimer timer = new CountDownTimer(6000, 1000) {
+			@Override
+			public void onTick(long millisUntilFinished) {}
+			@Override
+			public void onFinish() {
+				Activa.myApp.setContentView(R.layout.sending);
+				SendWiiResult sending = new SendWiiResult( Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE));
+				Thread thread = new Thread(sending, "SENDWII");
+				thread.start();
+			}
+		};
+		timer.start();
+	}
+
+	@Override
+	public void nextStep() {
+		this.state++;
+		switch (this.state) {
+			case 0:
+				break;
+			case 1:
+				Activa.myUIManager.loadScreen(R.layout.list);
+				((TextView) Activa.myApp.findViewById(R.id.startText)).setText(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_SELECTCHALLENGE);
+				TableLayout programlisting = (TableLayout)Activa.myApp.findViewById(R.id.listing);
+				ImageButton back = (ImageButton) Activa.myApp.findViewById(R.id.previous);
+				back.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Activa.myUIManager.loadGeneratedSubenvironment(Activa.myUIManager.lastSubenv, true);
+					}
+				});
+				
+				TableRow buttonLayout = new TableRow(Activa.myApp);
+				buttonLayout.setId(1);
+				buttonLayout.setOrientation(TableRow.HORIZONTAL);
+				buttonLayout.setGravity(Gravity.CENTER_VERTICAL);
+				buttonLayout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));			
+				ImageButton button = new ImageButton(Activa.myApp);
+				button.setBackgroundResource(R.drawable.iconbg);
+				button.setImageResource(R.drawable.easy);
+				button.setId(1);
+				OnClickListener listener = new OnClickListener() {			
+					@Override
+					public void onClick(View v) {
+						challengeChosen = 1;
+						numberOfExercises = 8;
+						nextStep();
+					}
+				};
+				button.setOnClickListener(listener);
+				TextView textList = new TextView(Activa.myApp);
+				textList.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CHALLENGE_EASY1);
+				textList.setTextSize((float) 20);
+				textList.setTextColor(Color.BLACK);
+				textList.setTypeface(Typeface.SANS_SERIF);
+				textList.setOnClickListener(listener);
+				textList.setId(1);
+				buttonLayout.addView(button);
+				buttonLayout.addView(textList);
+				buttonLayout.setOnClickListener(listener);
+				button.setOnClickListener(listener);
+				textList.setOnClickListener(listener);
+				programlisting.addView(buttonLayout);
+				
+				buttonLayout = new TableRow(Activa.myApp);
+				buttonLayout.setId(2);
+				buttonLayout.setOrientation(TableRow.HORIZONTAL);
+				buttonLayout.setGravity(Gravity.CENTER_VERTICAL);
+				buttonLayout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));			
+				button = new ImageButton(Activa.myApp);
+				button.setBackgroundResource(R.drawable.iconbg);
+				button.setImageResource(R.drawable.easy);
+				button.setId(2);
+				listener = new OnClickListener() {			
+					@Override
+					public void onClick(View v) {
+						challengeChosen = 2;
+						numberOfExercises = 10;
+						nextStep();
+					}
+				};
+				button.setOnClickListener(listener);
+				textList = new TextView(Activa.myApp);
+				textList.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CHALLENGE_EASY2);
+				textList.setTextSize((float) 20);
+				textList.setTextColor(Color.BLACK);
+				textList.setTypeface(Typeface.SANS_SERIF);
+				textList.setOnClickListener(listener);
+				textList.setId(2);
+				buttonLayout.addView(button);
+				buttonLayout.addView(textList);
+				buttonLayout.setOnClickListener(listener);
+				button.setOnClickListener(listener);
+				textList.setOnClickListener(listener);
+				programlisting.addView(buttonLayout);
+				
+				buttonLayout = new TableRow(Activa.myApp);
+				buttonLayout.setId(3);
+				buttonLayout.setOrientation(TableRow.HORIZONTAL);
+				buttonLayout.setGravity(Gravity.CENTER_VERTICAL);
+				buttonLayout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));			
+				button = new ImageButton(Activa.myApp);
+				button.setBackgroundResource(R.drawable.iconbg);
+				button.setImageResource(R.drawable.normal);
+				button.setId(3);
+				listener = new OnClickListener() {			
+					@Override
+					public void onClick(View v) {
+						challengeChosen = 3;
+						numberOfExercises = 9;
+						nextStep();
+					}
+				};
+				button.setOnClickListener(listener);
+				textList = new TextView(Activa.myApp);
+				textList.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CHALLENGE_NORMAL1);
+				textList.setTextSize((float) 20);
+				textList.setTextColor(Color.BLACK);
+				textList.setTypeface(Typeface.SANS_SERIF);
+				textList.setOnClickListener(listener);
+				textList.setId(3);
+				buttonLayout.addView(button);
+				buttonLayout.addView(textList);
+				buttonLayout.setOnClickListener(listener);
+				button.setOnClickListener(listener);
+				textList.setOnClickListener(listener);
+				programlisting.addView(buttonLayout);
+				
+				buttonLayout = new TableRow(Activa.myApp);
+				buttonLayout.setId(4);
+				buttonLayout.setOrientation(TableRow.HORIZONTAL);
+				buttonLayout.setGravity(Gravity.CENTER_VERTICAL);
+				buttonLayout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));			
+				button = new ImageButton(Activa.myApp);
+				button.setBackgroundResource(R.drawable.iconbg);
+				button.setImageResource(R.drawable.normal);
+				button.setId(4);
+				listener = new OnClickListener() {			
+					@Override
+					public void onClick(View v) {
+						challengeChosen = 4;
+						numberOfExercises = 9;
+						nextStep();
+					}
+				};
+				button.setOnClickListener(listener);
+				textList = new TextView(Activa.myApp);
+				textList.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CHALLENGE_NORMAL2);
+				textList.setTextSize((float) 20);
+				textList.setTextColor(Color.BLACK);
+				textList.setTypeface(Typeface.SANS_SERIF);
+				textList.setOnClickListener(listener);
+				textList.setId(4);
+				buttonLayout.addView(button);
+				buttonLayout.addView(textList);
+				buttonLayout.setOnClickListener(listener);
+				button.setOnClickListener(listener);
+				textList.setOnClickListener(listener);
+				programlisting.addView(buttonLayout);
+				
+				buttonLayout = new TableRow(Activa.myApp);
+				buttonLayout.setId(5);
+				buttonLayout.setOrientation(TableRow.HORIZONTAL);
+				buttonLayout.setGravity(Gravity.CENTER_VERTICAL);
+				buttonLayout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));			
+				button = new ImageButton(Activa.myApp);
+				button.setBackgroundResource(R.drawable.iconbg);
+				button.setImageResource(R.drawable.hard);
+				button.setId(5);
+				listener = new OnClickListener() {			
+					@Override
+					public void onClick(View v) {
+						challengeChosen = 5;
+						numberOfExercises = 16;
+						nextStep();
+					}
+				};
+				button.setOnClickListener(listener);
+				textList = new TextView(Activa.myApp);
+				textList.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CHALLENGE_HARD1);
+				textList.setTextSize((float) 20);
+				textList.setTextColor(Color.BLACK);
+				textList.setTypeface(Typeface.SANS_SERIF);
+				textList.setOnClickListener(listener);
+				textList.setId(5);
+				buttonLayout.addView(button);
+				buttonLayout.addView(textList);
+				buttonLayout.setOnClickListener(listener);
+				button.setOnClickListener(listener);
+				textList.setOnClickListener(listener);
+				programlisting.addView(buttonLayout);
+				
+				buttonLayout = new TableRow(Activa.myApp);
+				buttonLayout.setId(6);
+				buttonLayout.setOrientation(TableRow.HORIZONTAL);
+				buttonLayout.setGravity(Gravity.CENTER_VERTICAL);
+				buttonLayout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));			
+				button = new ImageButton(Activa.myApp);
+				button.setBackgroundResource(R.drawable.iconbg);
+				button.setImageResource(R.drawable.hard);
+				button.setId(6);
+				listener = new OnClickListener() {			
+					@Override
+					public void onClick(View v) {
+						challengeChosen = 6;
+						numberOfExercises = 11;
+						nextStep();
+					}
+				};
+				button.setOnClickListener(listener);
+				textList = new TextView(Activa.myApp);
+				textList.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_CHALLENGE_HARD2);
+				textList.setTextSize((float) 20);
+				textList.setTextColor(Color.BLACK);
+				textList.setTypeface(Typeface.SANS_SERIF);
+				textList.setOnClickListener(listener);
+				textList.setId(6);
+				buttonLayout.addView(button);
+				buttonLayout.addView(textList);
+				buttonLayout.setOnClickListener(listener);
+				button.setOnClickListener(listener);
+				textList.setOnClickListener(listener);
+				programlisting.addView(buttonLayout);
+				
+				break;
+			case 2:
+				Activa.myUIManager.loadScreen(R.layout.info);
+				TextView text = (TextView) Activa.myApp.findViewById(R.id.textInfo);
+				text.setText(Activa.myLanguageManager.PROGRAMS_WALKING_ADVERT0);
+				CountDownTimer timer = new CountDownTimer(3000,1000) {
+					@Override
+					public void onTick(long millisUntilFinished) {
+					}
+					@Override
+					public void onFinish() {
+						loadBorgAir(true);
+					}
+				};
+				timer.start();
+				break;	
+			case 3:
+				loadBorgFatigue(true);
+				break;	
+			case 4:
+				if (this.exerciseBeingDone == 0) {
+					Activa.mySensorManager.programassociated = this;
+					Activa.myUIManager.loadScreen(R.layout.info);
+					TextView text2 = (TextView) Activa.myApp.findViewById(R.id.textInfo);
+					text2.setText(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_ADVERT_SENSORWAITING);
+					CountDownTimer temporizer = new CountDownTimer(12000,1000) {
+						@Override
+						public void onTick(long millisUntilFinished) {}
+						@Override
+						public void onFinish() {
+							Activa.myUIManager.loadScreen(R.layout.info);
+							TextView text2 = (TextView) Activa.myApp.findViewById(R.id.textInfo);
+							text2.setText(instructions[challengeChosen - 1][exerciseBeingDone] + ".\n\n");
+							text2.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_ADVERT);
+							LinearLayout board = (LinearLayout) Activa.myApp.findViewById(R.id.mainLayout);
+							board.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).startMeasurement(time, null);
+								}
+							});						
+						}
+					};
+					temporizer.start();
+				}
+				else {
+					Activa.myUIManager.loadScreen(R.layout.info);
+					TextView text2 = (TextView) Activa.myApp.findViewById(R.id.textInfo);
+					text2.setText(instructions[challengeChosen - 1][exerciseBeingDone] + ".\n\n");
+					text2.append(Activa.myLanguageManager.PROGRAMS_WIIACTIVE_ADVERT);
+					LinearLayout board = (LinearLayout) Activa.myApp.findViewById(R.id.mainLayout);
+					board.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).startMeasurement(time, null);
+						}
+					});	
+				}
+				break;
+			case 5:
+				this.numberOfExercises--;
+				this.exerciseBeingDone++;
+				hrAvrg += ((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_HR_AVRG)*((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_TIME_EXE);
+				if (((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_HR_PEAK) > hrPeak) hrPeak = ((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_HR_PEAK);
+				so2Avrg += ((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_SO2_AVRG)*((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_TIME_EXE);
+				if (((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_SO2_PEAK) > so2Peak) so2Peak = ((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_SO2_PEAK);
+				totaltimeExe += ((Exercise) Activa.mySensorManager.sensorList.get(com.o2hlink.activa.data.sensor.SensorManager.ID_EXERCISE)).results.get(SensorManager.DATAID_TIME_EXE);
+				if (this.numberOfExercises > 0) this.state = 3;
+				nextStep();
+				break;
+			case 6:
+				hrAvrg = hrAvrg/totaltimeExe;
+				so2Avrg = so2Avrg/totaltimeExe;
+				Activa.myUIManager.loadScreen(R.layout.info);
+				TextView text3 = (TextView) Activa.myApp.findViewById(R.id.textInfo);
+				text3.setText(Activa.myLanguageManager.PROGRAMS_WALKING_ADVERT2);
+				CountDownTimer timer3 = new CountDownTimer(3000,1000) {
+					@Override
+					public void onTick(long millisUntilFinished) {
+					}
+					@Override
+					public void onFinish() {
+						loadBorgAir(false);
+					}
+				};
+				timer3.start();
+				break;
+			case 7:
+				loadBorgFatigue(false);
+				break;	
+			case 8:
+				finishProgram();
+		}
+	}
+
+	@Override
+	public void showProgress() {
+		
+	}
+	
+	public void loadBorgAir(final boolean pre) {
+		TextView questionText;
+		ImageButton next;
+		Activa.myApp.setContentView(R.layout.numquestion);
+		final String representation[] = {Activa.myLanguageManager.BORG_0, Activa.myLanguageManager.BORG_05, 
+				Activa.myLanguageManager.BORG_1, Activa.myLanguageManager.BORG_1, 
+				Activa.myLanguageManager.BORG_2, Activa.myLanguageManager.BORG_2, 
+				Activa.myLanguageManager.BORG_3, Activa.myLanguageManager.BORG_3, 
+				Activa.myLanguageManager.BORG_4, Activa.myLanguageManager.BORG_4, 
+				Activa.myLanguageManager.BORG_5, Activa.myLanguageManager.BORG_5, 
+				Activa.myLanguageManager.BORG_5, Activa.myLanguageManager.BORG_5, 
+				Activa.myLanguageManager.BORG_7, Activa.myLanguageManager.BORG_7, 
+				Activa.myLanguageManager.BORG_7, Activa.myLanguageManager.BORG_7, 
+				Activa.myLanguageManager.BORG_9, Activa.myLanguageManager.BORG_9, 
+				Activa.myLanguageManager.BORG_10, Activa.myLanguageManager.BORG_10};
+		questionText = (TextView) Activa.myApp.findViewById(R.id.questionText);
+		final TextView numText = (TextView) Activa.myApp.findViewById(R.id.numText);
+		questionText.setText(this.borgAir.text);
+		numText.setText("0 - " + representation[0]);
+		if (pre) borgAirPre = 0.0f;
+		else borgAirPost = 0.0f;
+		SeekBar seekbar = (SeekBar) Activa.myApp.findViewById(R.id.seekbar);
+		seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {				
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				
+			}
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				int selection = progress/5;
+				if ((selection == 1)) {
+					numText.setText("0.5 - " + representation[1]);
+					if (pre) borgAirPre = 0.5f;
+					else borgAirPost = 0.5f;
+				}
+				else {
+					numText.setText("" + progress/10 + " - " + representation[selection]);	
+					if (pre) borgAirPre = progress/10;
+					else borgAirPost = progress/10;
+				}
+			}
+		});
+		ImageButton prev = (ImageButton) Activa.myApp.findViewById(R.id.previous);
+		prev.setVisibility(View.INVISIBLE);
+		next = (ImageButton) Activa.myApp.findViewById(R.id.next);
+		next.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Activa.myProgramManager.programList.get(ProgramManager.PROG_WIIACTIVE).nextStep();
+			}
+		});
+	}
+	
+	public void loadBorgFatigue(final boolean pre) {
+		TextView questionText;
+		ImageButton next;
+		Activa.myApp.setContentView(R.layout.numquestion);
+		final String representation[] = {Activa.myLanguageManager.BORG_0, Activa.myLanguageManager.BORG_05, 
+				Activa.myLanguageManager.BORG_1, Activa.myLanguageManager.BORG_1, 
+				Activa.myLanguageManager.BORG_2, Activa.myLanguageManager.BORG_2, 
+				Activa.myLanguageManager.BORG_3, Activa.myLanguageManager.BORG_3, 
+				Activa.myLanguageManager.BORG_4, Activa.myLanguageManager.BORG_4, 
+				Activa.myLanguageManager.BORG_5, Activa.myLanguageManager.BORG_5, 
+				Activa.myLanguageManager.BORG_5, Activa.myLanguageManager.BORG_5, 
+				Activa.myLanguageManager.BORG_7, Activa.myLanguageManager.BORG_7, 
+				Activa.myLanguageManager.BORG_7, Activa.myLanguageManager.BORG_7, 
+				Activa.myLanguageManager.BORG_9, Activa.myLanguageManager.BORG_9, 
+				Activa.myLanguageManager.BORG_10, Activa.myLanguageManager.BORG_10};
+		questionText = (TextView) Activa.myApp.findViewById(R.id.questionText);
+		final TextView numText = (TextView) Activa.myApp.findViewById(R.id.numText);
+		questionText.setText(this.borgFatigue.text);
+		numText.setText("0 - " + representation[0]);
+		if (pre) borgFatiguePre = 0.0f;
+		else borgFatiguePost = 0.0f;
+		SeekBar seekbar = (SeekBar) Activa.myApp.findViewById(R.id.seekbar);
+		seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {				
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				
+			}
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				int selection = progress/5;
+				if ((selection == 1)) {
+					numText.setText("0.5 - " + representation[1]);
+					if (pre) borgFatiguePre = 0.5f;
+					else borgFatiguePost = 0.5f;
+				}
+				else {
+					numText.setText("" + progress/10 + " - " + representation[selection]);	
+					if (pre) borgFatiguePre = progress/10;
+					else borgFatiguePost = progress/10;
+				}
+			}
+		});
+		ImageButton prev = (ImageButton) Activa.myApp.findViewById(R.id.previous);
+		prev.setVisibility(View.INVISIBLE);
+		next = (ImageButton) Activa.myApp.findViewById(R.id.next);
+		next.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Activa.myProgramManager.programList.get(ProgramManager.PROG_WIIACTIVE).nextStep();
+			}
+		});
+	}
+
+}

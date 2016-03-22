@@ -1,0 +1,498 @@
+package com.o2hlink.activa;
+
+import java.io.File;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Locale;
+
+import com.o2hlink.activa.R;
+import com.o2hlink.activa.background.DownloadFiles;
+import com.o2hlink.activa.background.MainThread;
+import com.o2hlink.activa.background.NotificationThread;
+import com.o2hlink.activa.connection.ProtocolManager;
+import com.o2hlink.activa.data.PendingDataManager;
+import com.o2hlink.activa.data.calendar.CalendarManager;
+import com.o2hlink.activa.data.message.MessageManager;
+import com.o2hlink.activa.data.program.ProgramManager;
+import com.o2hlink.activa.data.questionnaire.QuestManager;
+import com.o2hlink.activa.data.questionnaire.control.QuestControlManager;
+import com.o2hlink.activa.data.sensor.PedometerCalibration;
+import com.o2hlink.activa.data.sensor.SensorManager;
+import com.o2hlink.activa.exterior.ExteriorManager;
+import com.o2hlink.activa.map.MapManager;
+import com.o2hlink.activa.mobile.MobileManager;
+import com.o2hlink.activa.news.NewsManager;
+import com.o2hlink.activa.notes.NotesManager;
+import com.o2hlink.activa.patient.PatientManager;
+import com.o2hlink.activa.ui.UIManager;
+import com.o2hlink.activa.ui.i18n.Resource;
+import com.o2hlink.activa.ui.i18n.ResourceEnglish;
+import com.o2hlink.activa.ui.i18n.ResourceSpanish;
+import com.o2hlink.activa.ui.widget.Ambient;
+import com.paypal.android.MEP.PayPal;
+import com.paypal.android.MEP.PayPalActivity;
+
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.media.AudioManager;
+import android.os.Bundle;
+import android.os.Environment;
+import android.telephony.TelephonyManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
+
+/**
+ * @author Adrian Rejas<P>
+ * 
+ * 
+ * This is the main class of the program. For the moment there aren't any structured program,
+ * this is only for testing purposes.
+ */
+
+public class Activa extends Activity {
+	
+	public boolean portrait = true;
+	
+	public boolean refreshing = false;
+	
+	public boolean refreshing_foreground = false;
+	
+	public static final boolean DEBUG_ALL = false;
+	
+	public static final boolean DEBUG = Activa.DEBUG_ALL | false;
+    
+    public static Activa myApp;
+	
+	public static Resource myLanguageManager;
+    
+    public static TelephonyManager myTelephonyManager;
+    
+    public static MobileManager myMobileManager;
+    
+    public static QuestManager myQuestManager;
+    
+    public static ProtocolManager myProtocolManager;
+    
+    public static UIManager myUIManager;
+    
+    public static CalendarManager myCalendarManager;
+
+    public static SensorManager mySensorManager;
+    
+    public static MenuInflater myInflater;
+
+	public static Menu myMenu;
+	
+	public static AlarmManager myAlarmManager;
+	
+	public static int myTaskID;
+	
+	public static NotificationManager myNotificationManager;
+	
+	public static PendingDataManager myPendingDataManager;
+	
+	public static MapManager myMapManager;
+	
+	public static ProgramManager myProgramManager;
+	
+	public static MessageManager myMessageManager;
+	
+	public static NewsManager myNewsManager;
+	
+	public static NotesManager myNotesManager;
+	
+	public static MainThread myMainBackgroundThread;
+	
+	public static NotificationThread myNotificationThread;
+	
+	public static BluetoothAdapter myBluetoothAdapter;
+	
+	public static android.hardware.SensorManager myAccelerometerManager;
+	
+	public static ExteriorManager myExteriorManager;
+	
+	public static AudioManager myAudioManager;
+	
+	public static PatientManager myPatientManager;
+	
+	public static QuestControlManager myQuestControlManager;
+
+	public static File rootFile;
+	
+	public static PayPal myPayPal;
+	
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        
+    	super.onCreate(savedInstanceState);
+        
+        myApp = this;
+
+		int id = Activa.myApp.getResources().getIdentifier("com.o2hlink.activa:drawable/clincomputereng", null, null);
+        myLanguageManager = setLanguage(getResources().getConfiguration().locale);
+        rootFile = Environment.getExternalStorageDirectory();
+        myTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        myMobileManager = MobileManager.getInstance(); 
+        myQuestManager = QuestManager.getInstance();
+        myProtocolManager = ProtocolManager.getInstance();
+        myUIManager = UIManager.getInstance();
+        myCalendarManager = CalendarManager.getInstance();
+        mySensorManager = SensorManager.getInstance();
+        myTaskID = this.getTaskId();
+        myAlarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        myNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        myMapManager = MapManager.getInstance();
+        myProgramManager = ProgramManager.getInstance();
+        myMessageManager = MessageManager.getInstance();
+        myMainBackgroundThread = new MainThread();
+        myAccelerometerManager = (android.hardware.SensorManager)Activa.myApp.getSystemService(Context.SENSOR_SERVICE);
+        myAudioManager = (AudioManager)Activa.myApp.getSystemService(Context.AUDIO_SERVICE);
+        myNotificationThread = NotificationThread.getInstance();
+        myNewsManager = NewsManager.getInstance();
+        myExteriorManager = ExteriorManager.getInstance();
+        myNotesManager = NotesManager.getInstance();
+        myPatientManager = PatientManager.getInstance();
+        myPayPal = PayPal.getInstance();
+        if (myPayPal == null) myPayPal = PayPal.initWithAppID(this, "none", PayPal.ENV_NONE);
+        this.myQuestControlManager = QuestControlManager.getInstance();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) this.portrait = true;
+		else this.portrait = false;
+
+        /* 
+         * Here we load the init screen. From now the UI manager will be the responsible for 
+         * the program.
+         */
+//        myUIManager.preloadImages();
+        myUIManager.loadInitScreen();
+
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+//		refreshScreen();
+    }
+
+    @Override
+    public void onDestroy() {
+    	if (Activa.myMainBackgroundThread.running) Activa.myMainBackgroundThread.stop();
+    	if (Activa.myNotificationThread.running) Activa.myNotificationThread.stop();
+//    	myCalendarManager.saveCalendar();
+    	if (myMobileManager.identified) myMobileManager.addUserWithPassword(myMobileManager.user);
+    	QuestManager.freeInstance();
+    	CalendarManager.freeInstance();
+    	MapManager.freeInstance();
+    	ProtocolManager.freeInstance();
+    	SensorManager.freeInstance();
+    	MobileManager.freeInstance();
+    	ProtocolManager.freeInstance();
+    	UIManager.freeInstance();
+    	SensorManager.freeInstance();
+    	MessageManager.freeInstance();
+    	NewsManager.freeInstance();
+    	NotesManager.freeInstance();
+    	ExteriorManager.freeInstance();
+    	PatientManager.freeInstance();
+    	myPayPal.shutdown();
+		super.onDestroy();
+		this.finish();
+	}
+    
+    @Override
+    public void onRestart() {
+    	super.onRestart();
+    	super.onWindowFocusChanged(true);
+    }
+    
+    @Override
+    public void onLowMemory() {
+    	return;
+    }
+
+    @Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) this.portrait = true;
+		else this.portrait = false;			
+//		refreshScreen();
+	}
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	if (requestCode == 100) {
+    		   switch(resultCode) {
+    		      case Activity.RESULT_OK:
+						HashSet<String> files = Ambient.getFilesForDownloading(Activa.myUIManager.ambienturl);
+						DownloadFiles run = new DownloadFiles(Activa.myUIManager.ambientname, Activa.myUIManager.ambienturl, files);
+						Thread thr = new Thread(run);
+						thr.start();
+						Activa.myUIManager.loadInfoPopup("Descargando el ambiente");
+    		          break;
+    		       case Activity.RESULT_CANCELED:
+    		       case PayPalActivity.RESULT_FAILURE:
+						Activa.myUIManager.loadInfoPopup("No se pudo comprar el ambiente.");
+	    		           break;
+    		  }
+    	}
+	    switch (requestCode) {
+			case ExteriorManager.INTENT_RESULT_IMAGESELECTED:
+				if (data != null) {
+//			    	Intent intent = new Intent(Intent.ACTION_VIEW);
+//				    intent.setData(data.getData());
+//				    startActivityForResult(intent, ExteriorManager.INTENT_RESULT_IMAGELOADED);
+					com.o2hlink.activa.exterior.ImageViewer.image = data.getData();
+					Intent intent = new Intent(this, com.o2hlink.activa.exterior.ImageViewer.class);
+					startActivityForResult(intent, ExteriorManager.INTENT_RESULT_IMAGELOADED);
+		    	}
+				break;
+			case ExteriorManager.INTENT_RESULT_IMAGELOADED:
+				myExteriorManager.externalApplications.get(ExteriorManager.APP_PICTURES).startApplication();
+				break;
+			case ExteriorManager.INTENT_RESULT_VIDEOSELECTED:
+				if (data != null) {
+			    	Intent intent = new Intent(Intent.ACTION_VIEW);
+				    intent.setData(data.getData());
+				    startActivityForResult(intent, ExteriorManager.INTENT_RESULT_VIDEOLOADED);
+		    	}
+				break;
+			case ExteriorManager.INTENT_RESULT_VIDEOLOADED:
+				myExteriorManager.externalApplications.get(ExteriorManager.APP_VIDEOS).startApplication();
+				break;
+			default:
+				break;
+		} 
+    }
+    
+    public void refreshScreen() {
+    	switch (myUIManager.state) {
+			case UIManager.UI_STATE_LOGIN:
+				myUIManager.loadLoginScreen();
+				break;
+			case UIManager.UI_STATE_MAIN:
+				Activa.myUIManager.loadGeneratedSubenvironment(Activa.myUIManager.lastSubenv, true);
+				break;
+			case UIManager.UI_STATE_TOTALQUESTIONNAIRE:
+				myUIManager.loadTotalQuestList();
+				break;
+			case UIManager.UI_STATE_TOTALSENSOR:
+				myUIManager.loadSensorList();
+				break;
+			case UIManager.UI_STATE_SCHEDULE:
+				myUIManager.loadScheduleDay(new Date());
+				break;
+			case UIManager.UI_STATE_SCHEDULEWEEK:
+				myUIManager.loadScheduleWeek(new Date());
+				break;
+			case UIManager.UI_STATE_SCHEDULEMONTH:
+				myUIManager.loadScheduleMonth(new Date());
+				break;
+			case UIManager.UI_STATE_TOTALPROGRAM:
+				myUIManager.loadProgramList	();
+				break;
+			case UIManager.UI_STATE_MAP:
+				myUIManager.showMap();
+				break;
+			case UIManager.UI_STATE_MESSAGE:
+				myUIManager.loadMessageList();
+				break;
+			case UIManager.UI_STATE_MESSAGEWRITING:
+				String receiverText = ((EditText) Activa.myApp.findViewById(R.id.receiver)).getText().toString();
+				String topicText = ((EditText) Activa.myApp.findViewById(R.id.topic)).getText().toString();
+				String textText = ((EditText) Activa.myApp.findViewById(R.id.text)).getText().toString();
+				Activa.myUIManager.refreshCreatingMessage(receiverText, topicText, textText);
+				break;
+			case UIManager.UI_STATE_MESSAGEREADING:
+				myUIManager.showMessage(Activa.myMessageManager.currentMessage);
+				break;
+			case UIManager.UI_STATE_QUESTION:
+				myUIManager.loadQuestion(myQuestManager.currentQuestion);
+				break;
+		}
+    }
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	if (Activa.myApp.refreshing) {
+			Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_REFRESHING);
+			return true;
+		}
+		else if (Activa.myApp.refreshing_foreground) {
+			((TextView) Activa.myApp.findViewById(R.id.popupText)).setText(Activa.myLanguageManager.MAIN_REFRESHING);
+			return true;
+		}
+        switch (item.getItemId()) {
+        case R.id.tosensors:
+            Activa.myUIManager.loadSensorList();
+            return true;
+        case R.id.tomicro:
+            Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_NOTAVAILABLE);
+            return true;
+        case R.id.toprojects:
+            Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_NOTAVAILABLE);
+            return true;
+        case R.id.totools:
+            Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_NOTAVAILABLE);
+            return true;
+        case R.id.topatients:
+            Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_NOTAVAILABLE);
+            return true;
+        case R.id.topapers:
+            Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_NOTAVAILABLE);
+            return true;
+        case R.id.toprograms:
+            Activa.myUIManager.loadProgramList();
+            return true;
+        case R.id.toquest:
+        	if (!Activa.myMobileManager.identified) {
+				Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_FORBIDDEN);
+				return false;
+			}
+            Activa.myUIManager.loadTotalQuestList();
+            return true;
+        case R.id.toshedule:
+        	if (!Activa.myMobileManager.identified) {
+				Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_FORBIDDEN);
+				return false;
+			}
+            Activa.myUIManager.loadScheduleDay(new Date());
+            return true;
+        case R.id.tomap:
+        	if (!Activa.myMobileManager.identified) {
+				Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_FORBIDDEN);
+				return false;
+			}
+            Activa.myUIManager.showMap();
+            return true;
+        case R.id.tomessages:
+        	if (!Activa.myMobileManager.identified) {
+				Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_FORBIDDEN);
+				return false;
+			}
+            Activa.myUIManager.loadMessageList();
+            return true;
+        case R.id.tonews:
+        	if (!Activa.myMobileManager.identified) {
+				Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_FORBIDDEN);
+				return false;
+			}
+            Activa.myUIManager.loadNewsList(true);
+            return true;
+        case R.id.tonotes:
+        	if (!Activa.myMobileManager.identified) {
+				Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.MAIN_FORBIDDEN);
+				return false;
+			}
+            Activa.myUIManager.loadNotes();
+            return true;
+        case R.id.toautocalibration:
+            (new PedometerCalibration()).startCalibration();
+            return true;
+        case R.id.tomanualcalibration:
+        	final CharSequence[] items = {Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT_ULTRAHIGH,
+        			Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT_VERYHIGH,
+        			Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT_HIGH,
+        			Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT_NORMAL,
+        			Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT_LOW,
+        			Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT_VERYLOW,
+        			Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT_ULTRALOW};
+			AlertDialog.Builder builder = new AlertDialog.Builder(Activa.myApp);
+			builder.setTitle(Activa.myLanguageManager.SENSORS_CALIBRATION_SELECT);
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int item) {
+			    	myMobileManager.pedometerCalValue = 30 + item*5;
+					myMobileManager.user.pedometerCalValue = 30 + item*5;
+			    }
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+			return true;
+        case R.id.today:
+            Activa.myUIManager.loadScheduleDay(new Date());
+            return true;
+        case R.id.toweek:
+            Activa.myUIManager.loadScheduleWeek(new Date());
+            return true;
+        case R.id.tomonth:
+            Activa.myUIManager.loadScheduleMonth(new Date());
+            return true;
+        
+        }
+        return false;
+    }
+    
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	Activa.myMenu = menu;
+    	Activa.myInflater = getMenuInflater();
+		switch (myUIManager.state) {
+			case UIManager.UI_STATE_MAIN:
+				switch (Activa.myMobileManager.user.getType()) {
+				case 0:
+					Activa.myInflater.inflate(R.menu.main, Activa.myMenu);
+					break;
+				case 1:
+					Activa.myInflater.inflate(R.menu.mainclinician, Activa.myMenu);
+					break;
+				case 2:
+					Activa.myInflater.inflate(R.menu.mainresearcher, Activa.myMenu);
+					break;
+				default:
+					Activa.myInflater.inflate(R.menu.main, Activa.myMenu);
+					break;
+				}
+				break;
+			case UIManager.UI_STATE_SCHEDULE:
+				Activa.myInflater.inflate(R.menu.schedule, Activa.myMenu);
+				break;
+			case UIManager.UI_STATE_SCHEDULEWEEK:
+				Activa.myInflater.inflate(R.menu.schedule, Activa.myMenu);
+				break;
+			case UIManager.UI_STATE_TOTALSENSOR:
+				Activa.myInflater.inflate(R.menu.sensors, Activa.myMenu);
+				break;
+		}
+        return true;
+    }
+
+//    public void onWindowsFocusChanged() {
+//    	
+//    }
+
+	/**
+	 * Returns the appropiate translations class <p>
+	 * @param selectedLang	The param that states the selected Language
+	 */
+	public static Resource setLanguage(Locale locale) {
+        String selectedLang = locale.getLanguage();
+		if (selectedLang == null) {
+			return new ResourceSpanish();
+		}
+		else {
+			if(selectedLang.equals("es")) {
+				return new ResourceSpanish();
+			}
+			else if(selectedLang.equals("en")) {
+				return new ResourceEnglish();
+			}
+			else {
+				//default is English
+				return new ResourceEnglish();
+			}
+		}
+	}
+	
+	public static void throwException(Exception ex) throws Exception {
+		throw ex;
+	}
+	
+}

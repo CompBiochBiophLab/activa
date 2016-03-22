@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="activ8ejb" default="deploy" basedir=".">
+	<!-- 
+	By using this build we create a JAR to deploy it in a JBoss Application Server 
+	-->
+	<!-- 
+	Set the properties
+	-->	
+	<property environment="env" />
+	<property name="ejb.file" value="activ8ejb.jar" />
+	<property name="classes.dir" value="${basedir}/bin" />
+	<property name="jboss.dir" value="${env.JBOSS_HOME}" />
+	<property name="temp.dir" value="${env.TEMP}" />
+	<property name="deploy.dir" value="${jboss.dir}/server/default/deploy" />
+	<!--
+	Classes extending command
+	-->
+	<target name="CMD">
+		<fileset id="commands" dir="${basedir}/src/com/o2hlink/activ8/server/command">
+			<include name="*.java"/>
+			<exclude name="Command.java"/>
+		</fileset>
+		<pathconvert property="dir.commands" refid="commands" dirsep="." pathsep="${line.separator}">
+			<map from="${basedir}/src/" to=""/>
+			<mapper type="glob" from="*.java" to="*"/>
+		</pathconvert>
+		<echo file="${basedir}/src/com/o2hlink/activ8/server/session/Command">${dir.commands}</echo>
+	</target>
+	<!-- 
+	Create the JAR
+	-->	
+	<target name="EJB">
+		<jar jarfile="${temp.dir}/${ejb.file}">
+			<fileset dir="${classes.dir}">
+				<include name="com/o2hlink/activ8/**"/>
+			</fileset>
+			<metainf dir=".">
+				<include name="persistence.xml"/>	
+			</metainf>
+		</jar>
+	</target>
+	<!-- 
+	Deploy
+	-->
+	<target name="deploy">
+		<antcall target="CMD" />
+		<antcall target="EJB" />
+		<copy file="${temp.dir}/${ejb.file}" todir="${deploy.dir}" />
+		<delete file="${temp.dir}/${ejb.file}"/>
+	</target>
+</project>

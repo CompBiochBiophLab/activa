@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/o2hlink/activa/ui/UIManagerOld.java|com/o2hlink/questionnairesServer/|com/o2hlink/activa/driver/|com/o2hlink/activa/data/program/Distance.java|com/o2hlink/activa/data/program/Physical.java|com/o2hlink/activa/data/sensor/CopyOfExercise.java|com/o2hlink/activa/data/sensor/CopyOfPulseOximeter.java|com/o2hlink/activa/data/sensor/CopyOfSpirometer.java|com/o2hlink/activa/data/sensor/CopyOfExerciseOld.java|com/o2hlink/activa/data/sensor/CopyOfExerciseOd.java|com/o2hlink/activa/data/sensor/CopyOfPulseOximeterOld.java|com/o2hlink/activa/data/sensor/CopyOfSpirometerOld.java|com/o2hlink/activa/data/sensor/Zephyr.java|com/o2hlink/activa/data/sensor/PulseOximeterActivity.java|com/o2hlink/activa/data/sensor/SpirometerActivity.java|com/o2hlink/activa/data/sensor/CopyOfPulseOximeter2.java|com/o2hlink/activa/data/sensor/Accelerometer.java|com/o2hlink/activa/data/sensor/PedometerCalibration2.java|com/o2hlink/activa/data/sensor/StepCounter.java|com/o2hlink/activa/ui/MyProgressBar.java|com/o2hlink/activa/ui/MyProgressBarBig.java|com/o2hlink/activa/ui/UIManagerOLD.java|com/o2hlink/activa/connection/CryptoService.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk16-145.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-user - RCP.jar"/>
+	<classpathentry kind="lib" path="lib/activ8-client.jar"/>
+	<classpathentry kind="lib" path="lib/PayPal_MPL.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

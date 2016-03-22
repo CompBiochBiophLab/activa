@@ -1,0 +1,38 @@
+<html>
+<body style="font-size: 12px;">
+<h1>Action package</h1>
+<p>The command pattern is used in order to make tolerable the asynchronous request made by the client.</p>
+<p>It is the leverage point for</p>
+<ul>
+	<li>Caching: By keeping a heap of the last actions performed.</li>
+	<li>Batching: By sending all the actions in a list of actions.</li>
+	<li>Centralize failure handling: By implementing a class which dispatch the actions.</li>
+</ul>
+<p>It also lays the background for</p>
+<ul>
+	<li>Load client code on demand</li>
+	<li>Undo/Redo: By keeping an stack of actions</li>
+	<li>Google Gears/HTML5 DB: Storing actions will help the client to work disconnected from the internet</li>
+</ul>
+<p>Actions are request sent to the server. Actions must implement the action interface</p>
+<pre style="font-size: 11px;">
+	/**
+	 * ..
+	 **/
+	public interface Action&lt;R extends Response&gt; extends Serializable {
+	}	
+</pre>
+<p>Optionally they can implement the Cacheable interface. The client is in charge of doing the cache in order to avoid calls to the server.</p>
+<pre style="font-size: 11px;">
+	/**
+	 * ..
+	 **/
+	public interface Cacheable {
+		/**
+		 * @return The time in milliseconds to which the last result will be cached
+		 **/
+		public long getMaxAge();
+	}
+</pre>
+</body>
+</html>

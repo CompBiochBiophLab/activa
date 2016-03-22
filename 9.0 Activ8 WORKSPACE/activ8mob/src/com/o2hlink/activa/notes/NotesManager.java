@@ -1,0 +1,98 @@
+package com.o2hlink.activa.notes;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.ActivaUtil;
+import com.o2hlink.activa.data.calendar.Event;
+import com.o2hlink.activa.data.questionnaire.QuestManager;
+import com.o2hlink.activa.map.Mark;
+
+public class NotesManager {
+	
+	public Hashtable<Long, Note> notelist;
+	
+	private static NotesManager instance;
+	
+	private NotesManager() {
+		this.notelist = new Hashtable<Long, Note>();
+	}
+	
+	public static NotesManager getInstance() {
+		if (NotesManager.instance == null) NotesManager.instance = new NotesManager();
+		return NotesManager.instance;
+	}
+	
+	public static void freeInstance() {
+		instance = null;
+	}
+	
+	public void getNotes() {
+		Activa.myProtocolManager.getNotes();
+	}
+	
+	public void extractNotesFromXML(String xml) {
+		long id = 0;
+		this.notelist.clear();
+		XmlPullParserFactory factory;
+		Event currentEvent;
+		try {
+			factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        boolean insideEvent = false;
+	        boolean end = true; 
+	        info.setInput(new StringReader(xml));
+	        int event = info.getEventType();
+        	currentEvent = new Event();	
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("NOTE")) {
+	                	String text = info.getAttributeValue(info.getNamespace(), "TEXT");
+	                	Date date = ActivaUtil.XMLDateToDate(info.getAttributeValue(info.getNamespace(), "DATE"));
+	                	this.notelist.put(id, new Note(id, text, date));
+	                	id++;
+	                }
+	            } else if(event == XmlPullParser.END_TAG) {
+	                if (info.getName().equalsIgnoreCase("NOTES")) {
+	                	break;
+	                }
+	            }
+	            event = info.next();
+	        }
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	public boolean addNote(String text) {
+//		long id = 0;
+//		while (this.notelist.containsKey(id)) id++;
+//		this.notelist.put(id, new Note(id, text, new Date()));
+//		return Activa.myProtocolManager.sendNote(text);
+//	}
+	
+	public boolean addNote(String text) {
+		boolean returned = false;
+		com.o2hlink.activ8.client.entity.Note note = Activa.myProtocolManager.sendNote(text);
+		if (note != null) {
+			this.notelist.put(note.getId(), new Note(note.getId(), note.getComment(), note.getDate()));
+			returned = true;
+		}
+		return returned;
+	}
+	
+}

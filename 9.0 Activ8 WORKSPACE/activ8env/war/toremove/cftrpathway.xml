@@ -1,0 +1,2878 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<NCI_PID_XML>
+<Created>2008_11_07 12:37::27</Created>
+  <Ontology>
+    <LabelType name="edge-type" id="3">
+      <LabelValueList>
+        <LabelValue name="agent" id="22" parent_idref="19" />
+        <LabelValue name="edge-type" id="18" parent_idref="18" />
+        <LabelValue name="incoming-edge" id="19" parent_idref="18" />
+        <LabelValue name="input" id="21" parent_idref="19" />
+        <LabelValue name="outgoing-edge" id="20" parent_idref="18" />
+        <LabelValue name="output" id="24" parent_idref="20" />
+      </LabelValueList>
+    </LabelType>
+    <LabelType name="process-type" id="2">
+      <LabelValueList>
+        <LabelValue name="modification" id="7" parent_idref="6" />
+        <LabelValue name="process-type" id="6" parent_idref="6" />
+        <LabelValue name="translocation" id="8" parent_idref="6" />
+      </LabelValueList>
+    </LabelType>
+    <LabelType name="activity-state" id="4">
+      <LabelValueList>
+        <LabelValue name="active" id="26" parent_idref="25" />
+        <LabelValue name="activity-state" id="25" parent_idref="25" />
+      </LabelValueList>
+    </LabelType>
+    <LabelType name="molecule-type" id="1">
+      <LabelValueList>
+        <LabelValue name="complex" id="5" parent_idref="1" />
+        <LabelValue name="compound" id="4" parent_idref="1" />
+        <LabelValue name="molecule-type" id="1" parent_idref="1" />
+        <LabelValue name="protein" id="2" parent_idref="1" />
+        <LabelValue name="rna" id="3" parent_idref="1" />
+      </LabelValueList>
+    </LabelType>
+    <LabelType name="location" id="5">
+      <LabelValueList>
+        <LabelValue name="cellular_component" id="5000" parent_idref="28" GO="GO:0005575" />
+        <LabelValue name="cytoplasm" id="5907" parent_idref="5000" GO="GO:0005737" />
+        <LabelValue name="extracellular" id="5830" parent_idref="5000" GO="GO:0005576" />
+        <LabelValue name="location" id="28" parent_idref="28" />
+        <LabelValue name="transmembrane" id="30" parent_idref="5000" />
+      </LabelValueList>
+    </LabelType>
+  </Ontology>
+  <Model>
+    <MoleculeList>
+      <Molecule molecule_type="protein" id="26734">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2241" />
+        <Name name_type="OF" long_name_type="official symbol" value="FER" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26771">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4921" />
+        <Name name_type="OF" long_name_type="official symbol" value="DDR2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26590">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8576" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK16" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="560">
+        <Name name_type="KG" long_name_type="KEGG" value="C00584" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="363-24-6" />
+        <Name name_type="AS" long_name_type="alias" value="prepidil (tn)" />
+        <Name name_type="AS" long_name_type="alias" value="prostaglandin e2" />
+        <Name name_type="AS" long_name_type="alias" value="(5z,13e)-(15s)-11alpha,15-dihydroxy-9-oxoprosta-5,13-dienoate" />
+        <Name name_type="AS" long_name_type="alias" value="dinoprostone (jan/usp)" />
+        <Name name_type="AS" long_name_type="alias" value="dinoprostone" />
+        <Name name_type="AS" long_name_type="alias" value="(5z,13e)-(15s)-11alpha,15-dihydroxy-9-oxoprost-13-enoate" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="28061">
+        <Name name_type="AS" long_name_type="alias" value="EC_3.4.21.5" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="28062">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="28062">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="3.4.21.5" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2147" />
+        <Name name_type="AS" long_name_type="alias" value="thrombofort" />
+        <Name name_type="AS" long_name_type="alias" value="thrombase" />
+        <Name name_type="AS" long_name_type="alias" value="e thrombin" />
+        <Name name_type="AS" long_name_type="alias" value="beta-thrombin" />
+        <Name name_type="AS" long_name_type="alias" value="gamma-thrombin" />
+        <Name name_type="AS" long_name_type="alias" value="Thrombin" />
+        <Name name_type="AS" long_name_type="alias" value="activated blood-coagulation factor ii" />
+        <Name name_type="AS" long_name_type="alias" value="factor iia" />
+        <Name name_type="AS" long_name_type="alias" value="topical" />
+        <Name name_type="AS" long_name_type="alias" value="thrombin-c" />
+        <Name name_type="AS" long_name_type="alias" value="tropostasin" />
+        <Name name_type="AS" long_name_type="alias" value="fibrinogenase" />
+        <Name name_type="AS" long_name_type="alias" value="blood-coagulation factor iia" />
+        <Name name_type="OF" long_name_type="official symbol" value="F2" />
+        <Part whole_molecule_idref="100593" part_molecule_idref="28062" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26787">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7006" />
+        <Name name_type="OF" long_name_type="official symbol" value="TEC" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100471">
+        <Name name_type="AS" long_name_type="alias" value="ERBB 1/3/4" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26732">
+          </Member>
+          <Member member_molecule_idref="26731">
+          </Member>
+          <Member member_molecule_idref="26718">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26732">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2066" />
+        <Name name_type="OF" long_name_type="official symbol" value="ERBB4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26731">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2065" />
+        <Name name_type="OF" long_name_type="official symbol" value="ERBB3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26718">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1956" />
+        <Name name_type="AS" long_name_type="alias" value="ERBB1" />
+        <Name name_type="AS" long_name_type="alias" value="EGF R" />
+        <Name name_type="AS" long_name_type="alias" value="EGF-R" />
+        <Name name_type="OF" long_name_type="official symbol" value="EGFR" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26187">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.4.2.30" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="142" />
+        <Name name_type="AS" long_name_type="alias" value="PARP" />
+        <Name name_type="AS" long_name_type="alias" value="ADPRT" />
+        <Name name_type="OF" long_name_type="official symbol" value="PARP1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26507">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="23678" />
+        <Name name_type="OF" long_name_type="official symbol" value="SGKL" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100094">
+        <Name name_type="AS" long_name_type="alias" value="Ach R" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100095">
+          </Member>
+          <Member member_molecule_idref="100096">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100095">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1128" />
+        <Name name_type="AS" long_name_type="alias" value="AchR-M1" />
+        <Name name_type="AS" long_name_type="alias" value="Muscarinic cholinergic receptor 1" />
+        <Name name_type="OF" long_name_type="official symbol" value="CHRM1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100096">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1134" />
+        <Name name_type="AS" long_name_type="alias" value="Nicotinic cholinergic receptor 1 alpha polypeptide" />
+        <Name name_type="OF" long_name_type="official symbol" value="CHRNA1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29236">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="109" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100049">
+        <Name name_type="AS" long_name_type="alias" value="B-RAF" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26574">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6788" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26756">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3718" />
+        <Name name_type="OF" long_name_type="official symbol" value="JAK3" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="100271">
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="362-74-3" />
+        <Name name_type="AS" long_name_type="alias" value="bt2 cAMP" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26599">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="91" />
+        <Name name_type="OF" long_name_type="official symbol" value="ACVR1B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26512">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="27330" />
+        <Name name_type="OF" long_name_type="official symbol" value="RPS6KA6" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26743">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2324" />
+        <Name name_type="AS" long_name_type="alias" value="FMS-related tyrosine kinase 4" />
+        <Name name_type="OF" long_name_type="official symbol" value="FLT4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26550">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5595" />
+        <Name name_type="AS" long_name_type="alias" value="ERK1" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26763">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4233" />
+        <Name name_type="OF" long_name_type="official symbol" value="MET" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26489">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10769" />
+        <Name name_type="OF" long_name_type="official symbol" value="PLK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26497">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1263" />
+        <Name name_type="OF" long_name_type="official symbol" value="PLK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26555">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5600" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK11" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26533">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5218" />
+        <Name name_type="OF" long_name_type="official symbol" value="PFTK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="28651">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="3.6.1.23" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1854" />
+        <Name name_type="AS" long_name_type="alias" value="dutp pyrophosphatase" />
+        <Name name_type="AS" long_name_type="alias" value="dutpase" />
+        <Name name_type="AS" long_name_type="alias" value="deoxyuridine-triphosphatase" />
+        <Name name_type="AS" long_name_type="alias" value="dutp diphosphatase" />
+        <Name name_type="AS" long_name_type="alias" value="desoxyuridine 5&#x27;-triphosphate nucleotidohydrolase" />
+        <Name name_type="AS" long_name_type="alias" value="desoxyuridine 5&#x27;-triphosphatase" />
+        <Name name_type="OF" long_name_type="official symbol" value="DUT" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26524">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="472" />
+        <Name name_type="OF" long_name_type="official symbol" value="ATM" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100593">
+        <Name name_type="AS" long_name_type="alias" value="Prothrombin" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26186">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.4.2.30" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10039" />
+        <Name name_type="OF" long_name_type="official symbol" value="PARP3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26510">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="269" />
+        <Name name_type="OF" long_name_type="official symbol" value="AMHR2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26556">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5601" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK9" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100284">
+        <Name name_type="LL" long_name_type="EntrezGene" value="7852" />
+        <Name name_type="OF" long_name_type="official symbol" value="CXCR4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26717">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1445" />
+        <Name name_type="OF" long_name_type="official symbol" value="CSK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26607">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="983" />
+        <Name name_type="AS" long_name_type="alias" value="CDK1" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDC2" />
+      </Molecule>
+      <Molecule molecule_type="complex" id="102197">
+        <Name name_type="AS" long_name_type="alias" value="Ligand/B2AR/G-gamma/G-beta" />
+        <ComplexComponentList>
+          <ComplexComponent molecule_idref="100289">
+            <Label label_type="location" value="transmembrane" />
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100740">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100741">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100179">
+            <Label label_type="location" value="extracellular" />
+          </ComplexComponent>
+        </ComplexComponentList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100741">
+        <Name name_type="LL" long_name_type="EntrezGene" value="2782" />
+        <Name name_type="AS" long_name_type="alias" value="G-beta" />
+        <Name name_type="AS" long_name_type="alias" value="transducin-beta" />
+        <Name name_type="OF" long_name_type="official symbol" value="GNB1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100740">
+        <Name name_type="LL" long_name_type="EntrezGene" value="2792" />
+        <Name name_type="AS" long_name_type="alias" value="G-gamma" />
+        <Name name_type="OF" long_name_type="official symbol" value="GNGT1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100179">
+        <Name name_type="AS" long_name_type="alias" value="Ligand" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100185">
+          </Member>
+          <Member member_molecule_idref="100188">
+          </Member>
+          <Member member_molecule_idref="100182">
+          </Member>
+          <Member member_molecule_idref="100189">
+          </Member>
+          <Member member_molecule_idref="100184">
+          </Member>
+          <Member member_molecule_idref="100190">
+          </Member>
+          <Member member_molecule_idref="100180">
+          </Member>
+          <Member member_molecule_idref="100183">
+          </Member>
+          <Member member_molecule_idref="100186">
+          </Member>
+          <Member member_molecule_idref="100187">
+          </Member>
+          <Member member_molecule_idref="28062">
+          </Member>
+          <Member member_molecule_idref="7883">
+          </Member>
+          <Member member_molecule_idref="3960">
+          </Member>
+          <Member member_molecule_idref="100181">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100188">
+        <Name name_type="LL" long_name_type="EntrezGene" value="6351" />
+        <Name name_type="AS" long_name_type="alias" value="MIP-1beta" />
+        <Name name_type="OF" long_name_type="official symbol" value="CCL4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100185">
+        <Name name_type="AS" long_name_type="alias" value="NT (neurotransmitter)" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100182">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1906" />
+        <Name name_type="AS" long_name_type="alias" value="ET-1" />
+        <Name name_type="AS" long_name_type="alias" value="Endothelin 1" />
+        <Name name_type="OF" long_name_type="official symbol" value="EDN1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100184">
+        <Name name_type="AS" long_name_type="alias" value="CPI-17 activating receptor ligand" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100189">
+        <Name name_type="LL" long_name_type="EntrezGene" value="155971" />
+        <Name name_type="AS" long_name_type="alias" value="gp120" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="100190">
+        <Name name_type="AS" long_name_type="alias" value="Epinephrine" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100180">
+        <Name name_type="LL" long_name_type="EntrezGene" value="183" />
+        <Name name_type="AS" long_name_type="alias" value="Angiotensin II" />
+        <Name name_type="OF" long_name_type="official symbol" value="AGT" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100183">
+        <Name name_type="AS" long_name_type="alias" value="fMLP" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100187">
+        <Name name_type="LL" long_name_type="EntrezGene" value="6356" />
+        <Name name_type="AS" long_name_type="alias" value="EOTAXIN" />
+        <Name name_type="OF" long_name_type="official symbol" value="CCL11" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100186">
+        <Name name_type="LL" long_name_type="EntrezGene" value="6387" />
+        <Name name_type="AS" long_name_type="alias" value="SDF-1" />
+        <Name name_type="OF" long_name_type="official symbol" value="CXCL12" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="7883">
+        <Name name_type="KG" long_name_type="KEGG" value="C09076" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="66575-29-9" />
+        <Name name_type="AS" long_name_type="alias" value="Forskolin" />
+        <Name name_type="AS" long_name_type="alias" value="coleonol" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100181">
+        <Name name_type="AS" long_name_type="alias" value="Beta-adrenergic agonists" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="3960">
+        <Name name_type="KG" long_name_type="KEGG" value="C04741" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="745-65-3" />
+        <Name name_type="AS" long_name_type="alias" value="befar (tn)" />
+        <Name name_type="AS" long_name_type="alias" value="(13e)-(15s)-11alpha,15-dihydroxy-9-oxoprost-13-enoate" />
+        <Name name_type="AS" long_name_type="alias" value="alprostadil (jp14/usp)" />
+        <Name name_type="AS" long_name_type="alias" value="prostaglandin e1" />
+        <Name name_type="AS" long_name_type="alias" value="prink (tn)" />
+        <Name name_type="AS" long_name_type="alias" value="alprostadil" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100289">
+        <Name name_type="LL" long_name_type="EntrezGene" value="154" />
+        <Name name_type="AS" long_name_type="alias" value="B2AR" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADRB2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100576">
+        <Name name_type="AS" long_name_type="alias" value="RB1 (cleaved)" />
+        <Part whole_molecule_idref="100122" part_molecule_idref="100576" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26779">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6098" />
+        <Name name_type="OF" long_name_type="official symbol" value="ROS1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100178">
+        <Name name_type="AS" long_name_type="alias" value="JAKs" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26755">
+          </Member>
+          <Member member_molecule_idref="26754">
+          </Member>
+          <Member member_molecule_idref="26756">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26755">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3717" />
+        <Name name_type="OF" long_name_type="official symbol" value="JAK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26754">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3716" />
+        <Name name_type="OF" long_name_type="official symbol" value="JAK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26596">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8999" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDKL2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26565">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6196" />
+        <Name name_type="OF" long_name_type="official symbol" value="RPS6KA2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100267">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5588" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-theta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCQ" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100125">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5580" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-delta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCD" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26521">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="415116" />
+        <Name name_type="OF" long_name_type="official symbol" value="PIM3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26573">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6787" />
+        <Name name_type="OF" long_name_type="official symbol" value="NEK4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100329">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5058" />
+        <Name name_type="OF" long_name_type="official symbol" value="PAK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100076">
+        <Name name_type="AS" long_name_type="alias" value="ERK1/ERK2" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26550">
+          </Member>
+          <Member member_molecule_idref="26549">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26549">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5594" />
+        <Name name_type="AS" long_name_type="alias" value="ERK2" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26500">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1432" />
+        <Name name_type="AS" long_name_type="alias" value="p38" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK14" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26547">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5592" />
+        <Name name_type="AS" long_name_type="alias" value="PKG type I" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKG1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26772">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5156" />
+        <Name name_type="AS" long_name_type="alias" value="PDGF R" />
+        <Name name_type="OF" long_name_type="official symbol" value="PDGFRA" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26572">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="659" />
+        <Name name_type="AS" long_name_type="alias" value="BMPR-II" />
+        <Name name_type="OF" long_name_type="official symbol" value="BMPR2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100205">
+        <Name name_type="AS" long_name_type="alias" value="PKC" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26539">
+          </Member>
+          <Member member_molecule_idref="26540">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26539">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5578" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-alpha" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCA" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26540">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5579" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-beta1" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-beta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCB1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26506">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="208" />
+        <Name name_type="OF" long_name_type="official symbol" value="AKT2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26794">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7525" />
+        <Name name_type="OF" long_name_type="official symbol" value="YES1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26733">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2185" />
+        <Name name_type="AS" long_name_type="alias" value="PYK2" />
+        <Name name_type="OF" long_name_type="official symbol" value="PTK2B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26589">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8558" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK10" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100260">
+        <Name name_type="AS" long_name_type="alias" value="VEGF R" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26743">
+          </Member>
+          <Member member_molecule_idref="26757">
+          </Member>
+          <Member member_molecule_idref="26741">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26741">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2321" />
+        <Name name_type="AS" long_name_type="alias" value="FMS-related tyrosine kinase 1" />
+        <Name name_type="OF" long_name_type="official symbol" value="FLT1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26757">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3791" />
+        <Name name_type="AS" long_name_type="alias" value="Kinase insert domain receptor" />
+        <Name name_type="OF" long_name_type="official symbol" value="KDR" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26542">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5584" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCI" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="101186">
+        <Name name_type="LL" long_name_type="EntrezGene" value="2778" />
+        <Name name_type="AS" long_name_type="alias" value="G-alpha-S" />
+        <Name name_type="OF" long_name_type="official symbol" value="GNAS" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="113">
+        <Name name_type="KG" long_name_type="KEGG" value="C00115" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="7782-50-5" />
+        <Name name_type="AS" long_name_type="alias" value="Cl -" />
+        <Name name_type="AS" long_name_type="alias" value="chloride" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100058">
+        <Name name_type="LL" long_name_type="EntrezGene" value="4217" />
+        <Name name_type="AS" long_name_type="alias" value="ASK1" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K5" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26778">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5979" />
+        <Name name_type="OF" long_name_type="official symbol" value="RET" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26560">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="56164" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK31" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29235">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="108" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26488">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10494" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK25" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26564">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6195" />
+        <Name name_type="AS" long_name_type="alias" value="p90RSK" />
+        <Name name_type="OF" long_name_type="official symbol" value="RPS6KA1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100282">
+        <Name name_type="LL" long_name_type="EntrezGene" value="2357" />
+        <Name name_type="OF" long_name_type="official symbol" value="FPR1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26586">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8408" />
+        <Name name_type="OF" long_name_type="official symbol" value="ULK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26608">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="9891" />
+        <Name name_type="AS" long_name_type="alias" value="ARK5" />
+        <Name name_type="OF" long_name_type="official symbol" value="NUAK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26728">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2049" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHB3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100191">
+        <Name name_type="AS" long_name_type="alias" value="MAPK" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26554">
+          </Member>
+          <Member member_molecule_idref="26500">
+          </Member>
+          <Member member_molecule_idref="26550">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26554">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5599" />
+        <Name name_type="AS" long_name_type="alias" value="JNK" />
+        <Name name_type="AS" long_name_type="alias" value="JNK1" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK8" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100569">
+        <Name name_type="AS" long_name_type="alias" value="ADPRT (cleaved)" />
+        <Part whole_molecule_idref="26187" part_molecule_idref="100569" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26513">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="27347" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK39" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26490">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="11035" />
+        <Name name_type="OF" long_name_type="official symbol" value="RIPK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100285">
+        <Name name_type="LL" long_name_type="EntrezGene" value="3358" />
+        <Name name_type="AS" long_name_type="alias" value="5HT2c" />
+        <Name name_type="OF" long_name_type="official symbol" value="HTR2C" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26522">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4294" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K10" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26579">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6794" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK11" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100265">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5581" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-epsilon" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCE" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26525">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4750" />
+        <Name name_type="OF" long_name_type="official symbol" value="NEK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26557">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5602" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK10" />
+      </Molecule>
+      <Molecule molecule_type="complex" id="102198">
+        <Name name_type="AS" long_name_type="alias" value="PKA/CFTR/Ezrin/EBP500/EBP50" />
+        <ComplexComponentList>
+          <ComplexComponent molecule_idref="26537">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="26538">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100949">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100950">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100951">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100952">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="102199">
+            <Label label_type="location" value="transmembrane" />
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100550">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="102200">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="102200">
+          </ComplexComponent>
+        </ComplexComponentList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="102199">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1080" />
+        <Name name_type="OF" long_name_type="official symbol" value="CFTR" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100550">
+        <Name name_type="LL" long_name_type="EntrezGene" value="7430" />
+        <Name name_type="AS" long_name_type="alias" value="Ezrin" />
+        <Name name_type="OF" long_name_type="official symbol" value="VIL2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100949">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5573" />
+        <Name name_type="AS" long_name_type="alias" value="PKA regulatory type I alpha" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKAR1A" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100952">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5577" />
+        <Name name_type="AS" long_name_type="alias" value="PKA regulatory type II beta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKAR2B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100950">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5575" />
+        <Name name_type="AS" long_name_type="alias" value="PKA regulatory type I beta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKAR1B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26537">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5567" />
+        <Name name_type="AS" long_name_type="alias" value="PKA catalytic beta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKACB" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26538">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5568" />
+        <Name name_type="AS" long_name_type="alias" value="PKA catalytic gamma" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKACG" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100951">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5576" />
+        <Name name_type="AS" long_name_type="alias" value="PKA regulatory type II alpha" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKAR2A" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="102200">
+        <Name name_type="LL" long_name_type="EntrezGene" value="9368" />
+        <Name name_type="AS" long_name_type="alias" value="EBP50" />
+        <Name name_type="OF" long_name_type="official symbol" value="SLC9A3R1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26529">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5127" />
+        <Name name_type="OF" long_name_type="official symbol" value="PCTK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100119">
+        <Name name_type="LL" long_name_type="EntrezGene" value="4193" />
+        <Name name_type="OF" long_name_type="official symbol" value="MDM2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26742">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2322" />
+        <Name name_type="OF" long_name_type="official symbol" value="FLT3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100120">
+        <Name name_type="LL" long_name_type="EntrezGene" value="4926" />
+        <Name name_type="AS" long_name_type="alias" value="NUMA" />
+        <Name name_type="OF" long_name_type="official symbol" value="NUMA1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26786">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="695" />
+        <Name name_type="OF" long_name_type="official symbol" value="BTK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26788">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7010" />
+        <Name name_type="OF" long_name_type="official symbol" value="TEK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26501">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1457" />
+        <Name name_type="AS" long_name_type="alias" value="CK-II" />
+        <Name name_type="OF" long_name_type="official symbol" value="CSNK2A1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26773">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5159" />
+        <Name name_type="OF" long_name_type="official symbol" value="PDGFRB" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100552">
+        <Name name_type="AS" long_name_type="alias" value="FAK (cleaved)" />
+        <Part whole_molecule_idref="26775" part_molecule_idref="100552" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26559">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5613" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKX" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26185">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.4.2.30" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10038" />
+        <Name name_type="AS" long_name_type="alias" value="poly(adp-ribose) synthase" />
+        <Name name_type="AS" long_name_type="alias" value="nad adp-ribosyltransferase" />
+        <Name name_type="AS" long_name_type="alias" value="adp-ribosyltransferase" />
+        <Name name_type="AS" long_name_type="alias" value="nad+ adp-ribosyltransferase" />
+        <Name name_type="OF" long_name_type="official symbol" value="PARP2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26552">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5597" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK6" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26719">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1969" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHA2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26495">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1196" />
+        <Name name_type="OF" long_name_type="official symbol" value="CLK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26740">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2268" />
+        <Name name_type="AS" long_name_type="alias" value="c-Fgr" />
+        <Name name_type="OF" long_name_type="official symbol" value="FGR" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26764">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4296" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K11" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100577">
+        <Name name_type="AS" long_name_type="alias" value="PRKDC (cleaved)" />
+        <Part whole_molecule_idref="26546" part_molecule_idref="100577" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="28650">
+        <Name name_type="AS" long_name_type="alias" value="EC_3.6.1.23" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="28651">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26588">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8445" />
+        <Name name_type="OF" long_name_type="official symbol" value="DYRK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26796">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="780" />
+        <Name name_type="OF" long_name_type="official symbol" value="DDR1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26581">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="699" />
+        <Name name_type="OF" long_name_type="official symbol" value="BUB1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26595">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8899" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRPF4B" />
+      </Molecule>
+      <Molecule molecule_type="complex" id="102201">
+        <Name name_type="AS" long_name_type="alias" value="Ligand/B2AR/G-gamma/G-beta/PKA/CFTR/Ezrin/EBP50/EBP50" />
+        <ComplexComponentList>
+          <ComplexComponent molecule_idref="100289">
+            <Label label_type="location" value="transmembrane" />
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100740">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100741">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100179">
+            <Label label_type="location" value="extracellular" />
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="26537">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="26538">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100949">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100950">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100951">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100952">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100550">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="102200">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="102200">
+          </ComplexComponent>
+        </ComplexComponentList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26795">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7535" />
+        <Name name_type="OF" long_name_type="official symbol" value="ZAP70" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26517">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3611" />
+        <Name name_type="OF" long_name_type="official symbol" value="ILK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26584">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7048" />
+        <Name name_type="AS" long_name_type="alias" value="T-beta-R-II" />
+        <Name name_type="AS" long_name_type="alias" value="TGF-beta-R2" />
+        <Name name_type="OF" long_name_type="official symbol" value="TGFBR2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26777">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5754" />
+        <Name name_type="OF" long_name_type="official symbol" value="PTK7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26514">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2931" />
+        <Name name_type="AS" long_name_type="alias" value="GSK3-alpha" />
+        <Name name_type="OF" long_name_type="official symbol" value="GSK3A" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26576">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6790" />
+        <Name name_type="AS" long_name_type="alias" value="Aurora A" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK6" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26487">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10298" />
+        <Name name_type="OF" long_name_type="official symbol" value="PAK4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100578">
+        <Name name_type="AS" long_name_type="alias" value="PAK1 (cleaved)" />
+        <Part whole_molecule_idref="100329" part_molecule_idref="100578" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26530">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5128" />
+        <Name name_type="OF" long_name_type="official symbol" value="PCTK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100053">
+        <Name name_type="LL" long_name_type="EntrezGene" value="4215" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26479">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1017" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26528">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5063" />
+        <Name name_type="OF" long_name_type="official symbol" value="PAK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100283">
+        <Name name_type="LL" long_name_type="EntrezGene" value="186" />
+        <Name name_type="AS" long_name_type="alias" value="Angiotensin R" />
+        <Name name_type="OF" long_name_type="official symbol" value="AGTR2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26567">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6300" />
+        <Name name_type="AS" long_name_type="alias" value="ERK6" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK12" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26605">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="93" />
+        <Name name_type="OF" long_name_type="official symbol" value="ACVR2B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26526">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4751" />
+        <Name name_type="OF" long_name_type="official symbol" value="NEK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26580">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6795" />
+        <Name name_type="OF" long_name_type="official symbol" value="AURKC" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29240">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="114" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY8" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26751">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3643" />
+        <Name name_type="AS" long_name_type="alias" value="Insulin R" />
+        <Name name_type="AS" long_name_type="alias" value="Insulin Ra" />
+        <Name name_type="OF" long_name_type="official symbol" value="INSR" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26721">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2042" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHA3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26753">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3702" />
+        <Name name_type="OF" long_name_type="official symbol" value="ITK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26508">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="26524" />
+        <Name name_type="OF" long_name_type="official symbol" value="LATS2" />
+      </Molecule>
+      <Molecule molecule_type="complex" id="101897">
+        <Name name_type="AS" long_name_type="alias" value="B2AR/G-alpha-s/G-gamma/G-beta/GDP" />
+        <ComplexComponentList>
+          <ComplexComponent molecule_idref="100289">
+            <Label label_type="location" value="transmembrane" />
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="101186">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100740">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="100741">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="35">
+          </ComplexComponent>
+        </ComplexComponentList>
+      </Molecule>
+      <Molecule molecule_type="compound" id="35">
+        <Name name_type="KG" long_name_type="KEGG" value="C00035" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="146-91-8" />
+        <Name name_type="AS" long_name_type="alias" value="guanosine diphosphate" />
+        <Name name_type="AS" long_name_type="alias" value="guanosine 5&#x27;-diphosphate" />
+        <Name name_type="AS" long_name_type="alias" value="gdp" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29239">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="113" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26558">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5603" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK13" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100117">
+        <Name name_type="LL" long_name_type="EntrezGene" value="984" />
+        <Name name_type="AS" long_name_type="alias" value="Cell division cycle-2-like 1" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDC2L1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26494">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1195" />
+        <Name name_type="OF" long_name_type="official symbol" value="CLK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26496">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1198" />
+        <Name name_type="OF" long_name_type="official symbol" value="CLK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26729">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2050" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHB4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26765">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4486" />
+        <Name name_type="OF" long_name_type="official symbol" value="MST1R" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26774">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="558" />
+        <Name name_type="OF" long_name_type="official symbol" value="AXL" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26583">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7046" />
+        <Name name_type="AS" long_name_type="alias" value="TGF-beta-RI" />
+        <Name name_type="AS" long_name_type="alias" value="TGF-beta-R1" />
+        <Name name_type="OF" long_name_type="official symbol" value="TGFBR1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26785">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6850" />
+        <Name name_type="OF" long_name_type="official symbol" value="SYK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26520">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4117" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26791">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7297" />
+        <Name name_type="OF" long_name_type="official symbol" value="TYK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26714">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10188" />
+        <Name name_type="AS" long_name_type="alias" value="protein-tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosine kinase p56lck" />
+        <Name name_type="AS" long_name_type="alias" value="jak protein tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="p56lck kinase" />
+        <Name name_type="AS" long_name_type="alias" value="p56lck tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="p56lck protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="hydroxyaryl-protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosine protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein p56lck tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein kinase p56-lck" />
+        <Name name_type="AS" long_name_type="alias" value="gene lck protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosylprotein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosine kinase lck" />
+        <Name name_type="AS" long_name_type="alias" value="lck tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="phosphotyrosyl-protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein kinase lck" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosine protein kinase p56lck" />
+        <Name name_type="AS" long_name_type="alias" value="protein p56lck kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein (tyrosine) kinase" />
+        <Name name_type="AS" long_name_type="alias" value="gene lck tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="insulin receptor protein-tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosine-specific protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="nonreceptor protein tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein tyrosine kinase p56lck" />
+        <Name name_type="AS" long_name_type="alias" value="ectoprotein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="v-fps protein-tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="receptor-activated janus kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein kinase p56lck" />
+        <Name name_type="AS" long_name_type="alias" value="protein tyrosine kinase pp56lck" />
+        <Name name_type="AS" long_name_type="alias" value="p56lck protein tyrosine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="irk" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosine phosphokinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein p56c-lck kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein tyrosine kinase lck" />
+        <Name name_type="AS" long_name_type="alias" value="tyrosine kinase" />
+        <Name name_type="OF" long_name_type="official symbol" value="TNK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26606">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="94" />
+        <Name name_type="OF" long_name_type="official symbol" value="ACVRL1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100268">
+        <Name name_type="AS" long_name_type="alias" value="cAMP activators" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="560">
+          </Member>
+          <Member member_molecule_idref="100270">
+          </Member>
+          <Member member_molecule_idref="7883">
+          </Member>
+          <Member member_molecule_idref="100269">
+          </Member>
+          <Member member_molecule_idref="100271">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100269">
+        <Name name_type="LL" long_name_type="EntrezGene" value="3552" />
+        <Name name_type="AS" long_name_type="alias" value="IL-1" />
+        <Name name_type="AS" long_name_type="alias" value="IL-1-alpha" />
+        <Name name_type="OF" long_name_type="official symbol" value="IL1A" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="100270">
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="131096-89-4" />
+        <Name name_type="AS" long_name_type="alias" value="cholera toxin" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26184">
+        <Name name_type="AS" long_name_type="alias" value="EC_2.4.2.30" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26190">
+          </Member>
+          <Member member_molecule_idref="26186">
+          </Member>
+          <Member member_molecule_idref="26187">
+          </Member>
+          <Member member_molecule_idref="26185">
+          </Member>
+          <Member member_molecule_idref="26189">
+          </Member>
+          <Member member_molecule_idref="26188">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26188">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.4.2.30" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="143" />
+        <Name name_type="OF" long_name_type="official symbol" value="PARP4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26190">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.4.2.30" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8658" />
+        <Name name_type="OF" long_name_type="official symbol" value="TNKS" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26189">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.4.2.30" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="80351" />
+        <Name name_type="OF" long_name_type="official symbol" value="TNKS2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26518">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="369" />
+        <Name name_type="AS" long_name_type="alias" value="A-RAF" />
+        <Name name_type="OF" long_name_type="official symbol" value="ARAF" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100288">
+        <Name name_type="LL" long_name_type="EntrezGene" value="147" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADRA1B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100294">
+        <Name name_type="AS" long_name_type="alias" value="PKG" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26547">
+          </Member>
+          <Member member_molecule_idref="26548">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26548">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5593" />
+        <Name name_type="AS" long_name_type="alias" value="PKG type II" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKG2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26776">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5753" />
+        <Name name_type="OF" long_name_type="official symbol" value="PTK6" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26789">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7075" />
+        <Name name_type="OF" long_name_type="official symbol" value="TIE1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26720">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2041" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHA1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29234">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="107" />
+        <Name name_type="AS" long_name_type="alias" value="adenylate cyclase" />
+        <Name name_type="AS" long_name_type="alias" value="3&#x27;,5&#x27;-cyclic amp synthetase" />
+        <Name name_type="AS" long_name_type="alias" value="adenylylcyclase" />
+        <Name name_type="AS" long_name_type="alias" value="adenyl cyclase" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26486">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1025" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK9" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26587">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8428" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK24" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26515">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2932" />
+        <Name name_type="AS" long_name_type="alias" value="GSK3-beta" />
+        <Name name_type="OF" long_name_type="official symbol" value="GSK3B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26527">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4752" />
+        <Name name_type="OF" long_name_type="official symbol" value="NEK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26485">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1024" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK8" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26531">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5170" />
+        <Name name_type="AS" long_name_type="alias" value="PDK-1" />
+        <Name name_type="OF" long_name_type="official symbol" value="PDPK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26478">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10110" />
+        <Name name_type="OF" long_name_type="official symbol" value="SGK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100122">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5925" />
+        <Name name_type="AS" long_name_type="alias" value="RB" />
+        <Name name_type="OF" long_name_type="official symbol" value="RB1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26752">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3645" />
+        <Name name_type="OF" long_name_type="official symbol" value="INSRR" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100052">
+        <Name name_type="LL" long_name_type="EntrezGene" value="4214" />
+        <Name name_type="AS" long_name_type="alias" value="MEKK1" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26750">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3480" />
+        <Name name_type="AS" long_name_type="alias" value="IGF-1R" />
+        <Name name_type="OF" long_name_type="official symbol" value="IGF1R" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26566">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6197" />
+        <Name name_type="OF" long_name_type="official symbol" value="RPS6KA3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26783">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6714" />
+        <Name name_type="OF" long_name_type="official symbol" value="SRC" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100121">
+        <Name name_type="AS" long_name_type="alias" value="PTISLRE" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26784">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6725" />
+        <Name name_type="OF" long_name_type="official symbol" value="SRMS" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26716">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1436" />
+        <Name name_type="OF" long_name_type="official symbol" value="CSF1R" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26790">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7294" />
+        <Name name_type="OF" long_name_type="official symbol" value="TXK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26477">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10087" />
+        <Name name_type="OF" long_name_type="official symbol" value="COL4A3BP" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26593">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8814" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDKL1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100291">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1232" />
+        <Name name_type="OF" long_name_type="official symbol" value="CCR3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100408">
+        <Name name_type="LL" long_name_type="EntrezGene" value="65003" />
+        <Name name_type="AS" long_name_type="alias" value="L11" />
+        <Name name_type="OF" long_name_type="official symbol" value="MRPL11" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26730">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2064" />
+        <Name name_type="OF" long_name_type="official symbol" value="ERBB2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26562">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="57396" />
+        <Name name_type="OF" long_name_type="official symbol" value="CLK4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26503">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1460" />
+        <Name name_type="OF" long_name_type="official symbol" value="CSNK2B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26775">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5747" />
+        <Name name_type="AS" long_name_type="alias" value="FAK" />
+        <Name name_type="OF" long_name_type="official symbol" value="PTK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26739">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2264" />
+        <Name name_type="OF" long_name_type="official symbol" value="FGFR4" />
+      </Molecule>
+      <Molecule molecule_type="complex" id="100404">
+        <Name name_type="AS" long_name_type="alias" value="PKA" />
+        <ComplexComponentList>
+        </ComplexComponentList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26592">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8767" />
+        <Name name_type="AS" long_name_type="alias" value="RIP2" />
+        <Name name_type="OF" long_name_type="official symbol" value="RIPK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26725">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2046" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHA8" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26600">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="9149" />
+        <Name name_type="OF" long_name_type="official symbol" value="DYRK1B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26723">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2044" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHA5" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100475">
+        <Name name_type="GO" long_name_type="Gene Ontology" value="0000307" />
+        <Name name_type="AS" long_name_type="alias" value="CDKs" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26479">
+          </Member>
+          <Member member_molecule_idref="26483">
+          </Member>
+          <Member member_molecule_idref="26480">
+          </Member>
+          <Member member_molecule_idref="26484">
+          </Member>
+          <Member member_molecule_idref="26482">
+          </Member>
+          <Member member_molecule_idref="26607">
+          </Member>
+          <Member member_molecule_idref="26481">
+          </Member>
+          <Member member_molecule_idref="26485">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26480">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1018" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26483">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1021" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK6" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26484">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1022" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26482">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1020" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK5" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26481">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1019" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDK4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26601">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="92" />
+        <Name name_type="AS" long_name_type="alias" value="ACVR2" />
+        <Name name_type="OF" long_name_type="official symbol" value="ACVR2A" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100239">
+        <Name name_type="AS" long_name_type="alias" value="TGF-R-beta" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26584">
+          </Member>
+          <Member member_molecule_idref="100240">
+          </Member>
+          <Member member_molecule_idref="26583">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100240">
+        <Name name_type="AS" long_name_type="alias" value="T-beta-R-III" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100330">
+        <Name name_type="LL" long_name_type="EntrezGene" value="56924" />
+        <Name name_type="OF" long_name_type="official symbol" value="PAK6" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26493">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="11200" />
+        <Name name_type="AS" long_name_type="alias" value="CHK2" />
+        <Name name_type="OF" long_name_type="official symbol" value="CHEK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26578">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6793" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK10" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100118">
+        <Name name_type="LL" long_name_type="EntrezGene" value="985" />
+        <Name name_type="AS" long_name_type="alias" value="Cell division cycle-2-like 2" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDC2L2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26543">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5587" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKD1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100407">
+        <Name name_type="LL" long_name_type="EntrezGene" value="3320" />
+        <Name name_type="AS" long_name_type="alias" value="HSP90" />
+        <Name name_type="OF" long_name_type="official symbol" value="HSPCA" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26738">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2263" />
+        <Name name_type="OF" long_name_type="official symbol" value="FGFR2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29237">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="111" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY5" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26569">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="65266" />
+        <Name name_type="OF" long_name_type="official symbol" value="WNK4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26591">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8737" />
+        <Name name_type="AS" long_name_type="alias" value="RIP" />
+        <Name name_type="OF" long_name_type="official symbol" value="RIPK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26748">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="27" />
+        <Name name_type="OF" long_name_type="official symbol" value="ABL2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100281">
+        <Name name_type="AS" long_name_type="alias" value="G-protein Receptor" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100285">
+          </Member>
+          <Member member_molecule_idref="100283">
+          </Member>
+          <Member member_molecule_idref="100288">
+          </Member>
+          <Member member_molecule_idref="100287">
+          </Member>
+          <Member member_molecule_idref="100095">
+          </Member>
+          <Member member_molecule_idref="100290">
+          </Member>
+          <Member member_molecule_idref="100286">
+          </Member>
+          <Member member_molecule_idref="100291">
+          </Member>
+          <Member member_molecule_idref="100146">
+          </Member>
+          <Member member_molecule_idref="100284">
+          </Member>
+          <Member member_molecule_idref="100282">
+          </Member>
+          <Member member_molecule_idref="100289">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100287">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1234" />
+        <Name name_type="OF" long_name_type="official symbol" value="CCR5" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100290">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5731" />
+        <Name name_type="AS" long_name_type="alias" value="PGE1R" />
+        <Name name_type="AS" long_name_type="alias" value="EP1R" />
+        <Name name_type="OF" long_name_type="official symbol" value="PTGER1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100286">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5029" />
+        <Name name_type="AS" long_name_type="alias" value="P2Y2" />
+        <Name name_type="OF" long_name_type="official symbol" value="P2RY2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100146">
+        <Name name_type="AS" long_name_type="alias" value="Endothelin receptor" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100148">
+          </Member>
+          <Member member_molecule_idref="100147">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100147">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1909" />
+        <Name name_type="AS" long_name_type="alias" value="Endothelin receptor type A" />
+        <Name name_type="OF" long_name_type="official symbol" value="EDNRA" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100148">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1910" />
+        <Name name_type="AS" long_name_type="alias" value="Endothelin receptor type B" />
+        <Name name_type="OF" long_name_type="official symbol" value="EDNRB" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29242">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="196883" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26760">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4058" />
+        <Name name_type="OF" long_name_type="official symbol" value="LTK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26603">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="9262" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK17B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100494">
+        <Name name_type="AS" long_name_type="alias" value="SRC/Hck/c-Fgr" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26740">
+          </Member>
+          <Member member_molecule_idref="26749">
+          </Member>
+          <Member member_molecule_idref="26783">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26749">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3055" />
+        <Name name_type="OF" long_name_type="official symbol" value="HCK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26594">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="8859" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK19" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100266">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5583" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-eta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCH" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26499">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="140901" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK35" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100405">
+        <Name name_type="AS" long_name_type="alias" value="PPAR chaperone" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="28651">
+          </Member>
+          <Member member_molecule_idref="100122">
+          </Member>
+          <Member member_molecule_idref="100407">
+          </Member>
+          <Member member_molecule_idref="100408">
+          </Member>
+          <Member member_molecule_idref="100406">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100406">
+        <Name name_type="LL" long_name_type="EntrezGene" value="3303" />
+        <Name name_type="AS" long_name_type="alias" value="HSP70" />
+        <Name name_type="OF" long_name_type="official symbol" value="HSPA1A" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100055">
+        <Name name_type="AS" long_name_type="alias" value="MAP3K4/MAP3K12" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26585">
+          </Member>
+          <Member member_molecule_idref="100056">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100056">
+        <Name name_type="LL" long_name_type="EntrezGene" value="4216" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26585">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7786" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K12" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26476">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10000" />
+        <Name name_type="AS" long_name_type="alias" value="calcium/phospholipid-dependent protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="serine(threonine) protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="raf kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein kinase ck2" />
+        <Name name_type="AS" long_name_type="alias" value="m phase-specific cdc2 kinase" />
+        <Name name_type="AS" long_name_type="alias" value="serine protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein kinase a" />
+        <Name name_type="AS" long_name_type="alias" value="calcium-dependent protein kinase c" />
+        <Name name_type="AS" long_name_type="alias" value="protein kinase p58" />
+        <Name name_type="AS" long_name_type="alias" value="threonine-specific protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="ribosomal protein s6 kinase ii" />
+        <Name name_type="AS" long_name_type="alias" value="camp-dependent protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="glycogen synthase kinase" />
+        <Name name_type="AS" long_name_type="alias" value="casein kinase ii" />
+        <Name name_type="AS" long_name_type="alias" value="cyclic monophosphate-dependent protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein-aspartyl kinase" />
+        <Name name_type="AS" long_name_type="alias" value="betaiipkc" />
+        <Name name_type="AS" long_name_type="alias" value="hpr kinase" />
+        <Name name_type="AS" long_name_type="alias" value="phosphorylase b kinase kinase" />
+        <Name name_type="AS" long_name_type="alias" value="camp-dependent protein kinase a" />
+        <Name name_type="AS" long_name_type="alias" value="ck-2" />
+        <Name name_type="AS" long_name_type="alias" value="serine/threonine protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="serine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="type-2 casein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="ap50 kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein-serine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="cyclic nucleotide-dependent protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="casein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="casein kinase i" />
+        <Name name_type="AS" long_name_type="alias" value="raf-1" />
+        <Name name_type="AS" long_name_type="alias" value="protein serine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="twitchin kinase" />
+        <Name name_type="AS" long_name_type="alias" value="pka" />
+        <Name name_type="AS" long_name_type="alias" value="protein serine-threonine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="atp-protein transphosphorylase" />
+        <Name name_type="AS" long_name_type="alias" value="pkc" />
+        <Name name_type="AS" long_name_type="alias" value="cgmp-dependent protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="a-kinase" />
+        <Name name_type="AS" long_name_type="alias" value="cyclic amp-dependent protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="ckii" />
+        <Name name_type="AS" long_name_type="alias" value="mitogen-activated s6 kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein glutamyl kinase" />
+        <Name name_type="AS" long_name_type="alias" value="glycogen synthase a kinase" />
+        <Name name_type="AS" long_name_type="alias" value="mitogen-activated protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="hydroxyalkyl-protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="ribosomal s6 protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="cki" />
+        <Name name_type="AS" long_name_type="alias" value="cytidine 3&#x27;,5&#x27;-cyclic monophosphate-responsive protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein phosphokinase" />
+        <Name name_type="AS" long_name_type="alias" value="protein-cysteine kinase" />
+        <Name name_type="AS" long_name_type="alias" value="cyclic amp-dependent protein kinase a" />
+        <Name name_type="AS" long_name_type="alias" value="p82 kinase" />
+        <Name name_type="AS" long_name_type="alias" value="casein kinase 2" />
+        <Name name_type="AS" long_name_type="alias" value="serine-specific protein kinase" />
+        <Name name_type="AS" long_name_type="alias" value="cyclin-dependent kinase" />
+        <Name name_type="AS" long_name_type="alias" value="t-antigen kinase" />
+        <Name name_type="AS" long_name_type="alias" value="beta-andrenergic receptor kinase" />
+        <Name name_type="AS" long_name_type="alias" value="epsilon pkc" />
+        <Name name_type="AS" long_name_type="alias" value="mapk" />
+        <Name name_type="OF" long_name_type="official symbol" value="AKT3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26516">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="30811" />
+        <Name name_type="OF" long_name_type="official symbol" value="HUNK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26504">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1612" />
+        <Name name_type="OF" long_name_type="official symbol" value="DAPK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26498">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="130399" />
+        <Name name_type="OF" long_name_type="official symbol" value="ACVR1C" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100328">
+        <Name name_type="AS" long_name_type="alias" value="PAKs" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100331">
+          </Member>
+          <Member member_molecule_idref="26528">
+          </Member>
+          <Member member_molecule_idref="100329">
+          </Member>
+          <Member member_molecule_idref="100330">
+          </Member>
+          <Member member_molecule_idref="100124">
+          </Member>
+          <Member member_molecule_idref="26487">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100124">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5062" />
+        <Name name_type="OF" long_name_type="official symbol" value="PAK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100331">
+        <Name name_type="LL" long_name_type="EntrezGene" value="57144" />
+        <Name name_type="OF" long_name_type="official symbol" value="PAK7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29241">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="115" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY9" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26492">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1111" />
+        <Name name_type="AS" long_name_type="alias" value="CHK1" />
+        <Name name_type="OF" long_name_type="official symbol" value="CHEK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26502">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="1459" />
+        <Name name_type="OF" long_name_type="official symbol" value="CSNK2A2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26536">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5566" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKACA" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100050">
+        <Name name_type="AS" long_name_type="alias" value="MAP3K2/MEKK1/MAP3K3/MAP3K8" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100053">
+          </Member>
+          <Member member_molecule_idref="100054">
+          </Member>
+          <Member member_molecule_idref="100051">
+          </Member>
+          <Member member_molecule_idref="100052">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100051">
+        <Name name_type="LL" long_name_type="EntrezGene" value="10746" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100054">
+        <Name name_type="LL" long_name_type="EntrezGene" value="1326" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K8" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26532">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="51755" />
+        <Name name_type="OF" long_name_type="official symbol" value="CRK7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100579">
+        <Name name_type="AS" long_name_type="alias" value="PAK2 (cleaved)" />
+        <Part whole_molecule_idref="100124" part_molecule_idref="100579" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26782">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="660" />
+        <Name name_type="OF" long_name_type="official symbol" value="BMX" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26582">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="701" />
+        <Name name_type="OF" long_name_type="official symbol" value="BUB1B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26568">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6446" />
+        <Name name_type="OF" long_name_type="official symbol" value="SGK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26722">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2043" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHA4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26758">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3815" />
+        <Name name_type="AS" long_name_type="alias" value="SCF-R" />
+        <Name name_type="OF" long_name_type="official symbol" value="KIT" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26551">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5596" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29233">
+        <Name name_type="AS" long_name_type="alias" value="EC_4.6.1.1" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="29240">
+          </Member>
+          <Member member_molecule_idref="29236">
+          </Member>
+          <Member member_molecule_idref="29243">
+          </Member>
+          <Member member_molecule_idref="29237">
+          </Member>
+          <Member member_molecule_idref="29239">
+          </Member>
+          <Member member_molecule_idref="29238">
+          </Member>
+          <Member member_molecule_idref="29235">
+          </Member>
+          <Member member_molecule_idref="29242">
+          </Member>
+          <Member member_molecule_idref="29241">
+          </Member>
+          <Member member_molecule_idref="29234">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="29243">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="55811" />
+        <Name name_type="OF" long_name_type="official symbol" value="SAC" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="29238">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="4.6.1.1" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="112" />
+        <Name name_type="OF" long_name_type="official symbol" value="ADCY6" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26575">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6789" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK4" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26724">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2045" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHA7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26766">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4914" />
+        <Name name_type="AS" long_name_type="alias" value="TRkA" />
+        <Name name_type="OF" long_name_type="official symbol" value="NTRK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26509">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="26576" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK23" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26737">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2261" />
+        <Name name_type="OF" long_name_type="official symbol" value="FGFR3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26746">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="25" />
+        <Name name_type="AS" long_name_type="alias" value="c-ABL" />
+        <Name name_type="OF" long_name_type="official symbol" value="ABL1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26604">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="9263" />
+        <Name name_type="OF" long_name_type="official symbol" value="STK17A" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100562">
+        <Name name_type="AS" long_name_type="alias" value="SRC (cleaved)" />
+        <Part whole_molecule_idref="26783" part_molecule_idref="100562" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26713">
+        <Name name_type="AS" long_name_type="alias" value="EC_2.7.1.112" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26786">
+          </Member>
+          <Member member_molecule_idref="26734">
+          </Member>
+          <Member member_molecule_idref="26771">
+          </Member>
+          <Member member_molecule_idref="26772">
+          </Member>
+          <Member member_molecule_idref="26783">
+          </Member>
+          <Member member_molecule_idref="26729">
+          </Member>
+          <Member member_molecule_idref="26716">
+          </Member>
+          <Member member_molecule_idref="26784">
+          </Member>
+          <Member member_molecule_idref="26765">
+          </Member>
+          <Member member_molecule_idref="26790">
+          </Member>
+          <Member member_molecule_idref="26788">
+          </Member>
+          <Member member_molecule_idref="26774">
+          </Member>
+          <Member member_molecule_idref="26785">
+          </Member>
+          <Member member_molecule_idref="26773">
+          </Member>
+          <Member member_molecule_idref="26787">
+          </Member>
+          <Member member_molecule_idref="26794">
+          </Member>
+          <Member member_molecule_idref="26733">
+          </Member>
+          <Member member_molecule_idref="26791">
+          </Member>
+          <Member member_molecule_idref="26730">
+          </Member>
+          <Member member_molecule_idref="26741">
+          </Member>
+          <Member member_molecule_idref="26781">
+          </Member>
+          <Member member_molecule_idref="26714">
+          </Member>
+          <Member member_molecule_idref="26719">
+          </Member>
+          <Member member_molecule_idref="26780">
+          </Member>
+          <Member member_molecule_idref="26761">
+          </Member>
+          <Member member_molecule_idref="26747">
+          </Member>
+          <Member member_molecule_idref="26778">
+          </Member>
+          <Member member_molecule_idref="26495">
+          </Member>
+          <Member member_molecule_idref="26740">
+          </Member>
+          <Member member_molecule_idref="26764">
+          </Member>
+          <Member member_molecule_idref="26715">
+          </Member>
+          <Member member_molecule_idref="26756">
+          </Member>
+          <Member member_molecule_idref="26588">
+          </Member>
+          <Member member_molecule_idref="26796">
+          </Member>
+          <Member member_molecule_idref="26562">
+          </Member>
+          <Member member_molecule_idref="26775">
+          </Member>
+          <Member member_molecule_idref="26739">
+          </Member>
+          <Member member_molecule_idref="26795">
+          </Member>
+          <Member member_molecule_idref="26725">
+          </Member>
+          <Member member_molecule_idref="26743">
+          </Member>
+          <Member member_molecule_idref="26769">
+          </Member>
+          <Member member_molecule_idref="26726">
+          </Member>
+          <Member member_molecule_idref="26782">
+          </Member>
+          <Member member_molecule_idref="26763">
+          </Member>
+          <Member member_molecule_idref="26732">
+          </Member>
+          <Member member_molecule_idref="26727">
+          </Member>
+          <Member member_molecule_idref="26731">
+          </Member>
+          <Member member_molecule_idref="26720">
+          </Member>
+          <Member member_molecule_idref="26789">
+          </Member>
+          <Member member_molecule_idref="26776">
+          </Member>
+          <Member member_molecule_idref="26757">
+          </Member>
+          <Member member_molecule_idref="26600">
+          </Member>
+          <Member member_molecule_idref="26754">
+          </Member>
+          <Member member_molecule_idref="26777">
+          </Member>
+          <Member member_molecule_idref="26755">
+          </Member>
+          <Member member_molecule_idref="26723">
+          </Member>
+          <Member member_molecule_idref="26767">
+          </Member>
+          <Member member_molecule_idref="26722">
+          </Member>
+          <Member member_molecule_idref="26758">
+          </Member>
+          <Member member_molecule_idref="26728">
+          </Member>
+          <Member member_molecule_idref="26717">
+          </Member>
+          <Member member_molecule_idref="26793">
+          </Member>
+          <Member member_molecule_idref="26779">
+          </Member>
+          <Member member_molecule_idref="26762">
+          </Member>
+          <Member member_molecule_idref="26718">
+          </Member>
+          <Member member_molecule_idref="26724">
+          </Member>
+          <Member member_molecule_idref="26766">
+          </Member>
+          <Member member_molecule_idref="26744">
+          </Member>
+          <Member member_molecule_idref="26749">
+          </Member>
+          <Member member_molecule_idref="26737">
+          </Member>
+          <Member member_molecule_idref="26746">
+          </Member>
+          <Member member_molecule_idref="26768">
+          </Member>
+          <Member member_molecule_idref="26751">
+          </Member>
+          <Member member_molecule_idref="26738">
+          </Member>
+          <Member member_molecule_idref="26721">
+          </Member>
+          <Member member_molecule_idref="26745">
+          </Member>
+          <Member member_molecule_idref="26770">
+          </Member>
+          <Member member_molecule_idref="26753">
+          </Member>
+          <Member member_molecule_idref="26735">
+          </Member>
+          <Member member_molecule_idref="26736">
+          </Member>
+          <Member member_molecule_idref="26748">
+          </Member>
+          <Member member_molecule_idref="26792">
+          </Member>
+          <Member member_molecule_idref="26752">
+          </Member>
+          <Member member_molecule_idref="26759">
+          </Member>
+          <Member member_molecule_idref="26742">
+          </Member>
+          <Member member_molecule_idref="26750">
+          </Member>
+          <Member member_molecule_idref="26760">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26747">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2534" />
+        <Name name_type="OF" long_name_type="official symbol" value="FYN" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26744">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="238" />
+        <Name name_type="OF" long_name_type="official symbol" value="ALK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26767">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4915" />
+        <Name name_type="OF" long_name_type="official symbol" value="NTRK2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26715">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="10461" />
+        <Name name_type="OF" long_name_type="official symbol" value="MERTK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26768">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4916" />
+        <Name name_type="OF" long_name_type="official symbol" value="NTRK3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26745">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2444" />
+        <Name name_type="OF" long_name_type="official symbol" value="FRK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26793">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7465" />
+        <Name name_type="OF" long_name_type="official symbol" value="WEE1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26770">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4920" />
+        <Name name_type="OF" long_name_type="official symbol" value="ROR2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26735">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2242" />
+        <Name name_type="OF" long_name_type="official symbol" value="FES" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26736">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2260" />
+        <Name name_type="OF" long_name_type="official symbol" value="FGFR1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26769">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4919" />
+        <Name name_type="OF" long_name_type="official symbol" value="ROR1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26792">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="7301" />
+        <Name name_type="OF" long_name_type="official symbol" value="TYRO3" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26726">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2047" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHB1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26759">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3932" />
+        <Name name_type="OF" long_name_type="official symbol" value="LCK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26762">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4145" />
+        <Name name_type="OF" long_name_type="official symbol" value="MATK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26781">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="640" />
+        <Name name_type="OF" long_name_type="official symbol" value="BLK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26727">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="2048" />
+        <Name name_type="OF" long_name_type="official symbol" value="EPHB2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26780">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6259" />
+        <Name name_type="OF" long_name_type="official symbol" value="RYK" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26761">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.112" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4067" />
+        <Name name_type="OF" long_name_type="official symbol" value="LYN" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="44">
+        <Name name_type="KG" long_name_type="KEGG" value="C00044" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="86-01-1" />
+        <Name name_type="AS" long_name_type="alias" value="gtp" />
+        <Name name_type="AS" long_name_type="alias" value="guanosine 5&#x27;-triphosphate" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26602">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="9212" />
+        <Name name_type="OF" long_name_type="official symbol" value="AURKB" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26577">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="6792" />
+        <Name name_type="OF" long_name_type="official symbol" value="CDKL5" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="551">
+        <Name name_type="KG" long_name_type="KEGG" value="C00575" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="60-92-4" />
+        <Name name_type="AS" long_name_type="alias" value="cyclic amp" />
+        <Name name_type="AS" long_name_type="alias" value="cyclic adenylic acid" />
+        <Name name_type="AS" long_name_type="alias" value="adenosine 3&#x27;,5&#x27;-phosphate" />
+        <Name name_type="AS" long_name_type="alias" value="3&#x27;,5&#x27;-cyclic amp" />
+        <Name name_type="AS" long_name_type="alias" value="camp" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100057">
+        <Name name_type="AS" long_name_type="alias" value="ASK1/TAK1/MAP3K11" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100058">
+          </Member>
+          <Member member_molecule_idref="26764">
+          </Member>
+          <Member member_molecule_idref="100059">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100059">
+        <Name name_type="LL" long_name_type="EntrezGene" value="6885" />
+        <Name name_type="AS" long_name_type="alias" value="TAK1" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26505">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="207" />
+        <Name name_type="AS" long_name_type="alias" value="AKT" />
+        <Name name_type="OF" long_name_type="official symbol" value="AKT1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26563">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5871" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP4K2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26535">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5347" />
+        <Name name_type="OF" long_name_type="official symbol" value="PLK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26544">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5589" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCSH" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100078">
+        <Name name_type="AS" long_name_type="alias" value="MAPK11/ERK6/MAPK13/p38" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26500">
+          </Member>
+          <Member member_molecule_idref="26558">
+          </Member>
+          <Member member_molecule_idref="26567">
+          </Member>
+          <Member member_molecule_idref="26555">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26541">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5582" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-gamma" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCG" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26597">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="90" />
+        <Name name_type="OF" long_name_type="official symbol" value="ACVR1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100580">
+        <Name name_type="AS" long_name_type="alias" value="MAP3K1 (cleaved)" />
+        <Part whole_molecule_idref="100052" part_molecule_idref="100580" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26561">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5681" />
+        <Name name_type="OF" long_name_type="official symbol" value="PSKH1" />
+      </Molecule>
+      <Molecule molecule_type="compound" id="2">
+        <Name name_type="KG" long_name_type="KEGG" value="C00002" />
+        <Name name_type="CA" long_name_type="Chemical Abstracts" value="56-65-5" />
+        <Name name_type="AS" long_name_type="alias" value="atp" />
+        <Name name_type="AS" long_name_type="alias" value="adenosine 5&#x27;-triphosphate" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26545">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5590" />
+        <Name name_type="AS" long_name_type="alias" value="PKC-zeta" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKCZ" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26519">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="3984" />
+        <Name name_type="AS" long_name_type="alias" value="LIM KINASE" />
+        <Name name_type="OF" long_name_type="official symbol" value="LIMK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26598">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="9020" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAP3K14" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100264">
+        <Name name_type="AS" long_name_type="alias" value="nPKC" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100266">
+          </Member>
+          <Member member_molecule_idref="100265">
+          </Member>
+          <Member member_molecule_idref="100267">
+          </Member>
+          <Member member_molecule_idref="100125">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100116">
+        <Name name_type="AS" long_name_type="alias" value="Caspase 3/6 inactivated cell cycle/DNA repair proteins" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100117">
+          </Member>
+          <Member member_molecule_idref="100119">
+          </Member>
+          <Member member_molecule_idref="100122">
+          </Member>
+          <Member member_molecule_idref="26187">
+          </Member>
+          <Member member_molecule_idref="100118">
+          </Member>
+          <Member member_molecule_idref="26546">
+          </Member>
+          <Member member_molecule_idref="100120">
+          </Member>
+          <Member member_molecule_idref="100121">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26546">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5591" />
+        <Name name_type="AS" long_name_type="alias" value="DNA-PK" />
+        <Name name_type="OF" long_name_type="official symbol" value="PRKDC" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26475">
+        <Name name_type="AS" long_name_type="alias" value="EC_2.7.1.37" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26548">
+          </Member>
+          <Member member_molecule_idref="26477">
+          </Member>
+          <Member member_molecule_idref="26593">
+          </Member>
+          <Member member_molecule_idref="26590">
+          </Member>
+          <Member member_molecule_idref="26501">
+          </Member>
+          <Member member_molecule_idref="26602">
+          </Member>
+          <Member member_molecule_idref="26577">
+          </Member>
+          <Member member_molecule_idref="26559">
+          </Member>
+          <Member member_molecule_idref="26505">
+          </Member>
+          <Member member_molecule_idref="26507">
+          </Member>
+          <Member member_molecule_idref="26552">
+          </Member>
+          <Member member_molecule_idref="26495">
+          </Member>
+          <Member member_molecule_idref="26574">
+          </Member>
+          <Member member_molecule_idref="26563">
+          </Member>
+          <Member member_molecule_idref="26599">
+          </Member>
+          <Member member_molecule_idref="26588">
+          </Member>
+          <Member member_molecule_idref="26503">
+          </Member>
+          <Member member_molecule_idref="26562">
+          </Member>
+          <Member member_molecule_idref="26581">
+          </Member>
+          <Member member_molecule_idref="26512">
+          </Member>
+          <Member member_molecule_idref="26592">
+          </Member>
+          <Member member_molecule_idref="26595">
+          </Member>
+          <Member member_molecule_idref="26535">
+          </Member>
+          <Member member_molecule_idref="26517">
+          </Member>
+          <Member member_molecule_idref="26550">
+          </Member>
+          <Member member_molecule_idref="26544">
+          </Member>
+          <Member member_molecule_idref="26541">
+          </Member>
+          <Member member_molecule_idref="26489">
+          </Member>
+          <Member member_molecule_idref="26584">
+          </Member>
+          <Member member_molecule_idref="26600">
+          </Member>
+          <Member member_molecule_idref="26597">
+          </Member>
+          <Member member_molecule_idref="26555">
+          </Member>
+          <Member member_molecule_idref="26497">
+          </Member>
+          <Member member_molecule_idref="26514">
+          </Member>
+          <Member member_molecule_idref="26533">
+          </Member>
+          <Member member_molecule_idref="26524">
+          </Member>
+          <Member member_molecule_idref="26561">
+          </Member>
+          <Member member_molecule_idref="26576">
+          </Member>
+          <Member member_molecule_idref="26487">
+          </Member>
+          <Member member_molecule_idref="26545">
+          </Member>
+          <Member member_molecule_idref="26601">
+          </Member>
+          <Member member_molecule_idref="26510">
+          </Member>
+          <Member member_molecule_idref="26556">
+          </Member>
+          <Member member_molecule_idref="26519">
+          </Member>
+          <Member member_molecule_idref="26607">
+          </Member>
+          <Member member_molecule_idref="26598">
+          </Member>
+          <Member member_molecule_idref="26530">
+          </Member>
+          <Member member_molecule_idref="26479">
+          </Member>
+          <Member member_molecule_idref="26480">
+          </Member>
+          <Member member_molecule_idref="26528">
+          </Member>
+          <Member member_molecule_idref="26605">
+          </Member>
+          <Member member_molecule_idref="26567">
+          </Member>
+          <Member member_molecule_idref="26578">
+          </Member>
+          <Member member_molecule_idref="26493">
+          </Member>
+          <Member member_molecule_idref="26526">
+          </Member>
+          <Member member_molecule_idref="26565">
+          </Member>
+          <Member member_molecule_idref="26596">
+          </Member>
+          <Member member_molecule_idref="26543">
+          </Member>
+          <Member member_molecule_idref="26539">
+          </Member>
+          <Member member_molecule_idref="26585">
+          </Member>
+          <Member member_molecule_idref="26573">
+          </Member>
+          <Member member_molecule_idref="26521">
+          </Member>
+          <Member member_molecule_idref="26580">
+          </Member>
+          <Member member_molecule_idref="26591">
+          </Member>
+          <Member member_molecule_idref="26569">
+          </Member>
+          <Member member_molecule_idref="26571">
+          </Member>
+          <Member member_molecule_idref="26500">
+          </Member>
+          <Member member_molecule_idref="26508">
+          </Member>
+          <Member member_molecule_idref="26554">
+          </Member>
+          <Member member_molecule_idref="26483">
+          </Member>
+          <Member member_molecule_idref="26484">
+          </Member>
+          <Member member_molecule_idref="26558">
+          </Member>
+          <Member member_molecule_idref="26603">
+          </Member>
+          <Member member_molecule_idref="26496">
+          </Member>
+          <Member member_molecule_idref="26494">
+          </Member>
+          <Member member_molecule_idref="26547">
+          </Member>
+          <Member member_molecule_idref="26594">
+          </Member>
+          <Member member_molecule_idref="26499">
+          </Member>
+          <Member member_molecule_idref="26572">
+          </Member>
+          <Member member_molecule_idref="26583">
+          </Member>
+          <Member member_molecule_idref="26520">
+          </Member>
+          <Member member_molecule_idref="26534">
+          </Member>
+          <Member member_molecule_idref="26506">
+          </Member>
+          <Member member_molecule_idref="26476">
+          </Member>
+          <Member member_molecule_idref="26516">
+          </Member>
+          <Member member_molecule_idref="26589">
+          </Member>
+          <Member member_molecule_idref="26504">
+          </Member>
+          <Member member_molecule_idref="26498">
+          </Member>
+          <Member member_molecule_idref="26542">
+          </Member>
+          <Member member_molecule_idref="26549">
+          </Member>
+          <Member member_molecule_idref="26606">
+          </Member>
+          <Member member_molecule_idref="26560">
+          </Member>
+          <Member member_molecule_idref="26570">
+          </Member>
+          <Member member_molecule_idref="26492">
+          </Member>
+          <Member member_molecule_idref="26502">
+          </Member>
+          <Member member_molecule_idref="26536">
+          </Member>
+          <Member member_molecule_idref="26532">
+          </Member>
+          <Member member_molecule_idref="26488">
+          </Member>
+          <Member member_molecule_idref="26518">
+          </Member>
+          <Member member_molecule_idref="26564">
+          </Member>
+          <Member member_molecule_idref="26582">
+          </Member>
+          <Member member_molecule_idref="26537">
+          </Member>
+          <Member member_molecule_idref="26587">
+          </Member>
+          <Member member_molecule_idref="26486">
+          </Member>
+          <Member member_molecule_idref="26568">
+          </Member>
+          <Member member_molecule_idref="26515">
+          </Member>
+          <Member member_molecule_idref="26586">
+          </Member>
+          <Member member_molecule_idref="26540">
+          </Member>
+          <Member member_molecule_idref="26523">
+          </Member>
+          <Member member_molecule_idref="26553">
+          </Member>
+          <Member member_molecule_idref="26511">
+          </Member>
+          <Member member_molecule_idref="26551">
+          </Member>
+          <Member member_molecule_idref="26538">
+          </Member>
+          <Member member_molecule_idref="26608">
+          </Member>
+          <Member member_molecule_idref="26482">
+          </Member>
+          <Member member_molecule_idref="26481">
+          </Member>
+          <Member member_molecule_idref="26485">
+          </Member>
+          <Member member_molecule_idref="26527">
+          </Member>
+          <Member member_molecule_idref="26575">
+          </Member>
+          <Member member_molecule_idref="26546">
+          </Member>
+          <Member member_molecule_idref="26531">
+          </Member>
+          <Member member_molecule_idref="26513">
+          </Member>
+          <Member member_molecule_idref="26490">
+          </Member>
+          <Member member_molecule_idref="26509">
+          </Member>
+          <Member member_molecule_idref="26522">
+          </Member>
+          <Member member_molecule_idref="26579">
+          </Member>
+          <Member member_molecule_idref="26525">
+          </Member>
+          <Member member_molecule_idref="26478">
+          </Member>
+          <Member member_molecule_idref="26604">
+          </Member>
+          <Member member_molecule_idref="26557">
+          </Member>
+          <Member member_molecule_idref="26529">
+          </Member>
+          <Member member_molecule_idref="26491">
+          </Member>
+          <Member member_molecule_idref="26566">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="26523">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="4342" />
+        <Name name_type="OF" long_name_type="official symbol" value="MOS" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26570">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="657" />
+        <Name name_type="AS" long_name_type="alias" value="ALK3" />
+        <Name name_type="OF" long_name_type="official symbol" value="BMPR1A" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26553">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5598" />
+        <Name name_type="AS" long_name_type="alias" value="ERK5" />
+        <Name name_type="OF" long_name_type="official symbol" value="MAPK7" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26511">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="27102" />
+        <Name name_type="AS" long_name_type="alias" value="HRI" />
+        <Name name_type="OF" long_name_type="official symbol" value="EIF2AK1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26534">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="5292" />
+        <Name name_type="OF" long_name_type="official symbol" value="PIM1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26571">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="658" />
+        <Name name_type="OF" long_name_type="official symbol" value="BMPR1B" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="26491">
+        <Name name_type="EC" long_name_type="Enzyme Consortium" value="2.7.1.37" />
+        <Name name_type="LL" long_name_type="EntrezGene" value="11040" />
+        <Name name_type="OF" long_name_type="official symbol" value="PIM2" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100123">
+        <Name name_type="AS" long_name_type="alias" value="Caspase 3/6 inactivated kinases" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26775">
+          </Member>
+          <Member member_molecule_idref="26591">
+          </Member>
+          <Member member_molecule_idref="100125">
+          </Member>
+          <Member member_molecule_idref="100052">
+          </Member>
+          <Member member_molecule_idref="100124">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100047">
+        <Name name_type="AS" long_name_type="alias" value="RAF1/A-RAF/B-RAF" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="100048">
+          </Member>
+          <Member member_molecule_idref="100049">
+          </Member>
+          <Member member_molecule_idref="26518">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100048">
+        <Name name_type="LL" long_name_type="EntrezGene" value="5894" />
+        <Name name_type="OF" long_name_type="official symbol" value="RAF1" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100551">
+        <Name name_type="AS" long_name_type="alias" value="Ezrin (cleaved)" />
+        <Part whole_molecule_idref="100550" part_molecule_idref="100551" start="" end="" />
+      </Molecule>
+      <Molecule molecule_type="protein" id="100077">
+        <Name name_type="AS" long_name_type="alias" value="JNK1/MAPK9/MAPK10" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26554">
+          </Member>
+          <Member member_molecule_idref="26557">
+          </Member>
+          <Member member_molecule_idref="26556">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="complex" id="101188">
+        <Name name_type="AS" long_name_type="alias" value="G-alpha-s/GTP" />
+        <ComplexComponentList>
+          <ComplexComponent molecule_idref="101186">
+          </ComplexComponent>
+          <ComplexComponent molecule_idref="44">
+          </ComplexComponent>
+        </ComplexComponentList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100402">
+        <Name name_type="AS" long_name_type="alias" value="PPAR kinases" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26550">
+          </Member>
+          <Member member_molecule_idref="26549">
+          </Member>
+          <Member member_molecule_idref="100404">
+          </Member>
+          <Member member_molecule_idref="100205">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+      <Molecule molecule_type="protein" id="100263">
+        <Name name_type="AS" long_name_type="alias" value="cPKC" />
+        <FamilyMemberList>
+          <Member member_molecule_idref="26539">
+          </Member>
+          <Member member_molecule_idref="26540">
+          </Member>
+          <Member member_molecule_idref="26541">
+          </Member>
+        </FamilyMemberList>
+      </Molecule>
+    </MoleculeList>
+    <InteractionList>
+      <Interaction interaction_type="modification" id="103123">
+        <Source id="3">BioCarta</Source>
+        <InteractionComponentList>
+          <InteractionComponent role_type="input" molecule_idref="102198">
+          </InteractionComponent>
+          <InteractionComponent role_type="input" molecule_idref="102197">
+          </InteractionComponent>
+          <InteractionComponent role_type="agent" molecule_idref="551">
+          </InteractionComponent>
+          <InteractionComponent role_type="output" molecule_idref="102201">
+          </InteractionComponent>
+          <InteractionComponent role_type="output" molecule_idref="102199">
+            <Label label_type="location" value="transmembrane" />
+            <Label label_type="activity-state" value="active" />
+          </InteractionComponent>
+        </InteractionComponentList>
+      </Interaction>
+      <Interaction interaction_type="modification" id="100720">
+        <Source id="3">BioCarta</Source>
+        <InteractionComponentList>
+          <InteractionComponent role_type="input" molecule_idref="29234">
+          </InteractionComponent>
+          <InteractionComponent role_type="agent" molecule_idref="101188">
+          </InteractionComponent>
+          <InteractionComponent role_type="output" molecule_idref="29234">
+            <Label label_type="activity-state" value="active" />
+          </InteractionComponent>
+        </InteractionComponentList>
+      </Interaction>
+      <Interaction interaction_type="modification" id="103120">
+        <Source id="3">BioCarta</Source>
+        <InteractionComponentList>
+          <InteractionComponent role_type="input" molecule_idref="101897">
+          </InteractionComponent>
+          <InteractionComponent role_type="input" molecule_idref="100179">
+            <Label label_type="location" value="extracellular" />
+          </InteractionComponent>
+          <InteractionComponent role_type="output" molecule_idref="102197">
+          </InteractionComponent>
+          <InteractionComponent role_type="output" molecule_idref="101188">
+          </InteractionComponent>
+        </InteractionComponentList>
+      </Interaction>
+      <Interaction interaction_type="modification" id="100721">
+        <Source id="3">BioCarta</Source>
+        <InteractionComponentList>
+          <InteractionComponent role_type="input" molecule_idref="2">
+          </InteractionComponent>
+          <InteractionComponent role_type="agent" molecule_idref="29234">
+            <Label label_type="activity-state" value="active" />
+          </InteractionComponent>
+          <InteractionComponent role_type="output" molecule_idref="551">
+          </InteractionComponent>
+        </InteractionComponentList>
+      </Interaction>
+      <Interaction interaction_type="translocation" id="103124">
+        <Source id="3">BioCarta</Source>
+        <InteractionComponentList>
+          <InteractionComponent role_type="input" molecule_idref="113">
+            <Label label_type="location" value="cytoplasm" />
+          </InteractionComponent>
+          <InteractionComponent role_type="agent" molecule_idref="102199">
+            <Label label_type="location" value="transmembrane" />
+            <Label label_type="activity-state" value="active" />
+          </InteractionComponent>
+          <InteractionComponent role_type="output" molecule_idref="113">
+            <Label label_type="location" value="extracellular" />
+          </InteractionComponent>
+        </InteractionComponentList>
+      </Interaction>
+    </InteractionList>
+    <PathwayList>
+      <Pathway id="100205" subnet="false">
+        <Organism>Hs</Organism>
+        <LongName>cystic fibrosis transmembrane conductance regulator (cftr) and beta 2 adrenergic receptor (b2ar) pathway</LongName>
+        <ShortName>cftrpathway</ShortName>
+        <Source id="3">BioCarta</Source>
+        <PathwayComponentList>
+          <PathwayComponent interaction_idref="103123" />
+          <PathwayComponent interaction_idref="100720" />
+          <PathwayComponent interaction_idref="103120" />
+          <PathwayComponent interaction_idref="100721" />
+          <PathwayComponent interaction_idref="103124" />
+        </PathwayComponentList>
+      </Pathway>
+    </PathwayList>
+  </Model>
+</NCI_PID_XML>
+

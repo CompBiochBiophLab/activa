@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="test-classes" path="test"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/guice-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/gin-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/aopalliance.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/gwt-ajaxloader.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/gwt-maps.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/gwt-o3d.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/gwt-rss.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/activ8-dto.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/activ8-cmd.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/activ8-gwt-web.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/gwt-dnd-3.0.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EJB3"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/activ8-remote.jar"/>
+	<classpathentry kind="lib" path="C:/Java/GWT/gwt-jaxb.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>

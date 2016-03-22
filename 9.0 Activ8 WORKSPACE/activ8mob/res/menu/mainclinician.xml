@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/toshedule"
+        android:title="@string/calendar"
+        android:icon="@drawable/schedulemenu" />
+    <item android:id="@+id/topatients"
+        android:title="@string/patients"
+        android:icon="@drawable/patientsmenu" />
+    <item android:id="@+id/toprojects"
+        android:title="@string/projects"
+        android:icon="@drawable/projectsmenu" />
+    <item android:id="@+id/topapers"
+        android:title="@string/papers"
+        android:icon="@drawable/papersmenu" />
+    <item android:id="@+id/totools"
+        android:title="@string/tools"
+        android:icon="@drawable/toolsmenu" />
+    <item android:id="@+id/tomap"
+        android:title="@string/map"
+        android:icon="@drawable/mapmenu" />
+    <item android:id="@+id/tomessages"
+        android:title="@string/messages"
+        android:icon="@drawable/messagesmenu" />
+    <item android:id="@+id/tonews"
+        android:title="@string/news"
+        android:icon="@drawable/feedsmenu" />
+    <item android:id="@+id/tonotes"
+        android:title="@string/notes"
+        android:icon="@drawable/notesmenu" />
+</menu>

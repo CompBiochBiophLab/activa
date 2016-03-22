@@ -1,0 +1,114 @@
+package com.o2hlink.activa.map;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.data.calendar.Event;
+import com.o2hlink.activa.mobile.MobileManager;
+
+import android.content.Context;
+import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+
+public class MapManager {
+
+	public boolean showingMap = false;
+	private static MapManager instance = null;
+	public Mark myPosition = null;
+	public ArrayList<Mark> myMarks = null;
+	public String provider;
+	public LocationManager myLocationManager;
+	public Location location;
+	public double northLatitude;
+	public double southLatitude;
+	public double eastLongitude;
+	public double westLongitude;
+	
+	private MapManager () {
+		this.showingMap = false;
+		this.myMarks = new ArrayList<Mark>();
+		getMyPosition();
+	}
+
+	public static MapManager getInstance() {
+		if (MapManager.instance == null) MapManager.instance = new MapManager();
+		return MapManager.instance;
+	}
+	
+	/**
+	 * Method for freeing the instance of the manager.
+	 */
+	public static void freeInstance() {
+		MapManager.instance = null;
+	}
+	
+	public void showMap() {
+		this.showingMap = true;
+		Activa.myApp.startActivity(new Intent(Activa.myApp, com.o2hlink.activa.map.ActivaMap.class));
+	}
+
+	public void getMapMarks() {
+		ActivaMap.myMap.updateMapViewLimits();
+		this.myMarks.clear();
+		Activa.myProtocolManager.getMapMarks();
+	}
+	
+	public void extractMarksFromXML(String xml) {
+		XmlPullParserFactory factory;
+		Event currentEvent;
+		try {
+			factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        boolean insideEvent = false;
+	        boolean end = true; 
+	        info.setInput(new StringReader(xml));
+	        int event = info.getEventType();
+        	currentEvent = new Event();	
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("MARK")) {
+	                	String name = info.getAttributeValue(info.getNamespace(), "TITLE");
+//	                	String text = info.getAttributeValue(info.getNamespace(), "TEXT");
+	                	String text = "";
+	                	Double latitude = Double.parseDouble(info.getAttributeValue(info.getNamespace(), "LATITUDE"));
+	                	Double longitude = Double.parseDouble(info.getAttributeValue(info.getNamespace(), "LONGITUDE"));
+	                	this.myMarks.add(new Mark(longitude, latitude, name, text));
+	                }
+	            } else if(event == XmlPullParser.END_TAG) {
+	            }
+	            event = info.next();
+	        }
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void getMyPosition() {
+        this.myLocationManager = (LocationManager)Activa.myApp.getSystemService(Context.LOCATION_SERVICE); 
+        this.provider = this.myLocationManager.getBestProvider(new Criteria(), true);
+//        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        this.location = this.myLocationManager.getLastKnownLocation(this.provider);
+        if (this.location != null) this.myPosition = new Mark(this.location.getLongitude(), this.location.getLatitude(), Activa.myMobileManager.user.getName(), "Usuario actual usando el movil");
+	}
+	
+	public void setLocationListener(LocationListener listener) {
+		Activa.myMapManager.myLocationManager.requestLocationUpdates(Activa.myMapManager.provider, 0, 0, listener);
+	}
+	
+}

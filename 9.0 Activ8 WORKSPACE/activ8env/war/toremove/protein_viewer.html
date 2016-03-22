@@ -1,0 +1,2386 @@
+<!--
+Copyright 2009, Google Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the aboveg copyright
+notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the abovefi
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+    * Neither the name of Google Inc. nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<!--
+This sample uses a custom render graph to implement a basic shadow map
+algorithm.
+
+The technique works by rendering the scene in two passes.  The first pass
+renders the geometry in the scene with a shader that colors each pixel a shade
+of gray representing how far the rendered point is from the light source.  That
+image, the shadow map, is rendered to a texture, and then the second (visible)
+render pass samples it to determine which points in the scene are in shaodow.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>
+Proteint 3D
+</title>
+<script type="text/javascript" src="xml.js"></script>
+<script type="text/javascript" src="o3djs/base.js"></script>
+<script type="text/javascript" src="loadPDB.js"></script>
+<script type="text/javascript" src="FPSCamera.js"></script>
+<script type="text/javascript" src="Load_Shaders.js"></script>
+<script type="text/javascript" src="picking.js"></script>
+<script type="text/javascript" src="rendergraph.js"></script>
+<script type="text/javascript" src="effect.js"></script>
+<script type="text/javascript" src="material.js"></script>
+<script type="text/javascript" src="Octree.js"></script>
+<script type="text/javascript" src="scene_octree.js"></script>
+<script type="text/javascript" src="Half_Edge.js"></script>
+<script type="text/javascipt" src="scene_octree.js"></script>
+<script type="text/javascript" src="png_decoder.js"></script>
+<script type="text/javascript" src="cellMembrane.js"></script>
+<script type="text/javascript" src="PathWay_Structure.js"></script>
+<script type="text/javascript" id="o3dscript">
+o3djs.require('o3djs.util');
+o3djs.require('o3djs.math');
+o3djs.require('o3djs.rendergraph');
+o3djs.require('o3djs.primitives');
+o3djs.require('o3djs.effect');
+o3djs.require('o3djs.debug');
+o3djs.require('o3djs.material');
+o3djs.require('o3djs.pack');
+o3djs.require('o3djs.scene');
+o3djs.require('o3djs.fps');
+
+
+// The initClient() function runs when the page has finished loading.
+window.onload = initClient;
+
+// global variables
+var g_o3dElement;
+var g_client;
+var g_o3d;
+var g_math;
+var g_pack;
+var g_colorViewInfo;
+var g_shadowViewInfo;
+var g_shadowTexture;
+var g_shadowMaterial;
+var g_shadowColorEffect;
+var g_shadowSampler;
+var g_lightViewProjection;
+var g_lightFrustumTransform;
+var g_globalParams = { };
+var g_viewFromLight = false;
+
+var g_renderSurfaceSet;
+var g_colorPassRenderRoot;
+
+var g_lightWorldPos = [10, 75, 25];
+var g_lightColor = [1, 1, 1, 1];
+var g_eyePosition = [1, 6, 20];
+var g_targetPosition = [0, 2, 0];
+
+// constants.
+var SHADOW_MAP_WIDTH = 512;
+var SHADOW_MAP_HEIGHT = 512;
+
+var g_finished = false;  // for selenium testing.
+
+
+var MOVE_VELOCITY = 25;  // in units per second.
+var g_o3dElement;
+var gFPSManager;
+var gPrevMouseCoords;
+var g_keyDown = [];  // which keys are down by key code.
+var g_clock = 0;
+var g_timeMult = 1;
+
+var gCamera;
+var gIsMouseDown = false;
+var gCameraSpeed = 1.0;
+
+var shadow_map_material;
+var g_treeInfo;
+
+var update_frustum
+
+var allProteins = [];
+var last_PDB = null;
+var last_chunk = 0;
+
+var near = 0.01;
+var far  = 500;
+var view_angle = 45;
+var worldRay;
+var scene_root_node = null; //to hold all the scene in a tree
+var scene_Root_AABB_shape = null;
+var ray_crossed_AABB = [];
+var ribbon_circles = [];
+
+
+
+var redAtom;
+var greenAtom;
+var blueAtom;
+var yellowAtom;
+var whiteAtom;
+var c_Shape;
+var o_Shape;
+var n_Shape;
+var h_Shape;
+var s_Shape;
+var c_Shape_stick;
+var o_Shape_stick;
+var h_Shape_stick;
+var n_Shape_stick;
+var s_Shape_stick;
+
+var s_stick_Sphere;
+var o_stick_Sphere;
+var h_stick_Sphere;
+var n_stick_Sphere;
+var c_stick_Sphere;
+
+var calculated_surface;
+var exists = false;
+
+/**
+ * Creates the client area.
+ */
+function initClient() {
+  o3djs.util.makeClients(main, 'FloatingPointTextures'); //
+}
+
+
+/**
+ * Initializes global variables, positions camera, draws shapes.
+ * @param {Array} clientElements Array of o3d object elements.
+ */
+function main(clientElements) {
+  // Init global variables.
+  initGlobals(clientElements);
+
+  // Set up the rendergraph.
+  initRenderGraph();
+
+  // Load effects, bind material parameters.
+  initMaterials();
+
+  // Add the shapes to the transform graph.
+  
+
+   gCamera = new FPSCamera(view_angle, g_client.width, g_client.height, near, far);
+   gCamera.LookAt([43.0, 73, -53.74],  [-43,  -71,  53],  [0.0,  0.0, 1.0]); // eye target up
+   gCamera.Update();
+
+   createShapes();
+   
+   gFPSManager = o3djs.fps.createFPSManager(g_pack, g_client.width, g_client.height, g_client.renderGraphRoot);
+   gFPSManager.setVisible(true);
+   gFPSManager.visible = true;
+
+   gPrevMouseCoords = [-1, -1];
+  // Set up the view and projection transformations for the camera.
+  //updateCamera();
+
+  // Init global parameters.  initGlobalParams() searches all materials in order
+  // to bind parameters, so it must be called after initMaterials()
+  initGlobalParams();
+
+  // Set the view and projection transformations for the light.
+  updateLightMatrix();
+
+  // Create the light that gets drawn.
+  createLightShape();
+
+  // Execute keyPressed() when we detect a keypress on the window or
+  // on the o3d object.
+   g_client.setRenderCallback(onRender);
+  window.document.onkeypress = keyPressed;
+  g_o3dElement.onkeypress = keyPressed;
+
+   o3djs.event.addEventListener(g_o3dElement, 'mousedown', onMouseDown);
+   o3djs.event.addEventListener(g_o3dElement, 'mousemove', onMouseMove);
+   o3djs.event.addEventListener(g_o3dElement, 'mouseup', onMouseUp);
+   o3djs.event.addEventListener(g_o3dElement, 'wheel', onMouseWheel);
+   o3djs.event.addEventListener(g_o3dElement, 'keydown', onKeyDown);
+   o3djs.event.addEventListener(g_o3dElement, 'dblclick', doubleClick);
+
+   updateInfo();
+
+   g_loadingElement = document.getElementById('loading');
+   g_pickInfoElem = document.getElementById('pickInfo');
+
+  g_finished = true;  // for selenium testing.
+}
+
+function updateInfo() {
+  if (!g_treeInfo) {
+    g_treeInfo = o3djs.picking.createTransformInfo(g_client.root,
+                                                        null);
+  }
+  g_treeInfo.update();
+}
+
+/**
+ * Initializes global variables and libraries.
+ */
+function initGlobals(clientElements) {
+  g_o3dElement = clientElements[0];
+  g_client = g_o3dElement.client;
+  g_o3d = g_o3dElement.o3d;
+  g_math = o3djs.math;
+
+  // Create a pack to manage the objects created.
+  g_pack = g_client.createPack();
+}
+
+
+/**
+ * Sets up the render graph.  Builds a basic view for the camera and the light
+ * point of view, arranges for the view from the light to be rendered to a
+ * texture for the shadow map.  Unlike the basic render graph created by the
+ * the utility function o3djs.rendergraph.createBasicView, to render the shadow
+ * map and then render the scene, we need two subtrees of the render graph, one
+ * for shadow map render pass and one to draw the scene.
+ */
+function initRenderGraph() {
+  // Create the texture that will store the depth information.
+   //g_client.renderMode = g_o3d.Client.RENDERMODE_ON_DEMAND;
+  g_shadowTexture = g_pack.createTexture2D(SHADOW_MAP_WIDTH,
+                                           SHADOW_MAP_HEIGHT,
+                                           g_o3d.Texture.ABGR32F,
+                                           1,
+                                           true);
+  var renderSurface = g_shadowTexture.getRenderSurface(0, g_pack);
+
+  // Create the depth-stencil buffer required when rendering the teapot.
+  var depthSurface = g_pack.createDepthStencilSurface(SHADOW_MAP_WIDTH,
+                                                      SHADOW_MAP_HEIGHT);
+
+  // The children of any one node in the render graph get traversed in order by
+  // priority.  Here, we're forcing the shadow map to get rendered first by
+  // by giving its render root lower priority.
+  var shadowPassRenderRoot = g_pack.createObject('RenderNode');
+  shadowPassRenderRoot.priority = 0;
+
+  g_colorPassRenderRoot = g_pack.createObject('RenderNode');
+  g_colorPassRenderRoot.priority = 1;
+
+  shadowPassRenderRoot.parent = g_client.renderGraphRoot;
+  g_colorPassRenderRoot.parent = g_client.renderGraphRoot;
+
+  g_renderSurfaceSet = g_pack.createObject('RenderSurfaceSet');
+  g_renderSurfaceSet.renderSurface = renderSurface;
+  g_renderSurfaceSet.renderDepthStencilSurface = depthSurface;
+  g_renderSurfaceSet.parent = shadowPassRenderRoot;
+
+  // Create a render sub-graph for the shadow map generation.
+  g_shadowViewInfo = o3djs.rendergraph.createBasicView(
+      g_pack,
+      g_client.root,
+      g_renderSurfaceSet,
+      [1, 1, 1, 1]);
+
+  // Create a render sub-graph for the regular pass.
+  g_colorViewInfo = o3djs.rendergraph.createBasicView(
+      g_pack,
+      g_client.root,
+      g_colorPassRenderRoot,
+      [0, 0, 0, 1]);
+}
+
+
+/**
+ * Switches between the camera and light point of view.
+ */
+function toggleView() {
+  if (g_viewFromLight) {
+    g_shadowViewInfo.root.parent = g_renderSurfaceSet;
+    g_colorPassRenderRoot.parent = g_client.renderGraphRoot;
+    g_viewFromLight = false;
+  } else {
+    g_shadowViewInfo.root.parent = g_client.renderGraphRoot;
+    g_colorPassRenderRoot.parent = null;
+    g_viewFromLight = true;
+  }
+}
+
+/**
+ * Creates a material to be put on all shapes in the scene for the shadow pass,
+ * and loads effects for materials in the scene.  Other materials are created
+ * on the fly as the shapes are created.
+ */
+function initMaterials() {
+  g_shadowMaterial = g_pack.createObject('Material');
+  g_shadowMaterial.drawList = g_shadowViewInfo.performanceDrawList;
+
+  var shadowEffect = g_pack.createObject('Effect');
+  var shadowEffectString = document.getElementById('shadowShader').text;
+  shadowEffect.loadFromFXString(shadowEffectString);
+  g_shadowMaterial.effect = shadowEffect;
+  shadowEffect.createUniformParameters(g_shadowMaterial);
+
+  g_shadowColorEffect = g_pack.createObject('Effect');
+  var colorEffectString = document.getElementById('shadowColorShader').text;
+  g_shadowColorEffect.loadFromFXString(colorEffectString);
+
+  g_shadowSampler = g_pack.createObject('Sampler');
+  g_shadowSampler.texture = g_shadowTexture;
+  g_shadowSampler.minFilter = g_o3d.Sampler.POINT;
+  g_shadowSampler.magFilter = g_o3d.Sampler.POINT;
+  g_shadowSampler.mipFilter = g_o3d.Sampler.POINT;
+  g_shadowSampler.addressModeU = g_o3d.Sampler.BORDER;
+  g_shadowSampler.addressModeV = g_o3d.Sampler.BORDER;
+  g_shadowSampler.borderColor = [1, 1, 1, 1];
+
+  redAtom   = createShadowColorMaterial([1.0, 0.0, 0.0, 1]);
+  greenAtom = createShadowColorMaterial([0.0, 1.0, 0.0, 1]);
+  blueAtom  = createShadowColorMaterial([0.0, 0.0, 1.0, 1]);
+  whiteAtom = createShadowColorMaterial([1.0, 1.0, 1.0, 1]);
+  yellowAtom = createShadowColorMaterial([1.0, 1.0, 0.0, 1]);
+
+  c_Shape = o3djs.primitives.createSphere(g_pack, whiteAtom, 1.7, 20, 20);
+  o_Shape= o3djs.primitives.createSphere(g_pack, redAtom, 1.48, 20, 20);
+  n_Shape= o3djs.primitives.createSphere(g_pack, blueAtom, 1.65, 20, 20);
+  h_Shape= o3djs.primitives.createSphere(g_pack, greenAtom, 1.0, 20, 20);
+  s_Shape= o3djs.primitives.createSphere(g_pack, yellowAtom, 1.50, 20, 20);
+  c_Sphere_stick = o3djs.primitives.createSphere(g_pack, whiteAtom, 0.3, 20, 20);
+  o_Sphere_stick = o3djs.primitives.createSphere(g_pack, redAtom, 0.3, 20, 20);
+  n_Sphere_stick = o3djs.primitives.createSphere(g_pack, blueAtom, 0.3, 20, 20);
+  h_Sphere_stick = o3djs.primitives.createSphere(g_pack, greenAtom, 0.3, 20, 20);
+  s_Sphere_stick = o3djs.primitives.createSphere(g_pack, yellowAtom, 0.3, 20, 20);
+  c_stick_Sphere = o3djs.primitives.createSphere(g_pack, whiteAtom, 0.2, 20, 20);
+  o_stick_Sphere = o3djs.primitives.createSphere(g_pack, redAtom, 0.2, 20, 20);
+  n_stick_Sphere = o3djs.primitives.createSphere(g_pack, blueAtom, 0.2, 20, 20);
+  h_stick_Sphere = o3djs.primitives.createSphere(g_pack, greenAtom, 0.2, 20, 20);
+  s_stick_Sphere = o3djs.primitives.createSphere(g_pack, yellowAtom, 0.2, 20, 20);
+
+
+}
+
+
+/**
+ * Sets up reasonable view and projection matrices.
+ */
+function updateCamera() {
+  // Set up a perspective transformation for the projection.
+  g_colorViewInfo.drawContext.projection = g_math.matrix4.perspective(
+      g_math.degToRad(30), // 30 degree frustum.
+      g_o3dElement.clientWidth / g_o3dElement.clientHeight, // Aspect ratio.
+      near,                   // Near plane.
+      far);               // Far plane.
+
+  // Set up our view transformation to look towards the world origin where the
+  // cube is located.
+  g_colorViewInfo.drawContext.view = g_math.matrix4.lookAt(
+      g_lightWorldPos,    // eye
+      g_targetPosition, // target
+      [0, 0, 0]);       // up
+}
+
+
+/**
+ * Computes the view and projection matrices from the point of view of the
+ * light. Sets the lightViewProjection parameter so the color shader can access
+ * it.
+ */
+function updateLightMatrix() {
+  // The perspective projection matrix for the light.
+  var lightProjection = g_math.matrix4.perspective(
+      g_math.degToRad(150), // 45 degree fov.
+      SHADOW_MAP_WIDTH / SHADOW_MAP_HEIGHT,   // Aspect ratio.
+      0.1,                   // Near plane.
+      5000);                 // Far plane.
+
+  // Make the light point toward the origin
+  var lightView = g_math.matrix4.lookAt(
+      g_lightWorldPos,   // light
+      [0, 0, 0],         // target
+      [1, 0, 0]);        // up
+
+  g_lightViewProjection = g_math.matrix4.composition(
+      lightProjection, lightView);
+
+  g_shadowViewInfo.drawContext.projection = lightProjection;
+  g_shadowViewInfo.drawContext.view = lightView;
+
+  g_globalParams.lightViewProjection.value = g_lightViewProjection;
+}
+
+
+/**
+ * Creates shapes using the primitives utility library, and adds them to the
+ * transform graph at the root node.
+ */
+function createShapes() {
+  // A green phong-shaded material for the cube.
+ // var cubeMaterial = createShadowColorMaterial([0.2, 0.5, 0, 1]);
+
+  // The cube shape.
+/*  var cube = o3djs.primitives.createCube(
+      g_pack,
+      cubeMaterial,
+      2);     // The length of each side of the cube.
+*/
+  // A red phong-shaded material for the sphere.
+  var sphereMaterial = createShadowColorMaterial([0.7, 0.2, 0.1, 1]);
+
+  // The sphere shape.
+  var sphere = o3djs.primitives.createSphere(
+      g_pack, sphereMaterial, 0.3, 50, 50);
+
+  // A blue phong-shaded material for the plane.
+  var planeMaterial = createShadowColorMaterial([0, 0.0, 1.0, 1]);
+
+  // The plane shape.
+  var plane = o3djs.primitives.createPlane(
+      g_pack,
+      planeMaterial,
+      100,      // Width.
+      100,      // Depth.
+      1,       // Horizontal subdivisions.
+      1);      // Vertical subdivisions.
+
+  // Associate to each shape, a translation vector.
+  var transformTable = [
+  //  {shape: cube, translation: [0, 1, 0]},
+      {shape: sphere, translation: [0, 0, 0]},
+      {shape: plane, translation: [0, -3, 0]}
+  ];
+
+  // Add the shapes to the transform graph with the translation.
+  var modelRoot = g_pack.createObject('Transform');
+  modelRoot.parent = g_client.root;
+  for (var tt = 0; tt < transformTable.length; ++tt) {
+    var transform = g_pack.createObject('Transform');
+    transform.addShape(transformTable[tt].shape);
+    // The shadow material is bound to a DrawList in the subtree of the
+    // rendergraph that handles the shadow map generation, so it gets drawn in
+    // that render pass only.
+    transformTable[tt].shape.createDrawElements(g_pack, g_shadowMaterial);
+
+    transform.translate(transformTable[tt].translation);
+    transform.parent = modelRoot;
+  }
+   loadPDB();
+   //create_PathWay_Pyramid(0, [0, 20, 0]);
+ // var docXML = read_PathWAy_XML("cftrpathway.xml");
+  //var docXML = new PDBFileInput("node.xml");
+  //readXML(docXML);
+  //createMembrane(10, 10, 2);
+}
+
+
+
+
+/**
+ * Creates the wireframe frustum showing the shadow map's render volume.
+ */
+function createLightShape() {
+  var inverseMatrix = g_math.matrix4.inverse(g_lightViewProjection);
+
+  // Scale and translate a cube of side length 2 to get a box
+  // that extends from [-1, -1, 0] to [1, 1, 1].
+  var shape = o3djs.debug.createLineCube(
+                  g_pack,
+                  o3djs.material.createConstantMaterial(g_pack,
+                                                        g_colorViewInfo,
+                                                        [1, 0, 0, 1]),
+                  2,
+                  g_math.matrix4.compose(
+                      g_math.matrix4.translation([0, 0, 0.5]),
+                      g_math.matrix4.scaling([1, 1, 0.5])));
+
+  g_lightFrustumTransform = g_pack.createObject('Transform');
+  g_lightFrustumTransform.localMatrix = inverseMatrix;
+  g_lightFrustumTransform.parent = g_client.root;
+  g_lightFrustumTransform.addShape(shape);
+     
+}
+
+
+/**
+ * Creates a Phong-shaded, shadowed material based on the given color.
+ */
+function createShadowColorMaterial(baseColor) {
+  var material = g_pack.createObject('Material');
+  shadow_map_material = material;
+  material.drawList = g_colorViewInfo.performanceDrawList;
+
+  material.effect = g_shadowColorEffect;
+  g_shadowColorEffect.createUniformParameters(material);
+
+  material.getParam('shadowMapSampler').value = g_shadowSampler;
+
+  material.getParam('ambient').value = g_math.mulScalarVector(0.1, baseColor);
+  material.getParam('diffuse').value = g_math.mulScalarVector(0.8, baseColor);
+  material.getParam('specular').value = [1, 1, 1, 1];
+  material.getParam('shininess').value = 80;
+
+  return material;
+}
+
+/**
+ * Binds params for light position, light color and the light view-projection
+ * matrix to all materials in the scene where they apply.
+ */
+function initGlobalParams() {
+  var paramSpec = {
+      'lightColor': 'ParamFloat4',
+      'lightWorldPos': 'ParamFloat3',
+      'lightViewProjection': 'ParamMatrix4'};
+
+  g_globalParams = o3djs.material.createParams(g_pack, paramSpec);
+  o3djs.material.bindParams(g_pack, g_globalParams);
+
+  g_globalParams.lightWorldPos.value = g_lightWorldPos;
+  g_globalParams.lightColor.value = g_lightColor;
+}
+
+
+/**
+ * Tracks key down events.
+ * @param {Event} e keyboard event.
+ */
+
+ function doubleClick(e){
+   //pick(e);
+   //g_client.renderMode = g_o3d.Client.RENDERMODE_CONTINUOUS;
+   worldRay = o3djs.picking.clientPositionToWorldRay(e.x, e.y, g_colorViewInfo.drawContext, g_client.width, g_client.height);
+   var near = worldRay.near;
+   var far  = worldRay.far;
+   var direct = subPoints(far, near);
+   direct = normalizeVec3D(direct);
+   var cam_pos = [gCamera.position[0], gCamera.position[1], gCamera.position[2]];
+   octants_crossed = [];
+   ray_step(scene_root_node, cam_pos, direct);
+   var ret_str = check_Intersection(cam_pos, direct);
+   //drawCrossedOctants();  //to fallow the intresection between the shooted ray and the octants
+   //var picked_atom = last_PDB.pickingDraw(viewTypes, worldRay.near, worldRay.far);
+   g_pickInfoElem.innerHTML = ret_str;
+   
+  
+   var curr_backBuffer = g_client.toDataURL("png");
+   curr_backBuffer = curr_backBuffer.slice(22);
+   var amb = shadow_map_material.getParam('diffuse').value;
+   curr_backBuffer = decode64(curr_backBuffer);
+   
+  /*  var pixArray = g_shadowTexture.getRenderSurface(0, g_pack);
+  
+   if(g_pickInfoElem.innerHTML=="Cyclinder"){
+		g_client.cleanup();
+		window.location="http://news.bbc.co.uk/";
+	}
+        */
+   //g_client.renderMode = g_o3d.Client.RENDERMODE_ON_DEMAND;
+ }
+
+function onKeyDown(e) {
+  g_keyDown[e.keyCode] = true;
+}
+
+/**
+ * Tracks key up events.
+ * @param {Event} e keyboard event.
+ */
+function onKeyUp(e) {
+  g_keyDown[e.keyCode] = false;
+
+}
+
+//mouse down event
+ function onMouseDown(e){
+	gIsMouseDown = true;
+
+ }
+
+//mouse up event
+ function onMouseUp(e){
+    gIsMouseDown = false;
+ }
+
+ function onMouseWheel(e){
+    if(gIsMouseDown==false)
+		gCameraSpeed += 0.1;
+	else
+		gCameraSpeed -= 0.1;
+ }
+
+
+//mouse move event
+ function onMouseMove(e)
+ {
+     var camera_move = false;
+      //g_client.renderMode = g_o3d.Client.RENDERMODE_CONTINUOUS;
+     if(gPrevMouseCoords[0] == -1){
+        gPrevMouseCoords = [e.x, e.y];
+     }
+     if (gIsMouseDown){
+        var mouseDelta = [e.x - gPrevMouseCoords[0], e.y - gPrevMouseCoords[1]];
+        gCamera.Look(mouseDelta[1] * .002, -mouseDelta[0] * .002, 0);
+        gCamera.Update();
+        g_colorViewInfo.drawContext.view = g_math.matrix4.lookAt(gCamera.position, gCamera.target, gCamera.up);
+        camera_move = true;
+	//g_lightPosParam.value = gCamera.look;
+        //g_viewInfo.drawContext.view = gCamera.view;
+    }
+    gPrevMouseCoords = [e.x, e.y];
+    worldRay = o3djs.picking.clientPositionToWorldRay(e.x, e.y, g_colorViewInfo.drawContext, g_client.width, g_client.height);
+    //g_client.renderMode = g_o3d.Client.RENDERMODE_ON_DEMAND;
+    if(camera_move){
+        var z_dir = gCamera.look;
+        var y_dir = gCamera.up;
+        var x_dir = crossProduct(y_dir, z_dir);
+        x_dir = normalizeVec3D(x_dir);
+        var cam_frame = [x_dir, y_dir, z_dir];
+        //find_visibility(scene_root_node, gCamera.position, cam_frame, near, far, g_client.width/g_client.height, view_angle);
+        //fill_visible_lists(scene_root_node);
+        traverse_vis_lists(scene_root_node, gCamera.position, cam_frame, near, far, g_client.width/g_client.height, view_angle);
+    }
+ }
+
+/**
+ * The keyboard event handler.
+ */
+function keyPressed(event) {
+  var keyChar = String.fromCharCode(o3djs.event.getEventKeyChar(event));
+  keyChar = keyChar.toLowerCase();
+  var camera_move = false;
+  var delta = 0.2;
+  switch(keyChar) {
+    case 'g':
+    case 'G':
+      moveLight([-delta, 0, 0]);
+      break;
+    case 'h':
+    case 'H':
+      moveLight([delta, 0, 0]);
+      break;
+    case 'j':
+    case 'J':
+      moveLight([0, -delta, 0]);
+      break;
+    case 'y':
+    case 'J':
+      moveLight([0, delta, 0]);
+      break;
+    case 'i':
+    case 'I':
+      moveLight([0, 0, delta]);
+      break;
+    case 'o':
+    case 'O':
+      moveLight([0, 0, -delta]);
+      break;
+
+    case ' ':
+      toggleView();
+      break;
+    case 'w':
+    case 'W':
+          gCamera.Walk(gCameraSpeed*1.0);
+          gCamera.Update();
+          camera_move = true;
+          break;
+    case 's':
+    case 'S':
+          gCamera.Walk(gCameraSpeed*(-1.0));
+          gCamera.Update();
+          camera_move = true;
+        break;
+    case 'd':
+    case 'D':
+         gCamera.Strafe(gCameraSpeed*(-1.0));
+         gCamera.Update();
+         camera_move = true;
+        break;
+    case 'a':
+    case 'A':
+        gCamera.Strafe(gCameraSpeed*(1.0));
+        gCamera.Update();
+        camera_move = true;
+        break;
+    case 'f':
+    case 'F':
+         gFPSManager.visible = !gFPSManager.visible;
+         gFPSManager.setVisible(gFPSManager.visible);
+         break;
+    case 'b':
+    case 'B':
+         scene_Root_AABB_shape.visible = !scene_Root_AABB_shape.visible;
+         for(var i=0; i<ray_crossed_AABB.length; i++)
+             ray_crossed_AABB[i].visible = !ray_crossed_AABB[i].visible;
+         break;
+    case '+':
+        execute_Lennard__Jones_Step(20, 20);
+        break;
+    default:
+        break;
+  }
+
+      g_colorViewInfo.drawContext.view = g_math.matrix4.lookAt(gCamera.position, gCamera.target, gCamera.up);
+      //g_client.renderMode = g_o3d.Client.RENDERMODE_CONTINUOUS;
+      if(camera_move){
+        var z_dir = gCamera.look;
+        var y_dir = gCamera.up;
+        var x_dir = crossProduct(y_dir, z_dir);
+        x_dir = normalizeVec3D(x_dir);
+        var cam_frame = [x_dir, y_dir, z_dir];
+        //find_visibility(scene_root_node, gCamera.position, cam_frame, near, far, g_client.width/g_client.height, view_angle);
+        //fill_visible_lists(scene_root_node);
+        traverse_vis_lists(scene_root_node, gCamera.position, cam_frame, near, far, g_client.width/g_client.height, view_angle);
+      }
+
+}
+
+
+/**
+ * Moves the light by the given vector delta, and updates params so the light
+ * draws in the right spot and the shadows move.
+ */
+function moveLight(delta) {
+  g_lightWorldPos = g_math.addVector(g_lightWorldPos, delta);
+  g_globalParams.lightWorldPos.value = g_lightWorldPos;
+  updateLightMatrix();
+  g_lightFrustumTransform.localMatrix =
+      g_math.matrix4.inverse(g_lightViewProjection);
+}
+
+
+ function giveWindowLoc(){
+	var loc =  window.location.href;
+    for(;loc.length!=0;){
+		if(loc.substring(loc.length-1)=='/')
+			break;
+		else if(loc.substring(loc.length-1)=='\\')
+			break;
+		loc = loc.substring(0,loc.length-1);
+	}
+	return loc;
+ }
+
+
+ function doload() {
+  var url = document.getElementById('url').value;
+  loadFile(g_viewInfo.drawContext, url);
+}
+
+function loadPDB(){
+	//alert("loadPDB");
+	//var url = document.getElementById('url_PDB').value;
+	//url = "file:///C:/Users/sinanmutlu/Desktop/5P21.pdb";
+	//alert(url);
+	//url = "james.pdb";
+        url = "5P21.pdb";
+        var window_loc = window.location.herf;
+	var newPDB = new PDBFileInput(url);
+	newPDB.setPath(url);
+	var result = newPDB.readFileMain(importedPDB_Files.length, giveWindowLoc());
+   
+	if(result==true){
+                newPDB.shadowMap = g_shadowSampler;
+                newPDB.lightWorldPos = g_lightWorldPos;
+                newPDB.lightColor    = g_lightColor;
+                newPDB.lightViewProjection = g_lightViewProjection;
+                newPDB.shadow_material = g_shadowMaterial;
+                //newPDB.lightViewProjection = g_globalParams.lightViewProjection;
+		newPDB.setID(importedPDB_Files.lenght);
+		importedPDB_Files.push(newPDB);
+	}
+	else
+	    delete newPDB;
+	//alert(result);
+	//RenderPDB(newPDB, g_o3d, g_colorViewInfo);
+        if(allProteins.length==0){
+            atomTypes = new Object();
+        }
+        constructLines_PDB_File(newPDB);
+        //renderNewPDBAtoms(newPDB);
+        const_NewPDB_Data(newPDB);
+        last_PDB = newPDB;
+        last_chunk=0;
+        allProteins.push(last_PDB);
+        last_PDB.ID = allProteins.length-1;
+        put_allData();
+        document.viewTypes.proteinViewWires.checked = true;
+        onViewTypeCheckBoxClick(null);
+        
+}
+
+
+function loadPDB_new(filename){
+
+        url = filename;
+        var window_loc = window.location.herf;
+	var newPDB = new PDBFileInput(url);
+	newPDB.setPath(url);
+	var result = newPDB.readFileMain(importedPDB_Files.length, giveWindowLoc());
+
+	if(result==true){
+                newPDB.shadowMap = g_shadowSampler;
+                newPDB.lightWorldPos = g_lightWorldPos;
+                newPDB.lightColor    = g_lightColor;
+                newPDB.lightViewProjection = g_lightViewProjection;
+                newPDB.shadow_material = g_shadowMaterial;
+                //newPDB.lightViewProjection = g_globalParams.lightViewProjection;
+		newPDB.setID(importedPDB_Files.lenght);
+		importedPDB_Files.push(newPDB);
+	}
+	else
+	    delete newPDB;
+	//alert(result);
+	//RenderPDB(newPDB, g_o3d, g_colorViewInfo);
+        if(allProteins.length==0){
+            atomTypes = new Object();
+        }
+        constructLines_PDB_File(newPDB);
+        //renderNewPDBAtoms(newPDB);
+        const_NewPDB_Data(newPDB);
+        last_PDB = newPDB;
+        last_chunk=0;
+        allProteins.push(last_PDB);
+        last_PDB.ID = allProteins.length-1;
+        put_allData();
+        document.viewTypes.proteinViewWires.checked = true;
+        onViewTypeCheckBoxClick(null);
+
+}
+
+function construct_SceneTree(){
+
+   //This function will construct all the scene tree, 
+    var max_pnt = [0,0,0];
+    var min_pnt = [0,0,0];
+    var radius = 0;
+
+    for(var i=0; i<allProteins.length; i++){
+
+
+
+
+        for(var j=0; j<allProteins[i].atoms.length; j++){
+            var coord = allProteins[i].atoms[j].getCoord();
+
+            if(allProteins[i].atoms[j].element=="C")
+                radius = 1.7;
+            else if(allProteins[i].atoms[j].element=="O")
+                radius = 1.48;
+            else if(allProteins[i].atoms[j].element=="N")
+                radius = 1.65;
+            if(allProteins[i].atoms[j].element=="H")
+                radius = 1.0;
+
+            if(coord[0]>max_pnt[0]+radius)
+                max_pnt[0] = coord[0]+radius;
+            else if(coord[0]<min_pnt[0]-radius)
+                min_pnt[0] = coord[0]-radius;
+
+            if(coord[1]>max_pnt[1]+radius)
+                max_pnt[1] = coord[1];
+            else if(coord[1]<min_pnt[1]-radius)
+                min_pnt[1] = coord[1]-radius;
+
+            if(coord[2]>max_pnt[2]+radius)
+                max_pnt[2] = coord[2]+radius;
+            else if(coord[2]<min_pnt[2]-radius)
+                min_pnt[2] = coord[2]-radius;
+        }
+    }
+
+
+}
+
+
+function newBond(atom1, atom2, res, rad){
+
+     var vertex_Info = [];
+     var next_pos = atom2.getCoord();
+     var curr_pos = atom1.getCoord();
+
+     var mid_pos = addPoints(next_pos, curr_pos);
+     mid_pos = divPoint(mid_pos, 2.0);
+
+     var newStick = new Cylinder(res, rad);
+     newStick.setStartPnt(curr_pos);
+     newStick.setEndPnt(mid_pos);
+     newStick.calc_MainPoints();
+     newStick.calc_Circles();
+
+     var vertexInfo = newStick.create_Cylinder();
+     vertex_Info.push(vertexInfo);
+
+      var newStick_2 = new Cylinder(res, rad);
+     newStick_2.setStartPnt(mid_pos);
+     newStick_2.setEndPnt(next_pos);
+     newStick_2.calc_MainPoints();
+     newStick_2.calc_Circles();
+
+     var vertexInfo_2 = newStick_2.create_Cylinder();
+     vertex_Info.push(vertexInfo_2);
+
+     return vertex_Info;
+}
+
+function newBond_2(atom1, atom2, res, rad){
+
+     var next_pos = atom2.getCoord();
+     var curr_pos = atom1.getCoord();
+
+     var mid_pos = addPoints(next_pos, curr_pos);
+     mid_pos = divPoint(mid_pos, 2.0);
+
+     var newStick = new Cylinder(res, rad);
+     newStick.setStartPnt(curr_pos);
+     newStick.setEndPnt(mid_pos);
+     newStick.calc_MainPoints();
+     newStick.calc_Circles();
+
+     var vertexInfo = newStick.create_Cylinder();
+     delete newStick;
+     return vertexInfo;
+}
+
+
+function new_Cylinder(atom1, atom2, res, rad){
+
+     var next_pos = atom2.getCoord();
+     var curr_pos = atom1.getCoord();
+
+     var mid_pos = addPoints(next_pos, curr_pos);
+     mid_pos = divPoint(mid_pos, 2.0);
+
+     var newStick = new Cylinder(res, rad);
+     newStick.setStartPnt(curr_pos);
+     newStick.setEndPnt(mid_pos);
+     newStick.calc_MainPoints();
+     newStick.calc_Circles();
+     return newStick.create_Cylinder();
+}
+
+function construct_transform(vertexInfo, colorMaterial, root, pack, transformList){
+
+    var transform = pack.createObject('Transform');
+    transform.parent = root;
+    transform.cull      = false;
+    transform.visible   = false;
+    newShape = vertexInfo.createShape(pack, colorMaterial);
+    transform.addShape(newShape);
+    transformList.push(transform);
+    return transform;
+}
+
+function new_Sphere(atom_id, pdb_obj, mode, transform, radius){
+      var new_S = new sphere_Element();
+      new_S.atom_ID = atom_id;
+      new_S.protein_obj = pdb_obj;
+      new_S.mode = mode;
+      new_S.sphere_translate = transform;
+      new_S.radius = radius;
+      if(transform!=null){
+        transform.visible = false;
+        transform.cull    = false;
+      }
+      return new_S;
+}
+
+
+function construct_transform_sphere(position, shape, root, pack, transformList){
+
+    var transform = pack.createObject('Transform');
+    transform.parent = root;
+    transform.cull      = false;
+    transform.visible   = false;
+    transform.addShape(shape);
+    transform.translate(position[0], position[1], position[2]);
+    transformList.push(transform);
+    return transform;
+}
+
+var minimal_backBone_IDS = [];  //[[...], [...],...]
+var full_backBone_IDS = [];
+var full_bond_IDS = [];
+
+function check_ID_List(list, id_1, id_2){
+
+    for(var i=0; i<list.length; i++)
+        if(list[i][0]==id_1 && list[i][1]==id_2)
+            return true;
+        else if(list[i][0]==id_2 && list[i][1]==id_1)
+            return true;
+    return false;
+}
+
+var all_cylinder_trans_list = []; // [[protein1], [protein_2], [protein_3], ... ]
+var all_sphere_trans_list   = []; // [[protein1], [protein_2], [protein_3], ... ]
+var new_protein_cylinders = [];
+//var new_protein_spheres   = [];
+
+
+
+function construct_cylinder(id_1, id_2, rad, protein, trans, mode){
+
+     var new_Cylinder = new cylinder_Element();
+     new_Cylinder.atom_IDS = [id_1, id_2];
+     new_Cylinder.protein_obj = protein;
+     new_Cylinder.mode = mode;
+     new_Cylinder.radius = rad;
+     //new_protein_cylinders.push(new_Cylinder);
+     new_Cylinder.cylinder_trans = trans;
+     var curr_pos = protein.atoms[id_1-1].getCoord();
+     var next_pos = protein.atoms[id_2-1].getCoord();
+     var pos_a, pos_b;
+    
+     if(curr_pos[0]>next_pos[0]){
+         pos_a = curr_pos;
+         pos_b = next_pos;
+     }
+     else{
+         pos_a = next_pos;
+         pos_b = curr_pos;
+     }
+
+     var dist = distance(curr_pos, next_pos); //scale factor in z axis [1,1,dist];
+     var abc = ([pos_a[0] - pos_b[0], pos_a[1] - pos_b[1], pos_a[2] - pos_b[2]]);
+     var d = Math.sqrt(abc[0]*abc[0] + abc[2]*abc[2]);
+     var beta_degree = Math.acos(abc[2]/d);
+     var alpha_degree= Math.acos(abc[1]/dist);
+
+     new_Cylinder.scale = [1,dist/2.0,1];
+     curr_pos = protein.atoms[ id_1-1].getCoord();
+     next_pos = protein.atoms[ id_2-1].getCoord();
+     var mid_pos = [(curr_pos[0]+next_pos[0])/2.0, (curr_pos[1]+next_pos[1])/2.0, (curr_pos[2]+next_pos[2])/2.0];
+     new_Cylinder.trans = [(curr_pos[0] + mid_pos[0])/2.0, (curr_pos[1] + mid_pos[1])/2.0, (curr_pos[2] + mid_pos[2])/2.0];
+     new_Cylinder.rot   = [alpha_degree, beta_degree, 0];
+     if(trans!=null){
+         new_Cylinder.cylinder_trans.translate(curr_pos[0], curr_pos[1], curr_pos[2]);
+         new_Cylnder.cylinder_trans.rotateY(beta_degree);
+         new_Cylinder.cylinder_trans.rotateX(alpha_degree);
+         new_Cylinder.cylinder_trans.scale(1,dist/2.0,1);
+     }
+     return new_Cylinder;
+}
+
+
+function constructCylinder(id_1, id_2, rad, protein, trans, mode){
+
+   var new_Cylinder = new cylinder_Element();
+   new_Cylinder.atom_IDS = [id_1, id_2];
+   new_Cylinder.protein_obj = protein;
+   new_Cylinder.mode = mode;
+   new_Cylinder.radius = rad;
+   protein.all_cylinders.push(new_Cylinder);
+   new_Cylinder.cylinder_trans = trans;
+   return new_Cylinder;
+}
+
+function constructCylinder_2(pos_1, pos_2, info, rad, protein, trans, mode){
+
+   var new_Cylinder = new cylinder_Element();
+   //new_Cylinder.atom_IDS = [id_1, id_2];
+   new_Cylinder.pos_1 = pos_1;
+   new_Cylinder.pos_2 = pos_2;
+   new_Cylinder.info = info;
+   new_Cylinder.protein_obj = protein;
+   new_Cylinder.mode = mode;
+   new_Cylinder.radius = rad;
+   protein.all_cylinders.push(new_Cylinder);
+   new_Cylinder.cylinder_trans = trans;
+}
+
+var old_max = [-10000, -10000, -10000];
+var old_min = [10000, 10000, 10000];
+
+var new_max = [-1000,-1000,-1000];;;
+var new_min = [1000,1000,1000];
+
+
+function createSpheres(PDB_Data, mode){
+
+       //if(PDB_Data.b_spheres_created==false){
+
+        for(var i=0; i< PDB_Data.all_spheres.length; i++){
+
+          var curr_mode = PDB_Data.all_spheres[i].mode;
+          if(mode==0 && curr_mode!=0)
+              continue;
+          else if((mode==1) && mode!=curr_mode)
+              continue;
+          else if(mode==2 && !(curr_mode>=2 && curr_mode<=5))
+              continue;
+          else if(mode==3 && curr_mode!=mode)
+              continue;
+          else if(mode==4 && (curr_mode!=3 && curr_mode!=4))
+              continue;
+          else if(mode==5 && !(curr_mode>=2 && curr_mode<=5))
+              continue;
+          else if(mode==7 && !(curr_mode>=2 && curr_mode<=5))
+              continue;
+          var curr_sphere = PDB_Data.all_spheres[i];
+          var curr_atom = PDB_Data.atoms[curr_sphere.atom_ID-1];
+
+          var transform;
+          if(curr_sphere.sphere_translate==null){
+                 transform = g_pack.createObject('Transform');
+                 transform.parent = g_client.root;
+                 transform.translate(parseFloat(curr_atom.coord[0]), parseFloat(curr_atom.coord[1]), parseFloat(curr_atom.coord[2]));
+                 transform.cull      = false;
+                 transform.visible   = false;
+                 curr_sphere.sphere_translate = transform;
+          }
+          else
+              continue;
+          if(curr_atom.element == 'C'){
+            var curr_shape = mode==0 ? c_Shape : null;
+            curr_shape = mode==1 ? c_Sphere_stick : curr_shape;
+            curr_shape = mode>1 ? c_stick_Sphere: curr_shape;
+            transform.addShape(curr_shape);
+          }
+          else if(curr_atom.element == 'O'){
+            var curr_shape = mode==0 ? o_Shape : null;
+            curr_shape = mode==1 ? o_Sphere_stick : curr_shape;
+            curr_shape = mode>1 ? o_stick_Sphere : curr_shape;
+            transform.addShape(curr_shape);
+          }
+          else if(curr_atom.element == 'N'){
+            var curr_shape = mode==0 ? n_Shape : null;
+            curr_shape = mode==1 ? n_Sphere_stick : curr_shape;
+            curr_shape = mode>1 ? n_stick_Sphere : curr_shape;
+            transform.addShape(curr_shape);
+          }
+          else if(curr_atom.element == 'H'){
+             var curr_shape = mode==0 ? h_Shape : null;
+            curr_shape = mode==1 ? o_Sphere_stick : curr_shape;
+            curr_shape = mode>1 ? o_stick_Sphere : curr_shape;
+            transform.addShape(curr_shape);
+          }
+          else if(curr_atom.element == 'S'){
+            var curr_shape = mode==0 ? s_Shape : null;
+            curr_shape = mode==1 ? s_Sphere_stick : curr_shape;
+            curr_shape = mode>1 ? s_stick_Sphere : curr_shape;
+            transform.addShape(curr_shape);
+          }
+        }
+        PDB_Data.b_spheres_created=true;
+    //}
+}
+
+function createCylinders(PDB_Data, mode){
+
+     for(var i=0; i<PDB_Data.all_cylinders.length-1; i++){
+        var mod = PDB_Data.all_cylinders[i].mode;
+
+        if(mode==1 && (mod==3))
+            continue;
+        else if(mode==3 && (mod==1 || mod==4 || mod==5))
+            continue;
+        else if(mode==4 && (mod==5 || mod==1 || mod==3))
+            continue;
+        else if(mode==5 && (mod==1 || mod==3))
+            continue;
+
+        if(PDB_Data.all_cylinders[i].cylinder_trans!=null)
+            continue;
+        var id_1 = PDB_Data.all_cylinders[i].atom_IDS[0];
+        var id_2 = PDB_Data.all_cylinders[i].atom_IDS[1];
+        var atom_1 = PDB_Data.atoms[id_1-1];
+        var atom_2 = PDB_Data.atoms[id_2-1];
+        var radius = PDB_Data.all_cylinders[i].radius;
+
+        var transform = create_Transform(g_pack, g_client, false, false);
+        PDB_Data.all_cylinders[i].cylinder_trans = transform;                
+        
+        if(i==0)
+            transform.translate(0, 0, 0);
+        else
+            transform.translate(PDB_Data.all_cylinders[i].trans[0], PDB_Data.all_cylinders[i].trans[1], PDB_Data.all_cylinders[i].trans[2]);
+        var newShape;
+        transform.rotateY(PDB_Data.all_cylinders[i].rot[1]);
+        transform.rotateX(PDB_Data.all_cylinders[i].rot[0]);        
+        transform.scale(PDB_Data.all_cylinders[i].scale[0], PDB_Data.all_cylinders[i].scale[1], PDB_Data.all_cylinders[i].scale[2]);
+        // transform.translate(PDB_Data.all_cylinders[i].trans[0], PDB_Data.all_cylinders[i].trans[1], PDB_Data.all_cylinders[i].trans[2]);
+        if(atom_1.element=='C')
+            newShape = getShape("C");
+        else if(atom_1.element=='O')
+            newShape = getShape("O");
+        else if(atom_1.element=='H')
+            newShape = getShape("H");
+        else if(atom_1.element=='N')
+            newShape = getShape("N");
+        else if(atom_1.element=='S')
+            newShape = getShape("S");
+
+        transform.addShape(newShape.shape);
+        transform.cull = false;
+        transform.visible = true;
+        PDB_Data.all_cylinders[i].cylinder_trans = transform;
+    }
+}
+
+function delete_Spheres(PDB_Data, mode){
+
+     for(var i=0; i<PDB_Data.all_spheres.length; i++){
+
+        curr_mode = PDB_Data.all_spheres[i].mode;
+        if(mode==-1 && PDB_Data.all_spheres[i].sphere_translate!=null){
+            PDB_Data.all_spheres[i].sphere_translate.visible = false;
+            g_pack.removeObject(PDB_Data.all_spheres[i].sphere_translate);
+            PDB_Data.all_spheres[i].sphere_translate.parent = null;
+            PDB_Data.all_spheres[i].sphere_translate = null;
+            //delete PDB_Data.all_spheres[i].sphere_translate;
+            continue;
+        }
+        if(mode==0 && curr_mode==mode)
+            continue;
+        else if(mode==1 && curr_mode==mode)
+            continue;
+        else if(mode==3 && curr_mode==mode)
+            continue;
+        else if(mode==2 &&  (curr_mode>=2 && curr_mode<=5))
+            continue;
+        else if(mode==4 && (curr_mode==4 || curr_mode==3))
+            continue;
+        else if(mode==5 && (curr_mode>=3 && curr_mode<=5))
+            continue;
+        if(PDB_Data.all_spheres[i].sphere_translate==null)
+            continue;
+        PDB_Data.all_spheres[i].sphere_translate.visible = false;
+        g_pack.removeObject(PDB_Data.all_spheres[i].sphere_translate);
+        PDB_Data.all_spheres[i].sphere_translate.parent = null;
+        PDB_Data.all_spheres[i].sphere_translate = null;
+     }
+}
+
+function delete_Cylinder(PDB_Data, mode){
+
+    for(var i=0; i<PDB_Data.all_cylinders.length-1; i++){
+        var curr_cyl = PDB_Data.all_cylinders[i];
+         if(curr_cyl==null)
+                continue;
+         if(PDB_Data.all_cylinders[i].mode==6)
+             continue;
+        if(mode==-1 && curr_cyl.cylinder_trans!=null){
+            curr_cyl.cylinder_trans.visible = false;
+            g_pack.removeObject(curr_cyl.cylinder_trans);
+            if(curr_cyl.cylinder_trans.parent!=null)
+                curr_cyl.cylinder_trans.parent = null;
+            curr_cyl.cylinder_trans = null;
+            continue;
+        }
+        var curr_mode = PDB_Data.all_cylinders[i].mode;
+        if((mode==1 || mode==2) && (curr_mode>=1 && curr_mode<=5) && curr_mode!=3)
+            continue;
+        else if(mode==3 && curr_mode==mode)
+            continue;
+        else if(mode==4 && curr_mode==4)
+            continue;
+        else if(mode==5 && (curr_mode==4 || curr_mode==5))
+            continue;
+       if(PDB_Data.all_cylinders[i].cylinder_trans==null)
+            continue;        
+        curr_cyl.cylinder_trans.visible = false;
+        g_pack.removeObject(curr_cyl.cylinder_trans);
+        if(curr_cyl.cylinder_trans.parent!=null)
+            curr_cyl.cylinder_trans.parent = null;
+        PDB_Data.all_cylinders[i].cylinder_trans = null;
+    }
+}
+
+function create_Transform(pack, parent, culling, vis){
+    var trans =  pack.createObject('Transform');
+    trans.parent    = parent.root;
+    trans.cull      = culling;
+    trans.visible   = vis;
+    return trans;
+}
+
+function const_NewPDB_Data(PDBData){
+  var max_Pnt = [0,0,0];
+  var min_Pnt = [0,0,0];
+
+  for(var i=0; i<PDBData.atoms.length; i++){         
+          var s1, s2, s3;
+          if(PDBData.atoms[i].element == 'C'){
+              if(!atomTypes["C"])
+                 atomTypes["C"] = 1.65;
+            s1 = new_Sphere(PDBData.atoms[i].ID, PDBData, 0, null, 1.7);
+          }
+          else if(PDBData.atoms[i].element == 'O'){
+             if(!atomTypes["O"])
+                 atomTypes["O"] = 1.65;
+             s1 = new_Sphere(PDBData.atoms[i].ID, PDBData, 0, null, 1.48);
+          }
+          else if(PDBData.atoms[i].element == 'N'){
+             if(!atomTypes["N"])
+                 atomTypes["N"] = 1.65;
+             s1 = new_Sphere(PDBData.atoms[i].ID, PDBData, 0, null, 1.65);
+          }
+          else if(PDBData.atoms[i].element == 'H'){
+              if(!atomTypes["H"])
+                 atomTypes["H"] = 1.65;
+             s1 = new_Sphere(PDBData.atoms[i].ID, PDBData, 0, null, 1.0);
+          }
+          else if(PDBData.atoms[i].element == 'S'){
+              if(!atomTypes["S"])
+                 atomTypes["S"] = 1.65;
+             s1 = new_Sphere(PDBData.atoms[i].ID, PDBData, 0, null, 1.5);
+          }
+          s2 = new_Sphere(PDBData.atoms[i].ID, PDBData, 1, null, 0.3);
+          s3 = new_Sphere(PDBData.atoms[i].ID, PDBData, 2, null, 0.2);
+
+          PDBData.all_spheres.push(s1);
+          PDBData.all_spheres.push(s2);
+          PDBData.all_spheres.push(s3);          
+        }
+
+        //all_sphere_trans_list.push(new_protein_spheres);
+        for(var i=0; i<PDBData.backBoneStructures.length; i++){
+
+            
+            for(var j=0; j<PDBData.backBoneStructures[i].atomsID.length; j++){
+
+                 var next_pos;
+                 if(PDBData.backBoneStructures[i].atomsID.length-1!=j)
+                   next_pos = PDBData.atoms[ PDBData.backBoneStructures[i].atomsID[j+1]-1].getCoord();
+                 var curr_pos = PDBData.atoms[ PDBData.backBoneStructures[i].atomsID[j]-1].getCoord();
+                
+                 var curr_atom = PDBData.atoms[ PDBData.backBoneStructures[i].atomsID[j]-1];
+                 var next_atom;
+                 if(PDBData.backBoneStructures[i].atomsID.length-1!=j)
+                      next_atom = PDBData.atoms[ PDBData.backBoneStructures[i].atomsID[j+1]-1 ];
+
+                if(j==0){               
+                     PDBData.all_spheres[(curr_atom.ID-1)*3+2].mode = 3;
+                 }
+
+
+                 if(PDBData.backBoneStructures[i].atomsID.length-1!=j){          
+                    PDBData.all_spheres[(next_atom.ID-1)*3+2].mode = 3;
+                 }
+
+                 var cyl_1 = construct_cylinder(curr_atom.ID, next_atom.ID, 0.2, PDBData, null, 3); //CA-CA
+                 var cyl_2 = construct_cylinder(next_atom.ID, curr_atom.ID, 0.2, PDBData, null, 3); //CA-CA
+                 PDBData.all_cylinders.push(cyl_1);
+                 PDBData.all_cylinders.push(cyl_2);
+                 var CA_ID = PDBData.backBoneStructures[i].atomsID[j]-1;
+                 CA_ID = Number(CA_ID);
+                 var CA_atom = PDBData.atoms[CA_ID];
+                 var N_atom = PDBData.atoms[CA_ID-1];
+                 var C_atom = PDBData.atoms[CA_ID+1];
+                 var O_atom = PDBData.atoms[CA_ID+2];
+                 var next_N;
+                 if(PDBData.backBoneStructures[i].atomsID.length-1!=j)
+                    next_N = PDBData.atoms[ PDBData.backBoneStructures[i].atomsID[j+1]-2 ];
+
+               
+                 var cyl_3 = construct_cylinder(N_atom.ID, CA_atom.ID,  0.2, PDBData, null, 4);
+                 var cyl_4 = construct_cylinder(CA_atom.ID, N_atom.ID,  0.2, PDBData, null, 4);
+                 var cyl_5 = construct_cylinder(CA_atom.ID, C_atom.ID,  0.2, PDBData, null, 4);
+                 var cyl_6 = construct_cylinder(C_atom.ID, CA_atom.ID,  0.2, PDBData, null, 4);
+
+                 PDBData.all_cylinders.push(cyl_3);
+                 PDBData.all_cylinders.push(cyl_4);
+                 PDBData.all_cylinders.push(cyl_5);
+                 PDBData.all_cylinders.push(cyl_6);
+
+                 if(PDBData.backBoneStructures[i].atomsID.length-1!=j){
+                    var cyl_0 = construct_cylinder(C_atom.ID, next_N.ID,  0.2, PDBData, null, 4);
+                    var cyl_00 = construct_cylinder(next_N.ID, C_atom.ID,  0.2, PDBData, null, 4);
+                    PDBData.all_cylinders.push(cyl_0);
+                    PDBData.all_cylinders.push(cyl_00);
+                 }
+                 var cyl_7 = construct_cylinder(O_atom.ID, C_atom.ID,  0.2, PDBData, null, 5);
+                 var cyl_8 = construct_cylinder(C_atom.ID, O_atom.ID,  0.2, PDBData, null, 5);
+                 
+                 PDBData.all_cylinders.push(cyl_7);
+                 PDBData.all_cylinders.push(cyl_8);
+
+                PDBData.all_spheres[(N_atom.ID-1)*3+2].mode = 4;
+                PDBData.all_spheres[(C_atom.ID-1)*3+2].mode = 4;
+                PDBData.all_spheres[(O_atom.ID-1)*3+2].mode = 5;
+            }
+        }
+
+         for(var i=0; i<PDBData.atoms.length; i++){
+
+            var curr_atom = PDBData.atoms[i];
+            var curr_atom_coord = [Number(curr_atom.coord[0]), Number(curr_atom.coord[1]), Number(curr_atom.coord[2])];
+            var kere;
+            for(var t=0; t<curr_atom.neighbours.length; t++){
+
+                var curr_neigh = PDBData.atoms[curr_atom.neighbours[t]-1];
+                var curr_atom_name = PDBData.atoms[i].atomName;
+                var neigh_atom_name= curr_neigh.atomName;
+
+                var exist = false;
+                if((curr_atom_name=="CA" && neigh_atom_name=="N") || (curr_atom_name=="N" && neigh_atom_name=="CA"))
+                    exist = check_ID_List(minimal_backBone_IDS, i, curr_neigh.ID-1);
+                else  if((curr_atom_name=="CA" && neigh_atom_name=="C") || (curr_atom_name=="C" && neigh_atom_name=="CA"))
+                    exist = check_ID_List(minimal_backBone_IDS, i, curr_neigh.ID-1);
+                else  if((curr_atom_name=="C" && neigh_atom_name=="N") || (curr_atom_name=="N" && neigh_atom_name=="C"))
+                    exist = check_ID_List(minimal_backBone_IDS, i, curr_neigh.ID-1);
+                else  if((curr_atom_name=="C" && neigh_atom_name=="O") || (curr_atom_name=="O" && neigh_atom_name=="C"))
+                    exist = check_ID_List(full_backBone_IDS, i, curr_neigh.ID-1);
+
+                if(exist)
+                    continue;            
+                var cyl_= construct_cylinder(curr_atom.ID, curr_neigh.ID,  0.2, PDBData, null, 1);
+                PDBData.all_cylinders.push(cyl_);
+            }
+        }
+        for(var i=0; i<PDBData.backBoneStructures.length; i++){
+             var circle_num = 0;
+             for(var j=0; j<PDBData.backBoneStructures[i].curves_vertex_Infos.length; j++){
+                 var color_info;
+                 if(PDBData.backBoneStructures[i].curves_types[j]==0){
+                     color_info = createShadowColorMaterial([0.5, 1.0, 0.0, 1]);
+                 }
+                 else if(PDBData.backBoneStructures[i].curves_types[j]>0){
+                     color_info = createShadowColorMaterial([Math.random(), Math.random(), Math.random(), 1]);
+                 }
+
+                 for(var k=0; k<PDBData.backBoneStructures[i].curves_vertex_Infos[j].length; k++){
+                      var transform = g_pack.createObject('Transform');
+                      transform.parent = g_client.root;
+                      transform.cull      = false;
+                      transform.visible   = true;
+                      var newShape = PDBData.backBoneStructures[i].curves_vertex_Infos[j][k].createShape(g_pack, color_info);
+                      transform.addShape(newShape);
+                      //PDBData.backBoneStructures[i].transforms.push(transform);
+
+                      var rad_1 = PDBData.backBoneStructures[i].Circles[circle_num].radius;
+                      var rad_2 = PDBData.backBoneStructures[i].Circles[circle_num+1].radius;
+                      var circle_1 = PDBData.backBoneStructures[i].Circles[circle_num];
+                      var circle_2 = PDBData.backBoneStructures[i].Circles[circle_num+1];
+                      var info = "";
+                      if(circle_1.info!="" && circle_1.info==circle_2.info)
+                        info = PDBData.filename + " " + circle_1.info;
+                      else if(circle_1.info!="" && circle_1.info!=circle_2.info)
+                        info = PDBData.filename + " " + circle_1.info + " " + circle_2.info;
+                      //put the new bounding objects for ribbons in the scene.
+                      if(rad_1>rad_2)
+                        constructCylinder_2(circle_1.getCenter(), circle_2.getCenter(), info,  rad_1, PDBData, transform, 6);
+                      else
+                        constructCylinder_2(circle_1.getCenter(), circle_2.getCenter(), info,  rad_2, PDBData, transform, 6);
+
+                      circle_num++;
+                 }
+            }
+         }
+        
+}
+
+
+function construct_allGeometry_Octree(PDBData){   //just to fill the tree
+
+   for(var i=0; i<PDBData.atoms.length; i++){
+
+   }
+
+}
+
+
+//Put all the data into the scene_array
+
+function putProtein(protein){
+
+     //put all the new atoms to the scene tree, use only the bigger cylinder
+       for(var i=0; i<protein.all_spheres.length; i++){
+           putSphere(scene_root_node, protein.all_spheres[i]);
+       }
+
+       for(var i=0; i< protein.all_cylinders.length; i++){
+           if( protein.all_cylinders[i].mode==6)
+                putCylinder(scene_root_node, protein.all_cylinders[i]);
+           else 
+             putCylinder(scene_root_node, protein.all_cylinders[i]);
+           //new_protein_cylinders[i].cylinder_trans.visible = false;
+           //new_protein_cylinders[i].cylinder_trans.cull = true;
+
+       }
+     
+}
+
+
+function put_allData(){
+
+  var reconstruct_scene_tree = false;
+
+  if(old_max[0]<new_max[0] || old_max[1]<new_max[1] || old_max[2]<new_max[2])
+      reconstruct_scene_tree = true;
+  else if(old_min[0]>new_min[0] || old_min[1]>new_min[1] || old_min[2]>new_min[2])
+      reconstruct_scene_tree = true;
+
+   var max_pnt = [0,0,0];
+   var min_pnt = [0,0,0];
+
+    max_pnt[0] = old_max[0] > new_max[0] ? old_max[0] : new_max[0];
+    max_pnt[1] = old_max[1] > new_max[1] ? old_max[1] : new_max[1];
+    max_pnt[2] = old_max[2] > new_max[2] ? old_max[2] : new_max[2];
+    min_pnt[0] = old_min[0] > new_min[0] ? new_min[0] : old_min[0];
+    min_pnt[1] = old_min[1] > new_min[1] ? new_min[1] : old_min[1];
+    min_pnt[2] = old_min[2] > new_min[2] ? new_min[2] : old_min[2];
+
+    var new_center = addPoints(max_pnt, min_pnt);
+    new_center = multiplyPnt(new_center, 0.5);
+    var new_radius = [ max_pnt[0]-new_center[0], max_pnt[1]-new_center[1], max_pnt[2]-new_center[2]];
+
+    scene_octree_delete(scene_root_node); //delete all the tree
+    delete_all_arrays();             //delete all the pre_allocated arrays
+    scene_root_node = new scene_octree(new_center, new_radius, 0);  //construct the root node
+    createScene_Octree(scene_root_node, 4);                         //construct an octree with a given depth
+
+    for(var i = 0; i<allProteins.length; i++)
+        putProtein(allProteins[i]);
+    mergeOctree(10);
+    
+    old_max = max_pnt;
+    old_min = min_pnt;
+
+    if(scene_Root_AABB_shape!=null){
+        scene_Root_AABB_shape.parent = null;
+        delete scene_Root_AABB_shape;
+    }
+    var vertices = [old_min[0], old_min[1], old_min[2],
+                    old_min[0], old_min[1], old_max[2],
+                    old_max[0], old_min[1], old_max[2],
+                    old_max[0], old_min[1], old_min[2],
+                    old_min[0], old_max[1], old_min[2],
+                    old_min[0], old_max[1], old_max[2],
+                    old_max[0], old_max[1], old_max[2],
+                    old_max[0], old_max[1], old_min[2]];
+    var indices = [ 0,1, 1,2, 2,3, 3,0, 4,5, 5,6, 6,7, 7,4,
+                    0,4, 1,5, 2,6, 3,7 ];
+
+    var shape = o3djs.debug.createLineShape(g_pack,
+                                  o3djs.material.createConstantMaterial(g_pack,
+                                                    g_colorViewInfo, [1, 1, 0, 1]),
+                                                    vertices, indices);
+  scene_Root_AABB_shape = g_pack.createObject('Transform');
+  scene_Root_AABB_shape.parent = g_client.root;
+  scene_Root_AABB_shape.addShape(shape);
+  var vertices_axis = [[20, 0, 0, 0, 0, 0], [0, 20, 0, 0, 0, 0], [0, 0, 20, 0, 0, 0] ];
+  var indices_axis = [[0,1], [0,1], [0,1]];
+  var shape_X = o3djs.debug.createLineShape(g_pack, o3djs.material.createConstantMaterial(g_pack, g_colorViewInfo, [1, 0, 0, 1]), vertices_axis[0], indices_axis[0]);
+  var shape_Y = o3djs.debug.createLineShape(g_pack, o3djs.material.createConstantMaterial(g_pack, g_colorViewInfo, [0, 1, 0, 1]), vertices_axis[1], indices_axis[1]);
+  var shape_Z = o3djs.debug.createLineShape(g_pack, o3djs.material.createConstantMaterial(g_pack, g_colorViewInfo, [0, 1, 1, 1]), vertices_axis[2], indices_axis[2]);
+  scene_Root_AABB_shape.addShape(shape_X);
+  scene_Root_AABB_shape.addShape(shape_Y);
+  scene_Root_AABB_shape.addShape(shape_Z);
+  //find_visibility(scene_root_node, gCamera.position, near, far, g_client.width/g_client.height, view_angle);
+ }
+
+
+function drawCrossedOctants(){
+    var visible = false;
+    if(ray_crossed_AABB.length>0)
+        visible = ray_crossed_AABB[0].visible;
+
+    for(var i=0; i<ray_crossed_AABB.length; i++){
+        var shapes = ray_crossed_AABB[i].shapes;
+        for(var j=0; j<shapes.length; j++)
+            ray_crossed_AABB[i].removeShape(shapes[j]);
+        delete ray_crossed_AABB[i];
+    }
+
+    ray_crossed_AABB = [];
+    for(var i=0; i<octants_crossed.length; i++){
+
+        var max = [octants_crossed[i].center[0] + octants_crossed[i].radius[0],
+                   octants_crossed[i].center[1] + octants_crossed[i].radius[1],
+                   octants_crossed[i].center[2] + octants_crossed[i].radius[2]];
+        var min = [octants_crossed[i].center[0] - octants_crossed[i].radius[0],
+                   octants_crossed[i].center[1] - octants_crossed[i].radius[1],
+                   octants_crossed[i].center[2] - octants_crossed[i].radius[2]];
+
+        var vertices = [min[0], min[1], min[2],
+                    min[0], min[1], max[2],
+                    max[0], min[1], max[2],
+                    max[0], min[1], min[2],
+                    min[0], max[1], min[2],
+                    min[0], max[1], max[2],
+                    max[0], max[1], max[2],
+                    max[0], max[1], min[2]];
+        var indices = [ 0,1, 1,2, 2,3, 3,0, 4,5, 5,6, 6,7, 7,4,
+                     0,4, 1,5, 2,6, 3,7 ];
+
+       var shape = o3djs.debug.createLineShape(g_pack,
+                                  o3djs.material.createConstantMaterial(g_pack,
+                                                    g_colorViewInfo, [1, 0, 0, 1]),
+                                                    vertices, indices);
+       var transform = g_pack.createObject('Transform');
+       transform.parent = g_client.root;
+       transform.addShape(shape);
+       ray_crossed_AABB.push(transform);
+       ray_crossed_AABB[ray_crossed_AABB.length-1].visible = visible;
+    }
+}
+
+function copy_lists(index_1, index_2, vertices_1, vertices_2){
+
+    var lenght_vertices_2 = vertices_2.length/3;
+    for(var i=0; i<index_1.length; i++){
+        index_2.push(index_1[i]+lenght_vertices_2);
+    }
+    for(var i=0; i<vertices_1.length; i++)
+        vertices_2.push(vertices_1[i]);
+
+}
+
+function constructLines_PDB_File(curr_pdb_file){
+
+    var c_vertices = [];
+    var o_vertices = [];
+    var n_vertices = [];
+    var s_vertices = [];
+    var h_vertices = [];
+    var c_indexes  = [];
+    var n_indexes  = [];
+    var o_indexes  = [];
+    var s_indexes  = [];
+    var h_indexes  = [];
+    for(var i=0; i<curr_pdb_file.atoms.length; i++){
+
+        var curr_atom = curr_pdb_file.atoms[i];
+        var vertices = [];
+        var indexes  = [];
+
+        var curr_atom_coord  = curr_atom.getCoord();
+        vertices.push(curr_atom_coord[0]);
+        vertices.push(curr_atom_coord[1]);
+        vertices.push(curr_atom_coord[2]);
+        //indexes.push(0);
+        var curr_ind = 0;
+
+        for(var j=0; j<curr_atom.neighbours.length; j++){
+            var curr_neigh       = curr_pdb_file.atoms[curr_atom.neighbours[j]-1];
+            var curr_neigh_coord = curr_neigh.getCoord();
+            var mid_pnt = addPoints(curr_atom_coord, curr_neigh_coord);
+            mid_pnt = multiplyPnt(mid_pnt, 0.5);
+            vertices.push(mid_pnt[0]);
+            vertices.push(mid_pnt[1]);
+            vertices.push(mid_pnt[2]);
+            indexes.push(0);
+            indexes.push(j+1);
+        }
+         var color;
+         var curr_radius = 0.0;
+         if(curr_atom.element=="C"){
+             copy_lists(indexes, c_indexes, vertices, c_vertices);
+             curr_radius = 1.7;
+        }
+         else if(curr_atom.element== "O"){
+              copy_lists(indexes, o_indexes, vertices, o_vertices);
+              curr_radius = 1.48;
+         }
+         else if(curr_atom.element=="N"){
+              copy_lists(indexes, n_indexes, vertices, n_vertices);
+              curr_radius = 1.65;
+        }
+         else if(curr_atom.element=="S"){
+             copy_lists(indexes, s_indexes, vertices, s_vertices);
+             curr_radius = 1.0;
+        }
+         else if(curr_atom.element=="H"){
+              copy_lists(indexes, h_indexes, vertices, h_vertices);
+              curr_radius = 1.50;
+         }
+
+           if(new_max[0] < curr_atom_coord[0] + curr_radius)
+                new_max[0] = curr_atom_coord[0] + curr_radius;
+            if(new_max[1] < curr_atom_coord[1] + curr_radius)
+                new_max[1] = curr_atom_coord[1] + curr_radius;
+            if(new_max[2] < curr_atom_coord[2] + curr_radius)
+                new_max[2] = curr_atom_coord[2] + curr_radius;
+            if(new_min[0] > curr_atom_coord[0] - curr_radius)
+                new_min[0] = curr_atom_coord[0] - curr_radius;
+            if(new_min[1] > curr_atom_coord[1] - curr_radius)
+                new_min[1] = curr_atom_coord[1] - curr_radius;
+            if(new_min[2] > curr_atom_coord[2] - curr_radius)
+                new_min[2] = curr_atom_coord[2] - curr_radius;
+     }
+     var vertex_list = [c_vertices, o_vertices, n_vertices, s_vertices, h_vertices];
+     var index_list  = [c_indexes, o_indexes ,n_indexes ,s_indexes, h_indexes];
+     var transform = g_pack.createObject('Transform');
+     transform.parent = g_client.root;
+     for(var i=0; i<vertex_list.length; i++){
+         var color;
+         if(vertex_list[i].length==0)
+             continue;
+         if(vertex_list[i]==c_vertices)
+             color = [1,1,1,1];
+         else if(vertex_list[i]==o_vertices)
+             color = [1,0,0,1];
+         else if(vertex_list[i]==n_vertices)
+             color = [0,0,1,1];
+         else if(vertex_list[i]==s_vertices)
+             color = [1,1,0,1];
+         else if(vertex_list[i]==h_vertices)
+             color = [0,1,0,1];
+       
+         var shape = o3djs.debug.createLineShape(g_pack,
+                                      o3djs.material.createConstantMaterial(g_pack,
+                                                        g_colorViewInfo, color),
+                                                        vertex_list[i], index_list[i]);
+         //for(var i=0; i<shape_array.length; i++)
+        transform.addShape(shape);
+        curr_pdb_file.wireframe_bonds_transform = transform;
+        transform.cull      = false;
+        transform.visible   = true;
+     }
+    curr_pdb_file.wireframe_bonds_transform = transform;
+    delete c_vertices;
+    delete o_vertices;
+    delete n_vertices;
+    delete s_vertices;
+    delete s_vertices;
+    delete c_indexes;
+    delete n_indexes;
+    delete o_indexes;
+    delete s_indexes;
+    delete h_indexes;
+
+    
+}
+
+
+function draw_CircleLines(curr_circle){
+
+    var vertices = [];
+    var indices  = [];
+    for(var i=0; i<curr_circle.points.length; i++){
+        vertices.push(curr_circle.points[i].Point[0]);
+        vertices.push(curr_circle.points[i].Point[1]);
+        vertices.push(curr_circle.points[i].Point[2]);
+        if(i<curr_circle.points.length-1){
+            indices.push(i);
+            indices.push(i+1);
+        }
+        else{
+            indices.push(i);
+            indices.push(0);
+        }
+    }
+    var shape = o3djs.debug.createLineShape(g_pack,
+                                  o3djs.material.createConstantMaterial(g_pack,
+                                                    g_colorViewInfo, [1, 0, 0, 1]),
+                                                    vertices, indices);
+    var transform = g_pack.createObject('Transform');
+    transform.parent = g_client.root;
+    transform.addShape(shape);
+    ribbon_circles.push(transform);
+
+    ribbon_circles[ribbon_circles.length-1].visible = true;
+}
+
+
+
+
+
+var viewTypes = 0;
+
+function onViewTypeCheckBoxClick(form){
+  var newvalue = 0;
+  //alert("I am in check boc function");
+  var check_boxes = [];
+
+  check_boxes.push(document.viewTypes.proteinViewAtoms);
+  check_boxes.push(document.viewTypes.proteinViewAtomsSticks);
+  check_boxes.push(document.viewTypes.proteinViewSticks);
+  check_boxes.push(document.viewTypes.proteinViewBackbone_Chain);
+  check_boxes.push(document.viewTypes.proteinViewBackbone_Minimal);
+  check_boxes.push(document.viewTypes.proteinViewBackbone_Full);
+  check_boxes.push(document.viewTypes.proteinViewRibbons);
+  check_boxes.push(document.viewTypes.proteinViewWires_Atoms)
+  check_boxes.push(document.viewTypes.proteinViewWires);
+
+  if(viewTypes>0){
+      var m = viewTypes;
+      var k = 0;
+      while(m>0){
+          m = m>>1;
+          k++;
+      }
+      check_boxes[k-1].checked = false;
+  }
+
+  if(document.viewTypes.proteinViewAtoms.checked==true){
+      newvalue = newvalue|1;
+  }
+ if(document.viewTypes.proteinViewAtomsSticks.checked==true){
+      newvalue = newvalue|2;
+  }
+  if(document.viewTypes.proteinViewSticks.checked==true){
+      newvalue = newvalue|4;
+  }
+  
+  var drawBackBone = false;
+  if(document.viewTypes.proteinViewBackbone_Chain.checked==true){
+      newvalue = newvalue|8;
+      drawBackBone = true;
+  }
+
+  if(document.viewTypes.proteinViewBackbone_Minimal.checked==true){
+      newvalue = newvalue|16;
+      drawBackBone = true;
+  }
+  if(document.viewTypes.proteinViewBackbone_Full.checked==true){
+      newvalue = newvalue|32;
+      drawBackBone = true;
+  }
+  if(document.viewTypes.proteinViewRibbons.checked==true){
+      newvalue = newvalue|64;
+  }
+  if(document.viewTypes.proteinViewWires_Atoms.checked==true){
+      newvalue = newvalue|128;
+  }
+  if(document.viewTypes.proteinViewWires.checked==true)
+      newvalue = newvalue|256;
+  if(document.viewTypes.proteinSurcace.checked==true)
+      newvalue = newvalue|512;
+
+   document.viewTypes.proteinViewAtoms.checked       = false;
+   document.viewTypes.proteinViewAtomsSticks.checked = false;
+   document.viewTypes.proteinViewSticks.checked      =false
+   document.viewTypes.proteinViewBackbone_Chain.checked    = false;
+   document.viewTypes.proteinViewBackbone_Minimal.checked    = false;
+   document.viewTypes.proteinViewBackbone_Full.checked    = false;
+   document.viewTypes.proteinViewRibbons.checked          = false;
+   document.viewTypes.proteinViewWires.checked           = false;
+   document.viewTypes.proteinSurcace.checked                    = false;
+
+   last_PDB.wireframe_bonds_transform.visible = false;
+
+  //var newvalue = viewTypes & newvalue;
+  //var newmode = 0;
+  if(newvalue&1)
+      newmode = 0;
+  else if(newvalue&2)
+      newmode = 1;
+  else if(newvalue&4)
+      newmode = 2;
+  else if(newvalue&8)
+      newmode = 3;
+  else if(newvalue&16)
+      newmode = 4;
+  else if(newvalue&32)
+      newmode = 5;
+  else if(newvalue&64)
+      newmode = 6;
+  else if(newvalue&128)
+      newmode = 7;
+  else if(newvalue&256)
+      newmode = 8;
+  else if(newvalue&512)
+      newmode = 9;
+
+
+  if(newvalue&1){
+      last_PDB.protein_render_mode = 0;
+      document.viewTypes.proteinViewAtoms.checked = true;
+      if(last_PDB.sphere_0==false)
+          createSpheres(last_PDB, 0);
+      curr_sphere_list = last_PDB.all_spheres;//all_sphere_trans_list[last_PDB.ID];
+      if(curr_sphere_list.length!=0)
+        for(var i=0; i<curr_sphere_list.length; i++)
+          if(curr_sphere_list[i].mode==0)
+            curr_sphere_list[i].sphere_translate.visible = true;
+      last_PDB.sphere_0 = true;
+  }
+  else{
+      delete_Spheres(last_PDB, newmode);
+      last_PDB.sphere_0 = false;
+  }
+  if(newvalue&2){
+      last_PDB.protein_render_mode = 1;
+      document.viewTypes.proteinViewAtomsSticks.checked = true;      
+       if(last_PDB.sphere_1==false)
+          createSpheres(last_PDB, 1);
+      curr_sphere_list = last_PDB.all_spheres;//all_sphere_trans_list[last_PDB.ID];
+      if(curr_sphere_list.length!=0)
+        for(var i=0; i<curr_sphere_list.length; i++)
+          if(curr_sphere_list[i].mode==1)
+            curr_sphere_list[i].sphere_translate.visible = true;
+
+      last_PDB.sphere_1 = true;
+     curr_cylinder_list = last_PDB.all_cylinders;
+       if(last_PDB.cylinder_2==false)
+          createCylinders(last_PDB, 1);
+       if(curr_cylinder_list.length!=0)
+            for(var i=0; i<curr_cylinder_list.length-1; i++)
+                if((curr_cylinder_list[i].mode>=1 && curr_cylinder_list[i].mode<=5) && curr_cylinder_list[i].mode!=3){
+                    curr_cylinder_list[i].cylinder_trans.visible=true;
+                    //curr_cylinder_list[i].cylinder_trans.cull   = false;
+            }
+        last_PDB.cylinder_1 = true;
+  }
+  else{
+      delete_Spheres(last_PDB, newmode);
+      last_PDB.sphere_1 = false;
+      delete_Cylinder(last_PDB, newmode);
+      last_PDB.cylinder_1 = false;
+  }
+  
+  if(newvalue&4){
+      last_PDB.protein_render_mode = 2;
+      document.viewTypes.proteinViewSticks.checked = true;
+      curr_cylinder_list = last_PDB.all_cylinders;
+       if(last_PDB.cylinder_2==false)
+          createCylinders(last_PDB, 1);
+       if(curr_cylinder_list.length!=0)
+            for(var i=0; i<curr_cylinder_list.length-1; i++)
+                if((curr_cylinder_list[i].mode>=1 && curr_cylinder_list[i].mode<=5) && curr_cylinder_list[i].mode!=3){
+                    curr_cylinder_list[i].cylinder_trans.visible=true;
+                    //curr_cylinder_list[i].cylinder_trans.cull   = false;
+            }
+        last_PDB.cylinder_1 = true;
+      
+      if(last_PDB.sphere_2==false)
+          createSpheres(last_PDB, 2);
+      curr_sphere_list = last_PDB.all_spheres;//all_sphere_trans_list[last_PDB.ID];
+      if(curr_sphere_list.length!=0)
+        for(var i=0; i<curr_sphere_list.length-1; i++)
+          if(curr_sphere_list[i].mode>=2 && curr_sphere_list[i].mode<6)
+            curr_sphere_list[i].sphere_translate.visible = true;
+
+      last_PDB.sphere_2 = true;
+  }
+  else{
+    delete_Spheres(last_PDB, newmode);
+    last_PDB.sphere_2 = false;
+    delete_Cylinder(last_PDB, newmode);
+    last_PDB.cylinder_1 = false;
+  }
+  if(newvalue&8){
+      last_PDB.protein_render_mode = 3;
+      document.viewTypes.proteinViewBackbone_Chain.checked = true;
+      curr_cylinder_list = last_PDB.all_cylinders;
+      if(last_PDB.sphere_3==false)
+          createCylinders(last_PDB, 3);
+       if(curr_cylinder_list.length!=0)
+            for(var i=0; i<curr_cylinder_list.length-1; i++)
+                if(curr_cylinder_list[i].mode==3){
+                    curr_cylinder_list[i].cylinder_trans.visible=true;
+                    //curr_cylinder_list[i].cylinder_trans.cull   = false;
+            }
+       last_PDB.cylinder_3 = false;
+      
+     if(last_PDB.sphere_3==false)
+          createSpheres(last_PDB, 3);
+      curr_sphere_list = last_PDB.all_spheres;//all_sphere_trans_list[last_PDB.ID];
+      if(curr_sphere_list.length!=0)
+        for(var i=0; i<curr_sphere_list.length-1; i++)
+          if(curr_sphere_list[i].mode==3)
+             curr_sphere_list[i].sphere_translate.visible = true;
+
+      last_PDB.sphere_3 = true;
+   }
+   else{
+        delete_Spheres(last_PDB, newmode);
+        last_PDB.sphere_3 = false;
+        delete_Cylinder(last_PDB, newmode);
+        last_PDB.cylinder_3 = false;
+   }
+
+   if(newvalue&16){
+       curr_cylinder_list = last_PDB.all_cylinders;
+       if(last_PDB.sphere_4==false)
+          createCylinders(last_PDB, 4);
+       if(curr_cylinder_list.length!=0)
+            for(var i=0; i<curr_cylinder_list.length-1; i++)
+                if(curr_cylinder_list[i].mode==4){
+                    curr_cylinder_list[i].cylinder_trans.visible=true;
+                    //curr_cylinder_list[i].cylinder_trans.cull   = false;
+            }
+     last_PDB.protein_render_mode = 4;
+     
+     document.viewTypes.proteinViewBackbone_Minimal.checked = true;
+     if(last_PDB.sphere_4==false)
+          createSpheres(last_PDB, 4);
+      curr_sphere_list = last_PDB.all_spheres;//all_sphere_trans_list[last_PDB.ID];
+      if(curr_sphere_list.length!=0)
+        for(var i=0; i<curr_sphere_list.length-1; i++)
+          if(curr_sphere_list[i].mode==3 || curr_sphere_list[i].mode==4)
+             curr_sphere_list[i].sphere_translate.visible = true;
+      last_PDB.sphere_4 = true;
+   }
+   else{
+        delete_Spheres(last_PDB, newmode);
+        last_PDB.sphere_4 = false;
+        delete_Cylinder(last_PDB, newmode);
+        last_PDB.cylinder_4 = false;
+   }
+   if(newvalue&32){
+       last_PDB.protein_render_mode = 5;
+       document.viewTypes.proteinViewBackbone_Full.checked = true;
+       curr_cylinder_list = last_PDB.all_cylinders;
+       if(last_PDB.sphere_5==false)
+          createCylinders(last_PDB, 5);
+       if(curr_cylinder_list.length!=0)
+            for(var i=0; i<curr_cylinder_list.length-1; i++)
+                if(curr_cylinder_list[i].mode==4 && curr_cylinder_list[i].mode==5){
+                    curr_cylinder_list[i].cylinder_trans.visible=true;
+                    //curr_cylinder_list[i].cylinder_trans.cull   = false;
+            }
+  
+     if(last_PDB.sphere_5==false)
+          createSpheres(last_PDB, 5);
+      curr_sphere_list = last_PDB.all_spheres;//all_sphere_trans_list[last_PDB.ID];
+      if(curr_sphere_list.length!=0)
+        for(var i=0; i<curr_sphere_list.length-1; i++)
+          if(curr_sphere_list[i].mode>=3 && curr_sphere_list[i].mode<=5)
+             curr_sphere_list[i].sphere_translate.visible = true;
+      last_PDB.sphere_5 = true;
+
+   }
+   else{
+        delete_Spheres(last_PDB, newmode);
+        last_PDB.sphere_5 = false;
+        delete_Cylinder(last_PDB, newmode);
+        last_PDB.cylinder_5 = false;
+   }
+   if(newvalue&64){
+       last_PDB.protein_render_mode = 6;
+       document.viewTypes.proteinViewRibbons.checked = true;
+       curr_cylinder_list = last_PDB.all_cylinders;
+       if(curr_cylinder_list.length!=0)
+            for(var i=0; i<curr_cylinder_list.length-1; i++){
+                if(curr_cylinder_list[i].mode==6){
+                    curr_cylinder_list[i].cylinder_trans.visible=true;
+                    curr_cylinder_list[i].cylinder_trans.cull   = false;
+            }
+        }
+   }
+   else{
+        curr_cylinder_list = last_PDB.all_cylinders;
+        for(var i=0; i<last_PDB.all_cylinders.length-1; i++){
+             if(curr_cylinder_list[i].mode==6){
+                    curr_cylinder_list[i].cylinder_trans.visible=false;
+             }
+        }
+   }
+   if(newvalue&128){
+       last_PDB.protein_render_mode = 7;
+       document.viewTypes.proteinViewWires_Atoms.checked = true;
+       last_PDB.wireframe_bonds_transform.visible = true;
+       last_PDB.wireframe_bonds_transform.cull    = false;
+
+        if(last_PDB.sphere_2==false)
+          createSpheres(last_PDB, 7);
+        curr_sphere_list = last_PDB.all_spheres;//all_sphere_trans_list[last_PDB.ID];
+        if(curr_sphere_list.length!=0)
+        for(var i=0; i<curr_sphere_list.length-1; i++)
+          if(curr_sphere_list[i].mode>=2 && curr_sphere_list[i].mode<6)
+            curr_sphere_list[i].sphere_translate.visible = true;
+
+       last_PDB.sphere_2 = true;
+   }
+   else
+   {
+       last_PDB.wireframe_bonds_transform.visible = false;
+       last_PDB.wireframe_bonds_transform.cull    = false;
+   }
+   if(newvalue&256){
+       last_PDB.protein_render_mode = 8;
+       document.viewTypes.proteinViewWires.checked = true;
+       last_PDB.wireframe_bonds_transform.visible = true;
+       last_PDB.wireframe_bonds_transform.cull    = false;
+    }
+    if(newvalue&512){
+       last_PDB.protein_render_mode = 9;
+       document.viewTypes.proteinSurcace.checked = true;
+       if(!last_PDB.surface_exist){
+            calculateSurface(last_PDB.filename);
+            last_PDB.surface_exist = true;
+       }
+
+    }
+
+  viewTypes = newvalue;
+
+}
+
+
+
+function onRender(renderEvent) {
+
+  /*if(last_PDB!=null && last_chunk<20){ //last_PDB.atoms.length
+    renderNewPDBAtoms(last_PDB, last_chunk);
+    last_chunk++;
+  }
+  else if(last_PDB!=null && last_chunk>=20) //last_PDB.atoms.length
+      last_PDB = null;
+        */
+  //g_client.renderGraphRoot.clearBuffer = [0.0, 0., 0.8, 1.0];
+  var elapsedTime = renderEvent.elapsedTime;
+  //g_client.renderMode = g_o3d.Client.RENDERMODE_ON_DEMAND;
+  gFPSManager.update(renderEvent);
+  //g_currentTimeParam.value = g_clock;
+  g_client.renderTree(g_client.renderGraphRoot);
+  g_client.renderTree(gFPSManager.viewInfo.root);
+  
+
+  //handleMoveKeys(elapsedTime);
+}
+
+/**
+ * form The real form
+ * prefix A unique identifier for the iframe
+ **/
+function  upload(form,prefix) {
+    var iframe=document.createElement('iframe');
+    iframe.setAttribute('id',prefix + '.iframe');
+    iframe.setAttribute('name',prefix + '.iframe');
+    iframe.setAttribute('style','width: 100px; height: 100px; border: none;');
+
+    form.parentNode.appendChild(iframe);
+    window.frames[prefix+'.iframe'].name=prefix+'.iframe';
+
+    iframeId=document.getElementById(prefix+'.iframe');
+    var eventHandler=function() {
+    if (iframeId.detachEvent)
+    iframeId.detachEvent('onload',eventHandler);
+    else iframeId.removeEventListener('load',eventHandler,false);
+        document.getElementById(prefix+'.button').style.display='inline';
+        document.getElementById(prefix+'.message').innerHTML='';
+        //setTimeout('iframeId.parentNode.removeChild(iframeId)',250);
+    }
+    if (iframeId.addEventListener)
+        iframeId.addEventListener('load',eventHandler,true);
+    if (iframeId.attachEvent)
+        iframeId.attachEvent('onload',eventHandler);
+    form.setAttribute('target',prefix+'.iframe');
+    form.setAttribute('action', '../uploadscript.php');
+    form.setAttribute('method','post');
+    form.setAttribute('enctype','multipart/form-data');
+    form.setAttribute('encoding','multipart/form-data');
+    document.getElementById(prefix+'.button').style.display='none';
+    document.getElementById(prefix+'.message').innerHTML='Uploading...';
+    form.submit();
+    document.getElementById(prefix+'.')
+    var curr_file = document.getElementById("file").value;
+    alert("curr_file");
+    all_PDB_Files.push(curr_file);
+    loadPDB_new("../uploads/"+curr_file);
+
+    return false;
+}
+
+</script>
+<script id="shadowShader" type="text/O3DShader">
+  /**
+   * This shader is for the effect applied in the first render pass, when the
+   * shadow map is created.  The scene is rendered from the perspective of the
+   * light, the grayscale value of each pixel in the rendered image represents
+   * how far away the rendered point is from the light (the lighter, the
+   * farther)  This image gets rendered to a texture, and that texture gets
+   * sampled in the second render pass, when the geometry is drawn to the
+   * screen.
+   */
+
+  // The light's wvp matrix
+  float4x4 worldViewProjection : WorldViewProjection;
+
+  // Input parameters for our vertex shader.
+  struct VertexShaderInput {
+    float4 position : POSITION;
+  };
+
+  // Input parameters for our pixel shader.
+  struct PixelShaderInput{
+    float4 position : POSITION;
+    float2 depth : TEXCOORD0;
+  };
+
+  /**
+   * The vertex shader simply transforms the input vertices to screen space.
+   */
+  PixelShaderInput vertexShaderFunction(VertexShaderInput input) {
+    PixelShaderInput output;
+    // Render from the light's perspective.
+    output.position = mul(input.position, worldViewProjection);
+    output.depth = output.position.zw;
+    return output;
+  }
+
+  /**
+   * The pixel shader returns a shade of gray.  The lighter the shade the
+   * farther that fragment is from the light.
+   */
+  float4 pixelShaderFunction(PixelShaderInput input): COLOR {
+    // Pixels in the shadowmap store the pixel depth from the light's
+    // perspective in normalized device coordinates.
+    float t = input.depth.x / input.depth.y;
+    return float4(t, t, t, 1);
+  }
+
+  // #o3d VertexShaderEntryPoint vertexShaderFunction
+  // #o3d PixelShaderEntryPoint pixelShaderFunction
+  // #o3d MatrixLoadOrder RowMajor
+</script>
+
+
+<script id="shadowColorShader" type="text/O3DShader">
+  /**
+   * This shader is for the effect applied in the second render pass when the
+   * shadowed shapes are drawn to the screen.  In the pixel shader, the distance
+   * from the rendered point to the camera is compared to the distance encoded
+   * in the shadow map.  If the distance is much greater, the rendered point is
+   * considered to be in shadow and is given a light coefficient of 0.
+   */
+
+  float4x4 world : World;
+  float4x4 worldViewProjection : WorldViewProjection;
+  float4x4 worldInverseTranspose : WorldInverseTranspose;
+  float4x4 viewInverse : ViewInverse;
+  float4x4 lightViewProjection;
+  sampler shadowMapSampler;
+
+  // Parameters for the phong shader.
+  uniform float3 lightWorldPos;
+  uniform float4 lightColor;
+  uniform float4 ambient;
+  uniform float4 diffuse;
+  uniform float4 specular;
+  uniform float shininess;
+
+  // input parameters for our vertex shader
+  struct VertexShaderInput {
+    float4 position : POSITION;
+    float3 normal : NORMAL;
+  };
+
+  // input parameters for our pixel shader
+  struct PixelShaderInput {
+    float4 position : POSITION;
+    float4 projTextureCoords : TEXCOORD0;
+    float4 worldPosition : TEXCOORD1;
+    float3 normal : TEXCOORD2;
+  };
+
+  PixelShaderInput vertexShaderFunction(VertexShaderInput input) {
+    PixelShaderInput output;
+    // Transform to homogeneous clip space.
+    output.position = mul(input.position, worldViewProjection);
+
+    // Compute the projective texture coordinates to project the shadow map
+    // onto the scene.
+    float4x4 worldLightViewProjection = mul(world, lightViewProjection);
+    output.projTextureCoords = mul(input.position, worldLightViewProjection);
+    output.worldPosition = mul(input.position, world);
+    output.normal = mul(float4(input.normal, 0), worldInverseTranspose).xyz;
+
+    return output;
+  }
+
+  float4 pixelShaderFunction(PixelShaderInput input): COLOR {
+
+    float3 surfaceToLight = normalize(lightWorldPos - input.worldPosition);
+    float3 surfaceToView = normalize(viewInverse[3].xyz - input.worldPosition);
+    float3 normal = normalize(input.normal);
+    float3 halfVector = normalize(surfaceToLight + surfaceToView);
+    float4 litResult = lit(dot(normal, surfaceToLight),
+                           dot(normal, halfVector), shininess);
+    float4 outColor = ambient;
+
+    float4 projCoords = input.projTextureCoords;
+
+    // Convert texture coords to [0, 1] range.
+    projCoords.xy /= projCoords.w;
+    projCoords.x =  0.5 * projCoords.x + 0.5;
+    projCoords.y = -0.5 * projCoords.y + 0.5;
+
+   
+    // Compute the pixel depth for shadowing.
+    float depth = projCoords.z / projCoords.w;
+
+    // If the rednered point is farter from the light than the distance encoded
+    // in the shadow map, we give it a light coefficient of 0.
+    float light = tex2D(shadowMapSampler, projCoords.xy).r + 0.008 > depth;
+    //light += tex2D(shadowMapSampler, projCoords.xy + float2(-1.0, -1.0)).r + 0.008 > depth;
+    //light += tex2D(shadowMapSampler, projCoords.xy + float2(1.0, -1.0)).r + 0.008 > depth;
+    //light += tex2D(shadowMapSampler, projCoords.xy + float2(-1.0, 1.0)).r + 0.008 > depth;
+    //light += tex2D(shadowMapSampler, projCoords.xy + float2(1.0, 1.0)).r + 0.008 > depth;
+
+    // Make the illuninated area a round spotlight shape just for fun.
+    // Comment this line out to see just the shadows.
+    light *= 1 - smoothstep(0.45, 0.5, length(projCoords - float2(0.5, 0.5)));
+
+    outColor += light * lightColor *
+        (diffuse * litResult.y + specular * litResult.z);
+    return outColor;
+  }
+
+  // #o3d VertexShaderEntryPoint vertexShaderFunction
+  // #o3d PixelShaderEntryPoint pixelShaderFunction
+  // #o3d MatrixLoadOrder RowMajor
+</script>
+
+
+</head>
+<body>
+<table style="width: 100%; height:100%;">
+  <tr style="width:100%; height: 100%;">
+  <td style="width:90%;">
+   <div style="width:100%; height: 100%;">
+     <div id="o3d" style="width: 100%; height: 100%;"></div>
+   </div>
+  </td>
+  <td style="width:10%;vertical-align:top;font-family:Verdana;font-size:10px;font-weight:bold;font-color:gray;">
+	Click Mouse to Rotate<br/><br/>
+	Scroll Mouse to change the speed of Camera<br/><br/>
+	W, go ahead <br/><br/>
+	S, go back <br/><br/>
+	A, go left <br/><br/>
+	D, go right <br/><br/>
+	<div style="color: red;" id="loading"></div>
+	<div style="font-family: sans-serif; font-size: large;">Picked Object: <span id="pickInfo"></span></div>
+        <form name="viewTypes">
+            <input type="checkbox" name="proteinViewAtoms" onClick ="onViewTypeCheckBoxClick(this.form)" value="0">Only Atoms<br>
+            <input type="checkbox" name="proteinViewAtomsSticks" onClick ="onViewTypeCheckBoxClick(this.form)" value="1">Atoms and Bonds<br>
+            <input type="checkbox" name="proteinViewSticks" onClick ="onViewTypeCheckBoxClick(this.form)" value="2">Sticks<br>
+            <input type="checkbox" name="proteinViewBackbone_Chain" onClick ="onViewTypeCheckBoxClick(this.form)" value="3">BackBone_chain_trace<br>
+             <input type="checkbox" name="proteinViewBackbone_Minimal" onClick ="onViewTypeCheckBoxClick(this.form)" value="4">BackBone_minimal<br>
+              <input type="checkbox" name="proteinViewBackbone_Full" onClick ="onViewTypeCheckBoxClick(this.form)" value="5">BackBone_full<br>
+              <input type="checkbox" name="proteinViewRibbons" onClick ="onViewTypeCheckBoxClick(this.form)" value="6">Ribbons<br>
+              <input type="checkbox" name="proteinViewWires_Atoms" onClick ="onViewTypeCheckBoxClick(this.form)" value="7">WireFrame_Atoms<br>
+              <input type="checkbox" name="proteinViewWires" onClick ="onViewTypeCheckBoxClick(this.form)" value="7">WireFrame<br>
+              <input type="checkbox" name="proteinSurcace" onclick="onViewTypeCheckBoxClick(this.form)" value="8">Surface<br>
+        </form>
+
+
+  </td>
+  </tr>
+</table>
+
+<form>
+   File: <input id="file" name="file" type="file"/>
+   <input id="uploadFile.button" type="button"  onclick="upload(this.form, 'uploadFile');" value="Upload file"/>
+   <span id="uploadFile.message"/></form>
+<br />
+</body>
+</html>

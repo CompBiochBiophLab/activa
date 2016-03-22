@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+<!-- Move to the server/<instance>/deploy directory -->
+	<local-tx-datasource>
+		<jndi-name>Activ8DS</jndi-name>
+		<connection-url>jdbc:mysql://localhost:3307/activ8</connection-url>
+		<!--
+		<connection-url>jdbc:mysql://localhost:3306/activ8</connection-url>
+		-->
+		<driver-class>com.mysql.jdbc.Driver</driver-class>
+		<user-name>root</user-name>
+		<password>yrg5hede</password>
+		<!-- Used at lavandula
+		<user-name>activ</user-name>
+		<password>an0th3r</password>
+		-->
+		
+		<min-pool-size>2</min-pool-size>
+		<max-pool-size>5</max-pool-size>
+		
+		<idle-timeout-minutes>5</idle-timeout-minutes>
+		
+		<exception-sorter-class-name>com.mysql.jdbc.integration.jboss.ExtendedMysqlExceptionSorter</exception-sorter-class-name>
+		<valid-connection-checker-class-name>com.mysql.jdbc.integration.jboss.MysqlValidConnectionChecker</valid-connection-checker-class-name>
+	</local-tx-datasource>
+</datasources>

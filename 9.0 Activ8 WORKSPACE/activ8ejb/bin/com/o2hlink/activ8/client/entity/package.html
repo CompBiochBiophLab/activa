@@ -1,0 +1,18 @@
+<html>
+<body style="font-size: 12px;">
+<h1>Entity package</h1>
+<p>
+The Entity package include all the entities expected to be used on the client side.  
+The difference between server entities is that client entities do not include the complete graph of relationships with other entities, making them lightweight objects. 
+Other important difference is that they do not include sensitive information (i.e. passwords) or technical information (i.e. flags).
+</p>
+<p>Some of the benefits in using dto's include</p>
+	<ul>
+		<li>Reduced number of remote calls. By transmitting more data in a single remote call, the application can reduce the number of remote calls.</li>
+		<li>Improved performance. Remote calls can slow an application drastically. Reducing the number of calls is one of the best ways to improve performance. In most scenarios, a remote call carrying a larger amount of data takes virtually the same time as a call that carries only a small amount of data</li>
+		<li>Hidden internals. Passing more data back and forth in a single call also more effectively hides the internals of a remote application behind a coarse-grained interface. This is the main motivation behind the Remote Facade pattern.</li>
+		<li>Discovery of business objects. In some cases, defining a DTO can help in the discovery of meaningful business objects. When creating custom classes to serve as DTOs, you often notice groupings of elements that are presented to a user or another system as a cohesive set of information. Often these groupings serve as useful prototypes for objects that describe the business domain that the application deals with</li>
+		<li>Testability. Encapsulating all parameters in a serializable object can improve testability. For example, you could read DTOs from an XML file and call remote functions to test them. Likewise, it would be easy to serialize the results back into XML format and compare the XML document to the desired outcome without having to create lengthy comparison scripts</li>
+	</ul>
+</body>
+</html>

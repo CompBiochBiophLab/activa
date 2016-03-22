@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="activ8cmd" default="deploy" basedir=".">
+	<!-- 
+	Set the properties
+	-->	
+	<property environment="env" />
+	<property name="jar.file" value="activ8-cmd.jar" />
+	<property name="source.dir" value="${basedir}/src" />
+	<property name="classes.dir" value="${basedir}/bin" />
+	<property name="temp.dir" value="${env.TEMP}" />
+	<property name="java.libs" value="C:\Java\GWT" />
+	<!-- 
+	Create the jar
+	-->	
+	<target name="JAR">
+		<jar jarfile="${temp.dir}/${jar.file}">
+			<fileset dir="${classes.dir}">
+				<include name="com/o2hlink/activ8/client/action/**"/>
+				<include name="com/o2hlink/activ8/client/response/**"/>
+				<include name="com/o2hlink/activ8/client/exception/**"/>
+			</fileset>
+			<fileset dir="${source.dir}">
+				<include name="com/o2hlink/activ8/client/Actions.gwt.xml"/>
+				<include name="com/o2hlink/activ8/client/action/**"/>
+				<include name="com/o2hlink/activ8/client/response/**"/>
+				<include name="com/o2hlink/activ8/client/exception/**"/>
+			</fileset>
+		</jar>
+	</target>
+	<!--
+	Deploy
+	-->
+	<target name="deploy">
+		<antcall target="JAR" />
+		<copy file="${temp.dir}/${jar.file}" todir="${java.libs}" />	
+		<delete file="${temp.dir}/${jar.file}"/>
+	</target>
+</project>

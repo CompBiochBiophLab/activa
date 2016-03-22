@@ -1,0 +1,473 @@
+package com.o2hlink.activa.mobile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import android.os.Environment;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.ActivaConfig;
+import com.o2hlink.activa.ActivaUtil;
+import com.o2hlink.activa.R;
+import com.o2hlink.activa.data.calendar.Event;
+
+/**
+ * @author Adrian Rejas<P>
+ *
+ * This class acts as a manager for the application environment (The mobile used for 
+ * running the application and the user is running the application).
+ */
+public class MobileManager {
+
+	/**
+	 * The user is running the application.
+	 */
+	public User user;
+	
+	/**
+	 * The user object used for callin web services.
+	 */
+	public com.o2hlink.activ8.client.entity.User userForServices;
+	
+	/**
+	 * The mobile is running the application.
+	 */
+	public Device device;
+	
+	/**
+	 * Instance of the manager.
+	 */
+	private static MobileManager instance;
+	
+	/**
+	 * Password introduced at login screen.
+	 */
+	public String password;
+	
+	/**
+	 * Pedometer integer value marking the calibration state of the pedometer.
+	 */
+	public int pedometerCalValue;
+	
+	/**
+	 * The set of users available at this mobile.
+	 */
+	public Hashtable<String, User> users;
+	
+	/**
+	 * If an user has been identified himself;
+	 */
+	public boolean identified;
+	
+	/**
+	 * Private constructor.
+	 */
+	private MobileManager() {
+		this.user = User.getInstance(null, null);
+		this.device = Device.getInstance();
+		this.users = new Hashtable<String, User>();
+		this.identified = false;
+		this.pedometerCalValue = 30;
+		this.getUsers();
+	}
+	
+	/**
+	 * Method for getting the instance of the manager.
+	 * @return
+	 */
+	public static MobileManager getInstance() {
+		if (MobileManager.instance == null) {
+			MobileManager.instance = new MobileManager();
+		}
+		return MobileManager.instance;
+	}
+	
+	/**
+	 * Method for freeing the instance of the manager.
+	 */
+	public static void freeInstance() {
+		MobileManager.instance = null;
+	}
+	
+	/**
+	 * Public method for setting a new user running the application.
+	 * @param name
+	 * @param password
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public boolean getUserFromPassword() {
+		this.identified = false;
+		boolean returned = false;
+		
+		String pass = this.password;
+		if (pass.length() == 0) return returned;
+		this.password = "" + pass.charAt(0);
+		for (int i = 1; i < pass.length(); i ++) {
+			if (pass.charAt(i) != pass.charAt(i-1)) this.password += pass.charAt(i);
+		}
+		if (users.containsKey(this.password)) {
+			String name = users.get(this.password).getName();
+			boolean notValid = name.equalsIgnoreCase("null");
+			if ((name != null)&&(!notValid)) {
+				setUser(users.get(this.password));
+				pedometerCalValue = user.pedometerCalValue;
+				this.identified= true;
+				returned = true;
+			} else {
+				users.remove(this.password);
+				saveUsers();
+			}
+		}
+		return returned;
+	}
+	
+	public boolean extractUsersFromXML(String xml) {
+		int count = 0, steplimit = 0, id = 0, type = 0;
+		boolean returned = false, insideUser = false, isMale = false, created = false, animations = true;
+		String name = null, password = null, phonepass = null, sex = null, ambient = null;
+		Date birthdate = new Date(0), lastupdate = new Date(0), laststepcalibration = new Date(0);
+		String firstname = "", lastname = "", country = "";
+		int height = 0, pedometer = 30;;
+		float weight = 0;
+		try {
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        
+	        info.setInput(new StringReader(xml));
+	        int event = info.getEventType();
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            	
+	            } else if(event == XmlPullParser.END_DOCUMENT) {
+	            	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("USERS")) {
+	                	count = Integer.parseInt(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("USER")) {
+		              	if (!insideUser) insideUser = true;
+		            }
+		            else if (info.getName().equalsIgnoreCase("ID")) {
+		               	if (!insideUser) {
+		               		break;
+		               	}
+		              	id = Integer.parseInt(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("NAME")) {
+		               	if (!insideUser) {
+		               		break;
+		               	}
+		              	name = info.getAttributeValue(0);
+		            }
+		            else if (info.getName().equalsIgnoreCase("TYPE")) {
+		               	if (!insideUser) {
+		               		break;
+		               	}
+		              	type = Integer.parseInt(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("PASSWORD")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	password = info.getAttributeValue(0);
+		            }
+		            else if (info.getName().equalsIgnoreCase("FIRSTNAME")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	firstname = info.getAttributeValue(0);
+		            }
+		            else if (info.getName().equalsIgnoreCase("LASTNAME")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	lastname = info.getAttributeValue(0);
+		            }
+		            else if (info.getName().equalsIgnoreCase("COUNTRY")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	country = info.getAttributeValue(0);
+		            }
+		            else if (info.getName().equalsIgnoreCase("BIRTHDATE")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		                birthdate = ActivaUtil.XMLDateToDate(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("LASTUPDATE")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		                lastupdate = ActivaUtil.XMLDateToDate(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("LASTSTEPCALIBRATION")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		                laststepcalibration = ActivaUtil.XMLDateToDate(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("STEPLIMIT")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	steplimit = Integer.parseInt(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("SEX")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	sex = info.getAttributeValue(0);
+		              	if (sex.equalsIgnoreCase("MALE")) isMale = true;
+		              	else isMale = false;
+		            }
+		            else if (info.getName().equalsIgnoreCase("CREATED")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	if (info.getAttributeValue(0).equalsIgnoreCase("TRUE")) created = true;
+		              	else created = false;
+		            }
+		            else if (info.getName().equalsIgnoreCase("ANIMATIONS")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	if (info.getAttributeValue(0).equalsIgnoreCase("TRUE")) animations = true;
+		              	else animations = false;
+		            }
+		            else if (info.getName().equalsIgnoreCase("HEIGHT")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	height = Integer.parseInt(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("WEIGHT")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	weight = Float.parseFloat(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("PEDOMETER")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	pedometer = Integer.parseInt(info.getAttributeValue(0));
+		            }
+		            else if (info.getName().equalsIgnoreCase("AMBIENT")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	ambient = info.getAttributeValue(0);
+		            }
+		            else if (info.getName().equalsIgnoreCase("PHONEPASS")) {
+		                if (!insideUser) {
+		                	break;
+		                }
+		              	phonepass = info.getAttributeValue(0);
+		            }
+	            } else if(event == XmlPullParser.END_TAG) {
+	                if (info.getName().equalsIgnoreCase("USER")) {
+	                	if (!insideUser) {
+	                		break;
+	                	}
+	                	User user = new User(name, password, birthdate, isMale, height, weight);
+	                	user.setCreated(created);
+	                	user.setId(id);
+	                	user.setType(type);
+	                	user.setLastupdate(lastupdate);
+	                	user.setFirstname(firstname);
+	                	user.setLastname(lastname);
+	                	user.setCountry(country);
+	                	user.setLaststepcalibration(laststepcalibration);
+	                	user.setSteplimit(steplimit);
+	                	user.setAmbient(ambient);
+	                	user.pedometerCalValue = pedometer;
+	                	user.animations = animations;
+	                	this.users.put(phonepass, user);
+	                	name = null;
+	                	birthdate = null;
+	                	lastupdate = new Date(0);
+	                	laststepcalibration = new Date(0);
+	                	steplimit = 0;
+	                	type = 0;
+	                	isMale = false;
+	                	height = 0;
+	                	sex = null;
+	                	pedometer = 30;
+	                	id = 0;
+	                	weight = 0;
+	                	firstname = "";
+	                	lastname = "";
+	                	country = "";
+	                	password = null;
+	                	animations = true;
+	                	ambient = null;
+	                	phonepass = null;
+	                	insideUser = false;
+	                }
+	                if (info.getName().equalsIgnoreCase("USERS")) {
+	                	if (count == users.size()) returned = true;
+	                	else returned = false;
+	                }
+	            }
+	            event = info.next();
+	        }
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return returned;
+	}
+	
+	public String passUsersToXML() {
+		String returned = "";
+		returned += "<USERS COUNT=\"";
+		returned += this.users.size();
+		returned += "\">\n";
+		Enumeration<String> enumer = this.users.keys();
+		while (enumer.hasMoreElements()) {
+			String currentPass = enumer.nextElement();
+			User currentUser = this.users.get(currentPass);
+			returned += "\t<USER>\n\t\t";
+			returned += "<ID VALUE=\"" + currentUser.getId() + "\"/>\n\t\t";
+			returned += "<NAME VALUE=\"" + currentUser.getName() + "\"/>\n\t\t";
+			returned += "<TYPE VALUE=\"" + currentUser.getType() + "\"/>\n\t\t";
+			returned += "<PASSWORD VALUE=\"" + currentUser.getPassword() + "\"/>\n\t\t";
+			returned += "<FIRSTNAME VALUE=\"" + currentUser.getFirstname() + "\"/>\n\t\t";
+			returned += "<LASTNAME VALUE=\"" + currentUser.getLastname() + "\"/>\n\t\t";
+			returned += "<COUNTRY VALUE=\"" + currentUser.getCountry() + "\"/>\n\t\t";
+			returned += "<BIRTHDATE VALUE=\"" + ActivaUtil.dateToXMLDate(currentUser.getBirthdate()) + "\"/>\n\t\t";
+			returned += "<SEX VALUE=\"" + (currentUser.isMale()?"MALE":"FEMALE") + "\"/>\n\t\t";
+			returned += "<HEIGHT VALUE=\"" + currentUser.getHeight() + "\"/>\n\t\t";
+			returned += "<WEIGHT VALUE=\"" + currentUser.getWeight() + "\"/>\n\t\t";
+			returned += "<PHONEPASS VALUE=\"" + currentPass + "\"/>\n\t\t";
+			returned += "<LASTUPDATE VALUE=\"" + ActivaUtil.dateToXMLDate(currentUser.getLastupdate()) + "\"/>\n\t\t";
+			returned += "<LASTSTEPCALIBRATION VALUE=\"" + ActivaUtil.dateToXMLDate(currentUser.getLaststepcalibration()) + "\"/>\n\t\t";
+			returned += "<STEPLIMIT VALUE=\"" + currentUser.getSteplimit() + "\"/>\n\t\t";
+			returned += "<CREATED VALUE=\"" + (currentUser.isCreated()?"TRUE":"FALSE") + "\"/>\n\t\t";
+			returned += "<ANIMATIONS VALUE=\"" + (currentUser.animations?"TRUE":"FALSE") + "\"/>\n\t\t";
+			returned += "<AMBIENT VALUE=\"" + currentUser.getAmbient() + "\"/>\n\t\t";
+			returned += "<PEDOMETER VALUE=\"" + currentUser.pedometerCalValue + "\"/>\n\t\t";
+			returned += "</USER>\n";
+		}
+		returned += "</USERS>";
+		return returned;
+	}
+
+	public void getUsers() {
+		try {
+			String xmlUsers = "";
+			File folder = Activa.myApp.getDir(ActivaConfig.FILES_FOLDER, 0);
+			File users = new File(folder, "activausers.xml");
+			if (!users.exists()) {
+				users.createNewFile();
+	    		FileOutputStream fout = new FileOutputStream(users);
+	    		OutputStreamWriter osw = new OutputStreamWriter(fout);
+	    		osw.write(passUsersToXML());
+	    		osw.close();
+	    		fout.close();
+				return;
+			}
+			else {
+				FileInputStream fin = new FileInputStream(users);
+				InputStreamReader isr = new InputStreamReader(fin,"UTF-8");          
+		        char[] inputBuffer = new char[255];   
+		        while ( isr.read(inputBuffer) != -1) {
+		        	xmlUsers += new String(inputBuffer);    
+		        }
+		        extractUsersFromXML(xmlUsers);
+		        isr.close();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addUserWithPassword(String username, String password) {
+    	try {
+    		User user = new User(username, password);
+        	this.users.put(this.password, user);
+    		File folder = Activa.myApp.getDir(ActivaConfig.FILES_FOLDER, 0);
+    		FileOutputStream fout = new FileOutputStream(new File(folder, "activausers.xml"));
+    		OutputStreamWriter osw = new OutputStreamWriter(fout);
+    		osw.write(passUsersToXML());
+    		osw.close();
+    		fout.close();
+    		setUser(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addUserWithPassword(String username, String password, Date birthdate, boolean isMale, int height, float weight) {
+    	try {
+    		User user = new User(username, password, birthdate, isMale, height, weight);
+        	this.users.put(this.password, user);
+    		File folder = Activa.myApp.getDir(ActivaConfig.FILES_FOLDER, 0);
+    		FileOutputStream fout = new FileOutputStream(new File(folder, "activausers.xml"));
+    		OutputStreamWriter osw = new OutputStreamWriter(fout);
+    		osw.write(passUsersToXML());
+    		osw.close();
+    		fout.close();
+    		setUser(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addUserWithPassword(User user) {
+    	try {
+        	this.users.put(this.password, user);
+    		File folder = Activa.myApp.getDir(ActivaConfig.FILES_FOLDER, 0);
+    		FileOutputStream fout = new FileOutputStream(new File(folder, "activausers.xml"));
+    		OutputStreamWriter osw = new OutputStreamWriter(fout);
+    		osw.write(passUsersToXML());
+    		osw.close();
+    		fout.close();
+    		setUser(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveUsers() {
+    	try {
+    		File folder = Activa.myApp.getDir(ActivaConfig.FILES_FOLDER, 0);
+    		FileOutputStream fout = new FileOutputStream(new File(folder, "activausers.xml"));
+    		OutputStreamWriter osw = new OutputStreamWriter(fout);
+    		osw.write(passUsersToXML());
+    		osw.close();
+    		fout.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+}

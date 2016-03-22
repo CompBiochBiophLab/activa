@@ -1,0 +1,460 @@
+package com.o2hlink.activa.connection;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Entity;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.ActivaConfig;
+import com.o2hlink.activa.ActivaUtil;
+import com.o2hlink.activa.exceptions.AESException;
+import com.o2hlink.activa.exceptions.ConnectionException;
+import com.o2hlink.activa.exceptions.InvalidValueException;
+import com.o2hlink.activa.exceptions.LoginException;
+import com.o2hlink.activa.exceptions.PasswordException;
+
+/**
+ * @author Adrian Rejas
+ * 
+ * This class will deal with the stablishment of the connection with the main server. This
+ * is the class which deal with the creation of the connections with the server, not with
+ * the protocol management.
+ */
+
+public class Connection {
+	
+	/**
+	 * <p>The debug flag for this class only</p>
+	 */
+	public static final boolean DEBUG = Activa.DEBUG_ALL | false;
+	
+	/**
+	 * The instance of the connection to the server.
+	 */
+	private static Connection instance;
+	
+	/**
+	 * The IP to connect.
+	 */
+	private String ip;
+	
+	/**
+	 * The port to connect.
+	 */
+	private int port;
+	
+	/**
+	 * The path to connect.
+	 */
+	private String path;
+
+	/**
+	 * The AES key to use at the connection.
+	 */
+	private byte[] aeskey;	
+	
+	/**
+	 * The maximum times for trial when getting expired notification from server.
+	 */
+	private static final int AES_EXPIRED_MAX_TRIAL = 3;
+	
+	/**
+	 * The user-defined HTTP error code for AES key expired notification.
+	 */
+	private static final int ERR_AES_KEY_EXPIRED = 601;
+
+	/**
+	 * The user-defined HTTP error code for server not detected as initiated.
+	 */
+	static final int ERR_SYSTEM_NOT_INITIALIZED = 600;
+	
+	/**
+	 * The user-defined HTTP error code for not existing user.
+	 */
+	private static final int ERR_USER_NOT_REGISTERED = 602;
+	
+	/**
+	 * The user-defined HTTP error code for wrong password.
+	 */
+	private static final int ERR_BAD_PASSWORD = 603;
+
+	protected Connection(String ip, int port, String path) {
+		this.ip = ip;
+		this.port = port;
+		if (null == path) {
+			path = "";
+		}
+		while (path.startsWith("/")) {
+			path = path.substring(1);
+		}
+		while (path.endsWith("/")) {
+			path = path.substring(0, path.length()-1);
+		}
+		this.path = "/"+path;
+		
+		// read AES from secure file
+		readAES();
+	}
+
+	/**
+	 * Get the instance of the connection with the server.
+	 * <p>
+	 * @param ip The IP of the server
+	 * @param port The port used by the server
+	 * @param path The path inside the IP server
+	 * @return the instance of The connection with the server.
+	 */
+    public static Connection getInstance(String ip, int port, String path) {
+        if (instance == null) {
+            instance = new Connection(ip, port, path);
+        }
+        return instance;
+    }
+    
+    /**
+	 * Clear AES key from handset and memory.
+	 */
+	private static void clearAES() {
+//		StreamConnection sc = null;
+		// clear AES key in memory
+//		aeskey = null;
+		// clear AES key in file system
+//		try {
+//			sc = (StreamConnection)Connector.open(AES_FILE 
+//			        + ";PASSWORD=" + Actor.getInstance().getIMEISum() 
+//			        + ";DELETE");
+//		}catch (Exception e) {
+//			if (DEBUG) System.out.println(e.toString());
+//		}finally {
+//			try {
+//				if (null != sc) {
+//					sc.close();
+//				}
+//			}catch (IOException ioe) {
+//				if (DEBUG) System.out.println(ioe.toString());
+//			}
+//		} // finally
+	}
+	
+	/**
+	 * Read AES key from handset secure file. 
+	 * If the file cannot be found, or error occurs when opening the file, 
+	 * or the file size is not the expected one, the aeskey will not be changed.
+	 */
+	private static void readAES() {
+//		StreamConnection sc = null;
+//		InputStream is = null;
+//		try {
+//			sc = (StreamConnection)Connector.open(AES_FILE 
+//			        + ";PASSWORD=" + Actor.getInstance().getIMEISum()); 
+//			is = sc.openInputStream();
+//			int size = is.available();
+//			if (size == (AES_LENGTH << 1)) {
+//				byte[] aesBytes = new byte[AES_LENGTH << 1];
+//				is.read(aesBytes);
+//				// save the AES key in memory
+//				aeskey = decode(aesBytes);
+//			}
+//		}catch (Exception e) {
+//			if (DEBUG) System.out.println(e.toString());
+//		}finally {
+//			try {
+//				if (null != is) {
+//					is.close();
+//				}
+//			}catch (IOException ioe) {
+//				if (DEBUG) System.out.println(ioe.toString());
+//			}
+//			try {
+//				if (null != sc) {
+//					sc.close();
+//				}
+//			}catch (IOException ioe) {
+//				if (DEBUG) System.out.println(ioe.toString());
+//			}
+//		} // finally
+	}
+
+	/**
+	 * Write AES key into handset secure file.</p>
+	 */
+	private static void writeAES() {
+//		StreamConnection sc = null;
+//		OutputStream os = null;
+//		if (null == aeskey || aeskey.length != AES_LENGTH)
+//		    return;
+//		try {
+//			sc = (StreamConnection)Connector.open(AES_FILE 
+//			        + ";PASSWORD=" + Actor.getInstance().getIMEISum()); 
+//			os = sc.openOutputStream();
+//			// encode the key first before save 
+//			byte[] aesBytes = encode(aeskey);
+//			os.write(aesBytes);
+//		}catch (Exception e) {
+//			if (DEBUG) System.out.println(e.toString());
+//		}finally {
+//			try {
+//				if (null != os) {
+//					os.close();
+//				}
+//			}catch (IOException ioe) {
+//				if (DEBUG) System.out.println(ioe.toString());
+//			}
+//			try {
+//				if (null != sc) {
+//					sc.close();
+//				}
+//			}catch (IOException ioe) {
+//				if (DEBUG) System.out.println(ioe.toString());
+//			}
+//		} // finally
+	}
+
+	/**
+	 * Open conneciton with a service offered by server.
+	 * <p>
+	 * @param requestFile The server file ordered with the service.
+	 * @return the HttpURLConnection object which represents the conneciton to the service.
+	 * @exception IOException if there are errors while submitting data.
+	 */
+	public HttpPost openConnection(String requestFile) {
+        HttpPost postMethod = null; 
+		String url = ActivaConfig.URL;
+		if (DEBUG) {
+			System.out.println("Connection.java::send:before open url:"+url);
+		}
+		try {
+			postMethod = new HttpPost(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (DEBUG) {
+			System.out.println("Connection.java::send:after open.");
+		}
+		return postMethod;
+	}
+	
+	/**
+	 * Submit data to server. Like send, but with encryption and decryption settings.
+	 * <p>
+	 * @param pdu The message to send.
+	 * @param requestFile The server file ordered with the service.
+	 * @return The received response in byte array.
+	 * @exception IOException if there are errors while submitting data.
+	 * @exception AESException if the key is expired
+	 * @exception ConnectionException if get connection error
+	 */
+	/*public byte[] submitSecure(byte[] msg, String requestFile) throws IOException, ConnectionException, InvalidValueException {
+
+	    // loop for trials when getting AESException
+		for (int i = 0; i < AES_EXPIRED_MAX_TRIAL; i++) {
+			try {
+				if (DEBUG) {
+					System.out.println("Connection.java::send:msg="+ActivaUtil.dumpBytes(msg));
+				}
+				// encrypt message and send to server
+				byte[] enmsg = CryptoService.encryptAES(msg, aeskey);
+				byte[] res = send(enmsg, requestFile);
+				if (DEBUG) {
+				      System.out.println("Connection.java::received response: " + res.length + " bytes");
+				}
+				byte[] deres = null;
+				if (null != res) {
+				    try {
+				        deres = CryptoService.decryptAES(res, aeskey);
+				    } catch (Exception e) {
+				          if (DEBUG) {
+				                System.out.println("Could not decrypt message");
+				          }
+				        throw new InvalidValueException(e.getMessage());				        
+				    }
+				}
+				if (DEBUG) {
+					System.out.println("Connection.java::submit:deres="+ActivaUtil.dumpBytes(deres));
+				}
+				return deres;
+			} catch (ConnectionException cex) {
+			    throw cex;
+			} catch (InvalidValueException ivex) {
+			    throw ivex;
+			} catch (AESException aese) {
+			    // clear AES key when it is expired
+			    clearAES();
+			} catch (Exception e) {
+				throw new IOException(e.getMessage());
+			}
+		}
+		throw new ConnectionException(Activa.myLanguageManager.PROT_ERR_RESP_CODE, ERR_AES_KEY_EXPIRED);
+	}*/
+	
+	/**
+	 * <p>submit data to server without AES encryption.</p>
+	 * 
+	 * @param msg - the message to send.
+	 * @param requestFile - which is expected to process this message on server.
+	 * @return the received response in byte array.
+	 * @exception IOException if there are errors while submitting data.
+	 * @exception ConnectionException when get connection error. 
+	 * @exception LoginException if the user doesn't exist. 
+	 * @exception PasswordException if a wrong password is used.
+	 */
+	public byte[] submitUnsecure(byte[] msg, String requestFile) throws IOException, ConnectionException, LoginException, PasswordException {
+		byte[] enmsg = null;
+		try {
+			if (DEBUG) {
+				System.out.println("CSIO.java::request:msg="+ActivaUtil.dumpBytes(msg));
+			}
+			byte[] res = send(msg, requestFile);
+			if (null != res) {
+				if (DEBUG) {
+				      System.out.println("Received :" + ActivaUtil.dumpBytes(res));
+				}
+			}
+			return res;
+		} catch (ConnectionException cex) {
+		    throw cex;
+		} catch (AESException aese) {
+			throw new ConnectionException(aese.getMessage(), ERR_AES_KEY_EXPIRED);
+		} catch (LoginException le) {
+			throw new LoginException(le.getMessage());
+		} catch (PasswordException pe) {
+			throw new PasswordException(pe.getMessage());
+		} catch (Exception e) {
+			throw new IOException(e.getMessage());
+		}
+	}
+
+	/**
+	 * Send data with server, sending a request and receiving a response.
+	 * <p>
+	 * @param pdu The message to send.
+	 * @param requestFile The server file ordered with the service.
+	 * @return The received response in byte array.
+	 * @exception IOException if there are errors while submitting data.
+	 * @exception AESException if the key is expired
+	 * @exception ConnectionException if get connection error
+	 */
+	private byte[] send(byte[] pdu, String requestFile) throws IOException, AESException, ConnectionException, LoginException, PasswordException {
+		HttpPost c = null;
+		InputStream is = null;
+		HttpResponse response = null;
+		HttpClient httpclient = null;
+		int respCode = -9;
+
+		byte[] data = null;
+		try {	
+	        httpclient = new DefaultHttpClient();
+			c = openConnection(requestFile);
+			c.setEntity(new StringEntity(new String(pdu)));
+			
+			response = httpclient.execute(c);
+			respCode = response.getStatusLine().getStatusCode();
+			if (respCode!=HttpURLConnection.HTTP_OK) {
+				if (respCode == HttpURLConnection.HTTP_INTERNAL_ERROR) {
+					throw new ConnectionException(Activa.myLanguageManager.PROT_ERR_SERVER_500, HttpURLConnection.HTTP_INTERNAL_ERROR);
+				} else if (respCode == ERR_SYSTEM_NOT_INITIALIZED) {
+				    throw new ConnectionException(Activa.myLanguageManager.PROT_ERR_RESP_CODE, ERR_SYSTEM_NOT_INITIALIZED);
+				} else if (respCode == ERR_AES_KEY_EXPIRED) {
+				    throw new AESException(Activa.myLanguageManager.PROT_ERR_RESP_CODE);
+				} else if (respCode == ERR_USER_NOT_REGISTERED) {
+				    throw new LoginException(Activa.myLanguageManager.PROT_ERR_RESP_CODE);
+				} else if (respCode == ERR_BAD_PASSWORD) {
+				    throw new PasswordException(Activa.myLanguageManager.PROT_ERR_RESP_CODE);
+				}
+				throw new ConnectionException(Activa.myLanguageManager.PROT_ERR_RESP_CODE, HttpURLConnection.HTTP_INTERNAL_ERROR);
+			}
+			is = response.getEntity().getContent(); 
+
+			// Get the length and process the data
+			int len = (int)response.getEntity().getContentLength();
+			if (DEBUG) {
+				System.out.println("Connection.java::send:response length:" + len);
+			}
+			if (len > 0) {
+				data = new byte[len];
+				int off = 0;
+				while (off < len) {
+					off += is.read(data, off, len-off);
+				}
+			} else {
+			      //Change the implementation, and read by chuncks of 256 bytes every 1/2 second
+			      ByteBuffer strBuff = new ByteBuffer();
+			      int lenReadData = 1;
+			      while (lenReadData > 0) {
+			            //read a chunck of 256 bytes (attempt to do so...)
+			            byte [] buffer = new byte [256];
+			            lenReadData = is.read(buffer,0,256);
+			            if (DEBUG) {
+			                  System.out.println("Read " + lenReadData + " bytes...");
+			            }
+			            if (lenReadData > 0) {
+			                  for (int ni = 0 ; ni < lenReadData; ni ++) { 
+			                        strBuff.append(buffer[ni]);
+			                  }
+			            }
+			      }
+			      //Convert the data to the data array...
+			      data = strBuff.getBytes();
+			      
+//				int ch;
+//				ByteBuffer bb = new ByteBuffer();
+//				while ((ch = is.read()) != -1) {
+//					bb.append((byte)ch);
+//				}
+//				data = bb.getBytes();
+			}
+		} catch (ConnectionException cex) {
+		    throw cex;
+		} catch (AESException aesex) {
+		    throw aesex;
+		} catch (LoginException lex) {
+		    throw lex;
+		} catch (PasswordException pex) {
+		    throw pex;
+		} catch (Exception ex) {
+			if (DEBUG) {
+			      ex.printStackTrace();
+			}
+			throw new IOException(ex.getMessage());
+		} finally {
+			try {
+				if (is != null)
+					is.close();
+			} catch (Exception ex) {
+				if (DEBUG) {
+				    ex.printStackTrace();
+				}
+			}
+			try {
+				if (httpclient != null)
+					httpclient.getConnectionManager().closeExpiredConnections();
+			} catch (Exception ex) {
+				if (DEBUG) {
+				    ex.printStackTrace();
+				}
+			}
+		}
+		return data;
+	}
+	
+}

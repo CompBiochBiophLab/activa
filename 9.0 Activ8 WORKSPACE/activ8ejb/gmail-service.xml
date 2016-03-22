@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+  <mbean code="org.jboss.mail.MailService" name="jboss:service=GMail">
+    <attribute name="JNDIName">java:/GMail</attribute>
+    <attribute name="User">user</attribute>
+    <attribute name="Password">password</attribute>
+    <attribute name="Configuration">
+      <configuration>
+        <property name="mail.user" value="user"/>
+
+        <property name="mail.store.protocol" value="imaps"/>
+        <property name="mail.imap.host" value="imap.gmail.com"/>
+        <property name="mail.imap.port" value="993"/>
+        <property name="mail.imap.socketFactory.class" value="javax.net.ssl.SSLSocketFactory"/>
+        <property name="mail.imap.socketFactory.fallback" value="false"/>
+        <property name="mail.imap.socketFactory.port" value="993"/>
+        <property name="mail.imap.fetchsize" value="65535"/>
+
+        <property name="mail.transport.protocol" value="smtps"/>
+        <property name="mail.smtps.host" value="smtp.gmail.com"/>
+        <property name="mail.smtps.port" value="465"/>
+        <property name="mail.smtps.auth" value="true"/>
+        <property name="mail.smtps.starttls.enable" value="true"/> 
+
+        <!--<property name="mail.from" value="user@gmail.com"/>-->
+      </configuration>
+    </attribute>
+    <depends>jboss:service=Naming</depends>
+  </mbean>
+
+</server>

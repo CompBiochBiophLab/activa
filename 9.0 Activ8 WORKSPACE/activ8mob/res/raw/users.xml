@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<USERS COUNT="2">
+	<USER>
+		<NAME VALUE="arejas"/>
+		<PASSWORD VALUE="activa"/>
+		<PHONEPASS VALUE="1478963"/>
+	</USER>
+	<USER>
+		<NAME VALUE="mhernandez"/>
+		<PASSWORD VALUE="activa"/>
+		<PHONEPASS VALUE="569874123"/>
+	</USER>
+</USERS>

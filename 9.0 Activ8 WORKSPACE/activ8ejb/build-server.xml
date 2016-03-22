@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="activ8cln" default="deploy" basedir=".">
+	<!--
+	Deploys the application in an external server. 
+	In order for this to work, it must deployed on a local server.
+	[As it takes files from it]
+	-->
+	<!--
+	Properties
+	-->
+	<property environment="env" />
+	<property name="jboss.dir" value="${env.JBOSS_HOME}" />
+	<property name="deploy.dir" value="${jboss.dir}/server/default/deploy" />
+	<property name="source.file" value="activ8ejb.jar" />
+	<property name="dest.dir" value="/usr/local/jboss/server/default/deploy" />
+	<property name="server.host" value="174.143.202.184" />
+	<property name="server.port" value="38822" />
+	<!-- 
+	Deploy
+	-->
+	<target name="deploy">
+		<input message="jboss@${server.host}: " addproperty="password"/>
+		<scp todir="jboss@${server.host}:${dest.dir}" port="${server.port}" password="${password}" verbose="true" trust="true" sftp="true">
+			<fileset dir="${deploy.dir}">
+				<include name="${source.file}" />
+			</fileset>
+		</scp>
+	</target>
+</project>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AMBIENTS COUNT="1">
+	<AMBIENT NAME="Clinician default environment" URL="http://c0034483.cdn1.cloudfiles.rackspacecloud.com" PRICE="null"/>
+	<AMBIENT NAME="Clinician default environment2" URL="http://c0034483.cdn1.cloudfiles.rackspacecloud.com" PRICE="0.50"/>
+</AMBIENTS>

@@ -1,0 +1,167 @@
+package com.o2hlink.activa.data.questionnaire;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Date;
+import java.util.Hashtable;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.R;
+import com.o2hlink.activa.data.calendar.Event;
+import com.o2hlink.activa.mobile.MobileManager;
+import com.o2hlink.activa.ui.UIManager;
+
+/**
+ * @author Adrian Rejas<P>
+ *
+ * This class manages the different questionnaires available for the user. Just one 
+ * questionnaires manager is necessary, so there will be just one instance of this 
+ * class while running the application.
+ */
+public class QuestManager {
+	
+	/**
+	 * Instance of the questionnaire manager.
+	 */
+	private static QuestManager instance;
+	
+	/**
+	 * Boolean value which validates the info at the QuestManager.
+	 */
+	public boolean valid;
+	
+	/**
+	 * If the questionnaire is part of a program.
+	 */
+	public boolean partOfAProgram;
+	
+	/**
+	 * set of questionnaires managed by the manager.
+	 */
+	public Hashtable<Integer, Questionnaire> questionnaireSet;
+	
+	/**
+	 * Active questionnaire ID.
+	 */
+	public int activeQuestionnaireId;
+	
+	/**
+	 * Event associated with the questionnaire actually being done (null if no event associated).
+	 */
+	public Event eventAssociated;
+
+	public Question currentQuestion;
+	
+	/**
+	 * Private constructor.
+	 */
+	private QuestManager() {
+		this.valid = false;
+		this.partOfAProgram = false;
+		this.questionnaireSet = new Hashtable<Integer, Questionnaire>();
+	}
+	
+	/**
+	 * Public method for getting the questionnaire manager
+	 * @return The QuestManager instance.
+	 */
+	public static QuestManager getInstance() {
+		if (QuestManager.instance == null) {
+			QuestManager.instance = new QuestManager();
+		}
+		return QuestManager.instance;
+	}
+	
+	/**
+	 * Method for freeing the instance of the manager.
+	 */
+	public static void freeInstance() {
+		QuestManager.instance = null;
+	}
+	
+	/**
+	 * This function extracts from a XML structure all the questionnaires.
+	 * @param xml The XML structure which contains the questionnaires.
+	 */
+	
+	public void extractFromXML(String xml) {
+		int count = 0, mycount = 0;
+		XmlPullParserFactory factory;
+		Event currentEvent;
+		try {
+			factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        this.valid = true;
+	        boolean insideEvent = false;
+	        boolean end = true; 
+	        info.setInput(new StringReader(xml));
+	        int event = info.getEventType();
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("CUESTIONARIOS")) {
+	                	count = Integer.parseInt(info.getAttributeValue(info.getNamespace(), "COUNT"));
+	                }
+	                else if (info.getName().equalsIgnoreCase("CUESTIONARIO")) {
+	                	Questionnaire questionnaire = Questionnaire.extractFromXML(info);
+	                	if (questionnaire != null) {
+	                		this.questionnaireSet.put(questionnaire.id, questionnaire);
+		                	mycount++;
+	                	}
+	                }
+	            } else if(event == XmlPullParser.END_TAG) {
+	            	if (info.getName().equalsIgnoreCase("CUESTIONARIOS")) {
+	            		if (count != mycount) this.valid = false;
+	            		return;
+	            	}
+	            }
+	            event = info.next();
+	        }
+	        if (!end) this.valid = false;
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method start the filling of a questionnaire.
+	 * @param questionnaireID
+	 */
+	public void startQuestionnaire(int questionnaireID) {
+		this.activeQuestionnaireId = questionnaireID;
+		Activa.myUIManager.startActiveQuestionnaire();
+	}
+
+	public void finishQuestionnaire() {
+		float result = this.questionnaireSet.get(this.activeQuestionnaireId).finish();
+		if (this.eventAssociated != null) {
+			this.eventAssociated.state = 0;
+			Activa.myCalendarManager.saveCalendar();
+		}
+		if (this.partOfAProgram) {
+			this.partOfAProgram = false;
+			Activa.myUIManager.loadQuestResult2(result);
+		}
+		else Activa.myUIManager.loadQuestResult(result);
+	}
+
+	public void getQuestionnaires() {
+		if (Activa.myMobileManager.user.getType() != 0) return;
+		boolean valid = Activa.myProtocolManager.getQuestionnaires();
+		if (!valid) Activa.myProtocolManager.getQuestionnaires2();
+	}
+
+}

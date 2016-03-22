@@ -1,0 +1,16 @@
+DEPENDENCIES
+
+JBoss 5.1.
+Go to:
+http://www.jboss.org/jbossas/downloads.html
+And download version 5.1 (current version).
+
+Unzip the folder and copy it to a folder of your preference (i.e. C:\jboss),
+add environment variable JBOSS_HOME to be C:\jboss
+
+The libraries needed to include are: 
+All jar in client except jaxws-rt.jar, jaxws-tools.jar
+The xercesImpl.jar in lib\endorsed
+The servlet-api.jar in common\lib
+
+Google Data

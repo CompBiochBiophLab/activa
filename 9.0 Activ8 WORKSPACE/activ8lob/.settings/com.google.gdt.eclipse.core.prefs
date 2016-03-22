@@ -1,0 +1,5 @@
+#Fri Jul 09 13:32:44 CEST 2010
+eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=C\:/Java/GWT/gwt-o3d.jar|C\:/Java/GWT/gwt-maps.jar|C\:/Java/GWT/gwt-ajaxloader.jar|C\:/Java/GWT/guice-2.0.jar|C\:/Java/GWT/gin-1.0.jar|C\:/Java/GWT/aopalliance.jar|C\:/Java/GWT/activ8-gwt-web.jar|C\:/Java/GWT/activ8-dto.jar|C\:/Java/GWT/activ8-cmd.jar|C\:/Java/GWT/gwt-rss.jar|C\:/Java/GWT/gwt-dnd-3.0.1.jar|C\:/Java/GWT/gwt-jaxb.jar
+warSrcDir=war
+warSrcDirIsOutput=true

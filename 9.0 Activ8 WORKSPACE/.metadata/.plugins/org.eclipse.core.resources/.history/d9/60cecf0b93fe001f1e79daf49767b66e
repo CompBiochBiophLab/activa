@@ -1,0 +1,93 @@
+package com.o2hlink.activa.connection;
+/**
+ *      <hr/><b> E-BusinessJavaTemplate <br>
+ *      Copyright 2004 Motorola, Inc. All Rights Reserved.<br>
+ *      MOTOROLA CONFIDENTIAL PROPRIETARY WHEN FILLED OUT COMPLETELY<br>
+ *      Template No. SWF0018 Template Version No. 01.00.00</B> <hr/>
+ *  
+ *  This class makes an increasable byte array. <P>
+ *
+ *  Filename:    /Source/MIDlet/src/com/motorola/motohealth/protocol/ByteBuffer.java<P>
+ *
+ *  Requirements Tracking: <P>
+ *  Tag:         2.2.2.2.25 @ SDS 01.01<P>
+ *  R#:          Refer to traceability matrix in SDS<P>
+ *  Spec Path:   /doc/baseline/design/MOTOHEALTH_SDS_(MIDLET)_01.01.doc<P>
+ *
+ *  Revision Information:<p>
+ *  Date:           Author:                   Tracking #:           Description:<p>
+ *  --------------- ------------------------ --------------------- ------------------------------------<p>
+ *  04Mar2004       Qiao Junqi               MIRpt29045            Initial version.
+ *  05JUL2004       Vettey Yan               SRCbj04548            Update code convention
+ */
+
+/**
+ * [Description]
+ * <p>This class makes an increasable byte array.</p>
+ * <hr>
+ * <b>MOTOROLA and the Stylized M Logo are registered trademarks of
+ * Motorola, Inc. Reg. U.S. Pat. & Tm. Off.<br>
+ * &copy; Copyright 2004 Motorola, Inc. All Rights Reserved.</b>
+ * <hr>
+ * @version 1.0.0
+ * @author Motorola, Inc.
+ */
+public class ByteBuffer {
+	/**
+	 * Description of the field
+	 * <p>incremental size.</p>
+	 */
+	private static final int SIZE_INC = 256;
+
+	/**
+	 * Description of the field
+	 * <p>append position in the buffer.</p>
+	 */
+	private int pos = 0;
+
+	/**
+	 * Description of the field
+	 * <p>buffer space.</p>
+	 */
+	private byte[] buf = new byte[SIZE_INC];
+
+	/**
+	 * Method description
+	 * <p>append a byte to the end of buffer.</p>
+	 * Method extra info
+	 * <p></p>
+	 * @param b - the byte to append.
+	 */
+	public void append(byte b) {
+		if (pos == buf.length) {
+			byte[] tmp = new byte[pos+SIZE_INC];
+			int i;
+			for (i = 0; i < pos; i++) {
+				tmp[i] = buf[i];
+			}
+			buf = tmp;
+		}
+		buf[pos++] = b;
+	}
+
+	/**
+	 * Method description
+	 * <p>get the byte array saved in the buffer.</p>
+	 * Method extra info
+	 * <p></p>
+	 * @return the byte array saved in the buffer.
+	 */
+	public byte[] getBytes() {
+		if (pos == buf.length) {
+			return buf;
+		}else {
+			byte[] tmp = new byte[pos];
+			int i;
+			for (i = 0; i < pos; i++) {
+				tmp[i] = buf[i];
+			}
+			return tmp;
+		}
+	}
+} // private class ByteBuffer
+

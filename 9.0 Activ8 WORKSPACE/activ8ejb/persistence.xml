@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence">
+	<!-- Put inside METAINF -->
+   <persistence-unit name="Activ8EJB3">
+      <jta-data-source>java:/Activ8DS</jta-data-source>
+      <properties>
+      	<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      	<property name="hibernate.hbm2ddl.auto" value="update"/>
+      	<!--
+      	<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+      	<property name="hibernate.show_sql" value="true"/>
+      	-->
+      </properties>
+   </persistence-unit>
+</persistence>

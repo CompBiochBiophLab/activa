@@ -1,0 +1,26 @@
+<html>
+<body style="font-size: 12px;">
+<h1>Response package</h1>
+<p>The command pattern is used in order to make tolerable the asynchronous request made by the client.</p>
+<p>It is the leverage point for</p>
+<ul>
+	<li>Caching: By keeping a heap of the last actions performed.</li>
+	<li>Batching: By sending all the actions in a list of actions.</li>
+	<li>Centralize failure handling: By implementing a class which dispatch the actions.</li>
+</ul>
+<p>It also lays the background for</p>
+<ul>
+	<li>Load client code on demand</li>
+	<li>Undo/Redo: By keeping an stack of actions</li>
+	<li>Google Gears/HTML5 DB: Storing actions will help the client to work disconnected from the internet</li>
+</ul>
+<p>Response are the response sent by the server. Responses must implement the Response interface</p>
+<pre style="font-size: 11px;">
+	/**
+	 * ..
+	 **/
+	public interface Response extends Serializable {
+	}
+</pre>
+</body>
+</html>

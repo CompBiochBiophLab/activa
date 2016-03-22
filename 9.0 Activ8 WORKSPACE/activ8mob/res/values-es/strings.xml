@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="calendar">Calendario</string>
+	<string name="programs">Programas</string>
+	<string name="quest">Cuestionarios</string>
+	<string name="sensors">Sensores</string>
+	<string name="map">Mapas</string>
+	<string name="messages">Mensajes</string>
+	<string name="news">Noticias</string>
+	<string name="notes">Notas</string>
+	<string name="patients">Pacientes</string>
+	<string name="projects">Proyectos</string>
+	<string name="papers">Publicaciones</string>
+	<string name="tools">Herramientas</string>
+	<string name="micro">Ambientes biologicos</string>
+	<string name="day">Dia</string>
+	<string name="week">Semana</string>
+	<string name="month">Mes</string>
+	<string name="autocalibration">Calibracion automatica</string>
+	<string name="manualcalibration">Calibracion manual</string>
+</resources>

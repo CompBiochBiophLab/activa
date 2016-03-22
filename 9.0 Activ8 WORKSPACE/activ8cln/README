@@ -1,0 +1,14 @@
+This project has the following dependencies:
+* JDK 1.6
+* Google Web Toolkit v 2.0 : 
+	gwt-user.jar, gwt-dev.jar
+* Activ8 client components:
+	activ8-gwt-evt.jar, activ8-gwt-mvp.jar
+* Activ8 client-server components:
+	activ8-dto.jar, activ8-cmd.jar
+* Activ8 server communication:
+	activ8-servlet.jar
+* Google third libraries:
+	gwt-o3d.jar, gwt-rss.jar, gwt-ajaxloader.jar, gwt-maps.jar
+* Google GIN:
+	guice-2.0.jar, aopalliance.jar, gin-1.0.jar

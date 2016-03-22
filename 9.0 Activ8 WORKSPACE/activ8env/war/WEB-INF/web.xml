@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<description>Activ8 application</description>
+	<servlet>
+		<servlet-name>serviceImpl</servlet-name>
+		<servlet-class>com.o2hlink.activ8.server.servlet.ServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>serviceImpl</servlet-name>
+		<url-pattern>/activ8env/service</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>uploadImpl</servlet-name>
+		<servlet-class>com.o2hlink.activ8.server.servlet.UploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>uploadImpl</servlet-name>
+		<url-pattern>/activ8env/upload</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>

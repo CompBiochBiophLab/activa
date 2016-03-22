@@ -1,0 +1,981 @@
+package com.o2hlink.activa.connection;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Iterator;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.ActivaConfig;
+import com.o2hlink.activa.ActivaUtil;
+import com.o2hlink.activa.R;
+import com.o2hlink.activa.connection.message.EventMessage;
+import com.o2hlink.activa.connection.message.MapRequest;
+import com.o2hlink.activa.connection.message.NoteMessage;
+import com.o2hlink.activa.connection.message.O2MessageRequest;
+import com.o2hlink.activa.connection.message.O2MessageSent;
+import com.o2hlink.activa.connection.message.QuestMessage;
+import com.o2hlink.activa.connection.message.Request;
+import com.o2hlink.activa.connection.message.SensorMessage;
+import com.o2hlink.activa.data.calendar.Event;
+import com.o2hlink.activa.data.message.O2UnregisteredMessage;
+import com.o2hlink.activa.data.questionnaire.Questionnaire;
+import com.o2hlink.activa.data.sensor.Sensor;
+import com.o2hlink.activa.exceptions.ConnectionException;
+import com.o2hlink.activa.exceptions.LoginException;
+import com.o2hlink.activa.exceptions.PasswordException;
+
+/**
+ * @author Adrian Rejas<P>
+ * 
+ * This class deals with the protocol management. The application will deal with the server 
+ * through this class. In a way, this is the protocol manager.<P>
+ * This class is a singleton, that is, there can be just one instance of this manager 
+ * during the running of the application.
+ */
+public class ProtocolManager {
+	
+	/**
+	 * The instance of the connection with the server.
+	 */
+	public Connection serverConnection;
+	
+	/**
+	 * The state of the connection (true for connected and false for not connected)
+	 */
+	public boolean connected;
+	
+	/**
+	 * The instance of the protocol manager (This class).
+	 */
+	public static ProtocolManager instance;
+	
+	/**
+	 * The public constructor for the class.
+	 */
+	private ProtocolManager() {
+		this.connected = false;
+		serverConnection = Connection.getInstance(ActivaConfig.SERVERIP, ActivaConfig.SERVERPORT, ActivaConfig.SERVERPATH);
+	}
+	
+	/**
+	 * The method for getting the only instance of the class.
+	 * @return The instance of the protocol manager.
+	 */
+	public static ProtocolManager getInstance() {
+		if (ProtocolManager.instance == null) {
+			ProtocolManager.instance = new ProtocolManager();
+		}
+		return ProtocolManager.instance;
+	}
+	
+	/**
+	 * Method for freeing the instance of the manager.
+	 */
+	public static void freeInstance() {
+		ProtocolManager.instance = null;
+	}
+	
+	/**
+	 * This method will deal with the sending of a request and the receiving of a response.
+	 * This method will be used by higher level methods of the protocol manager.
+	 * @param type The type of request.
+	 * @return A string representing the answer received at sending the request.
+	 * @throws ConnectionException 
+	 * @throws LoginException 
+	 * @throws PasswordException 
+	 */
+	public String sendRequest(String type) throws ConnectionException, LoginException, PasswordException { 
+		String answer = null;
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+		Request request = new Request(type);
+//		Message message = new Message(request.toMessageString());
+			try {
+//				tosend = message.toMessageString().getBytes();
+				tosend = request.toMessageString().getBytes();
+				toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+				answer = new String(toreceive, "UTF-8");
+			} catch (IOException e) {
+				throw new ConnectionException(e.getMessage(), 0);
+			} catch (ConnectionException e) {
+				throw new ConnectionException(e.getMessage(), 0);
+			} catch (LoginException e) {
+				throw new LoginException(e.getMessage());
+			} catch (PasswordException e) {
+				throw new PasswordException(e.getMessage());
+			}
+		
+		return answer;
+	}
+	
+	/**
+	 * This method will deal with the sending of a request and the receiving of a response.
+	 * This method will be used by higher level methods of the protocol manager.
+	 * @param type The type of request.
+	 * @return A string representing the answer received at sending the request.
+	 * @throws ConnectionException 
+	 * @throws LoginException 
+	 * @throws PasswordException 
+	 */
+	public String sendRegisterRequest() throws ConnectionException, LoginException, PasswordException { 
+		String answer = null;
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+//		Request request = new Request(Request.TYPE_CONFIG, true);
+		Request request = new Request(Request.TYPE_CONFIG, true);
+//		Message message = new Message(request.toMessageString());
+			try {
+//				tosend = message.toMessageString().getBytes();
+				tosend = request.toMessageString().getBytes();
+				toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+				answer = new String(toreceive, "UTF-8");
+			} catch (IOException e) {
+				throw new ConnectionException(e.getMessage(), 0);
+			} catch (ConnectionException e) {
+				throw new ConnectionException(e.getMessage(), 0);
+			} catch (LoginException e) {
+				throw new LoginException(e.getMessage());
+			} catch (PasswordException e) {
+				throw new PasswordException(e.getMessage());
+			}
+		
+		return answer;
+	}
+	
+	/**
+	 * This method will deal with the sending of a request and the receiving of a response.
+	 * This method will be used by higher level methods of the protocol manager.
+	 * @param type The type of request.
+	 * @return A string representing the answer received at sending the request.
+	 * @throws ConnectionException 
+	 * @throws LoginException 
+	 * @throws PasswordException 
+	 */
+	public String sendUserExistanceRequest() throws ConnectionException, LoginException, PasswordException { 
+		String answer = null;
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+//		Request request = new Request(Request.TYPE_CONFIG, true);
+		Request request = new Request(Request.TYPE_CONFIG, false);
+//		Message message = new Message(request.toMessageString());
+			try {
+//				tosend = message.toMessageString().getBytes();
+				tosend = request.toMessageString().getBytes();
+				toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+				answer = new String(toreceive);
+			} catch (IOException e) {
+				throw new ConnectionException(e.getMessage(), 0);
+			} catch (ConnectionException e) {
+				throw new ConnectionException(e.getMessage(), 0);
+			} catch (LoginException e) {
+				throw new LoginException(e.getMessage());
+			} catch (PasswordException e) {
+				throw new PasswordException(e.getMessage());
+			}
+		
+		return answer;
+	}
+	
+	/**
+	 * This method deals with the obtaining of the questionnaires and their parsing by
+	 * the quest manager.
+	 */
+	public boolean getQuestionnaires() {
+		String xmlQuestionnaires;
+		try {
+			xmlQuestionnaires = sendRequest(Request.TYPE_QUEST);
+			Activa.myQuestManager.extractFromXML(xmlQuestionnaires);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			return false;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			return false;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public void getQuestionnaires2() {
+		String xmlQuestionnaires = "";
+		try {
+			InputStream fIn = Activa.myApp.getResources().openRawResource(R.raw.cuestionarios);
+	        InputStreamReader isr = new InputStreamReader(fIn,"UTF-8");          
+	        char[] inputBuffer = new char[255];              
+	        while (isr.read(inputBuffer) != -1) {
+	        	xmlQuestionnaires += new String(inputBuffer);
+	        }
+			Activa.myQuestManager.extractFromXML(xmlQuestionnaires);    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * This method deals with the obtaining of the marks to be shown at the Map winget.
+	 */
+	public boolean getMapMarks() {
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+		MapRequest request = new MapRequest();
+		try {
+			tosend = request.toMessageString().getBytes();
+			toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+			Activa.myMapManager.extractMarksFromXML(new String(toreceive));
+			return true;
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			return false;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			return false;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void getMapMarks2() {
+		String xmlMap = "";
+		try {
+			InputStream fIn = Activa.myApp.getResources().openRawResource(R.raw.mapmarks);
+	        InputStreamReader isr = new InputStreamReader(fIn,"UTF-8");          
+	        char[] inputBuffer = new char[255];              
+	        while (isr.read(inputBuffer) != -1) {
+	        	xmlMap += new String(inputBuffer);
+	        }
+	        Activa.myMapManager.extractMarksFromXML(xmlMap);    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * This method deals with the obtaining of the message directed to the user.
+	 */
+	public boolean getContacts() {
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+		Request request = new Request(Request.TYPE_CONTACTS);
+		try {
+			tosend = request.toMessageString().getBytes();
+			toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+			Activa.myMessageManager.extractContactsFromXML(new String(toreceive));
+			return true;
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			return false;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			return false;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void getContacts2() {
+		String xmlMap = "";
+		try {
+			InputStream fIn = Activa.myApp.getResources().openRawResource(R.raw.contacts);
+	        InputStreamReader isr = new InputStreamReader(fIn,"UTF-8");          
+	        char[] inputBuffer = new char[255];              
+	        while (isr.read(inputBuffer) != -1) {
+	        	xmlMap += new String(inputBuffer);
+	        }
+	        Activa.myMessageManager.extractContactsFromXML(xmlMap);    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * This method deals with the obtaining of the message directed to the user.
+	 */
+	public boolean getMessages(Date date) {
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+		O2MessageRequest request = new O2MessageRequest(date);
+		try {
+			tosend = request.toMessageString().getBytes();
+			toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+			Activa.myMessageManager.extractMessagesFromXML(new String(toreceive));
+			return true;
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			return false;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			return false;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void getMessages2(Date date) {
+		String xmlMap = "";
+		try {
+			InputStream fIn = Activa.myApp.getResources().openRawResource(R.raw.message);
+	        InputStreamReader isr = new InputStreamReader(fIn,"UTF-8");          
+	        char[] inputBuffer = new char[255];              
+	        while (isr.read(inputBuffer) != -1) {
+	        	xmlMap += new String(inputBuffer);
+	        }
+	        Activa.myMessageManager.extractMessagesFromXML(xmlMap);    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * This method deals with the obtaining of the calendar and the parsing by the calendar
+	 * manager.
+	 */
+	public void getCalendar() {
+		String xmlAgenda;
+		try {
+			xmlAgenda = sendRequest(Request.TYPE_AGENDA);
+			Activa.myCalendarManager.extractFromXML(xmlAgenda);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (LoginException e) {
+			e.printStackTrace();
+		} catch (PasswordException e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	public void getCalendar2() {
+		String xmlCalendar = "";
+		try {
+			InputStream fIn = Activa.myApp.getResources().openRawResource(R.raw.calendario);
+	        InputStreamReader isr = new InputStreamReader(fIn,"UTF-8");          
+	        char[] inputBuffer = new char[255];              
+	        while (isr.read(inputBuffer) != -1) {
+	        	xmlCalendar += new String(inputBuffer);
+	        }
+			Activa.myCalendarManager.extractFromXML(xmlCalendar);    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean login() {
+		String xmlConfig;
+		boolean returned = true;
+		this.connected = true;
+		try {
+			xmlConfig = sendRequest(Request.TYPE_CONFIG);
+			if (xmlConfig.length() == 0) throw new Exception();
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        info.setInput(new StringReader(xmlConfig));
+	        int event = info.getEventType();
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("URL")) {
+//	                	ActivaConfig.URL = info.getAttributeValue(info.getNamespace(), "VALUE");
+	                }
+	                else if (info.getName().equalsIgnoreCase("PATIENTID")) {
+	                	Activa.myMobileManager.user.setId(Integer.parseInt(info.getAttributeValue(info.getNamespace(), "VALUE")));
+	                }
+	                else if (info.getName().equalsIgnoreCase("AGENDARANGE")) {
+	                	ActivaConfig.SCHEDULE_HOURS = Integer.parseInt(info.getAttributeValue(info.getNamespace(), "VALUE"));
+	                }
+	                else if (info.getName().equalsIgnoreCase("USERINFO")) {
+	                	Activa.myMobileManager.user.firstname = info.getAttributeValue(info.getNamespace(), "FIRSTNAME");
+	                	Activa.myMobileManager.user.lastname = info.getAttributeValue(info.getNamespace(), "LASTNAME");
+	                	Activa.myMobileManager.user.setBirthdate(ActivaUtil.XMLDateToDate(info.getAttributeValue(info.getNamespace(), "BIRTHDATE")));
+	                	if (info.getAttributeValue(info.getNamespace(), "TYPE") != null)
+	                		Activa.myMobileManager.user.setType(Integer.parseInt(info.getAttributeValue(info.getNamespace(), "TYPE")));
+	                	Activa.myMobileManager.user.lastname = info.getAttributeValue(info.getNamespace(), "LASTNAME");
+	                	String sex = info.getAttributeValue(info.getNamespace(), "SEX");
+	                	if (sex.equalsIgnoreCase("MALE")) Activa.myMobileManager.user.setMale(true);
+	                	else Activa.myMobileManager.user.setMale(false);
+		            }
+	            } else if(event == XmlPullParser.START_TAG) {
+	            	if (info.getName().equalsIgnoreCase("CONFIG")) {
+	            		break;
+	            	}
+	            }
+	            event = info.next();
+	        }
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		}
+		return returned;
+	}
+	
+	public int checkUserExistance() {
+		String xmlConfig;
+		// Returned value: 0 for succesfful checking, 1 for unsuccesful checking, 2 for internal error
+		int returned = 0;
+		this.connected = true;
+		try {
+			xmlConfig = sendUserExistanceRequest();
+			if (xmlConfig.length() == 0) throw new Exception();
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        info.setInput(new StringReader(xmlConfig));
+	        int event = info.getEventType();
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("URL")) {
+//	                	ActivaConfig.URL = info.getAttributeValue(info.getNamespace(), "VALUE");
+	                }
+	                else if (info.getName().equalsIgnoreCase("PATIENTID")) {
+	                	Activa.myMobileManager.user.setId(Integer.parseInt(info.getAttributeValue(info.getNamespace(), "VALUE")));
+	                }
+	                else if (info.getName().equalsIgnoreCase("AGENDARANGE")) {
+	                	ActivaConfig.SCHEDULE_HOURS = Integer.parseInt(info.getAttributeValue(info.getNamespace(), "VALUE"));
+	                }
+	                else if (info.getName().equalsIgnoreCase("USERINFO")) {
+	                	Activa.myMobileManager.user.firstname = info.getAttributeValue(info.getNamespace(), "FIRSTNAME");
+	                	Activa.myMobileManager.user.lastname = info.getAttributeValue(info.getNamespace(), "LASTNAME");
+	                	Activa.myMobileManager.user.setBirthdate(ActivaUtil.XMLDateToDate(info.getAttributeValue(info.getNamespace(), "BIRTHDATE")));
+	                	if (info.getAttributeValue(info.getNamespace(), "TYPE") != null)
+	                		Activa.myMobileManager.user.setType(Integer.parseInt(info.getAttributeValue(info.getNamespace(), "TYPE")));
+	                	String sex = info.getAttributeValue(info.getNamespace(), "SEX");
+	                	if (sex.equalsIgnoreCase("MALE")) Activa.myMobileManager.user.setMale(true);
+	                	else Activa.myMobileManager.user.setMale(false);
+		            }
+	            } else if(event == XmlPullParser.START_TAG) {
+	            	if (info.getName().equalsIgnoreCase("CONFIG")) {
+	            		break;
+	            	}
+	            }
+	            event = info.next();
+	        }
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=1;
+			return returned;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=1;
+			return returned;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=1;
+			return returned;
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=2;
+			return returned;
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=2;
+			return returned;
+		}
+		return returned;
+	}
+	
+	public boolean register() {
+		String xmlConfig;
+		boolean returned = true;
+		this.connected = true;
+		try {
+			xmlConfig = sendRegisterRequest();
+			if (xmlConfig.length() == 0) throw new Exception();
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+	        factory.setNamespaceAware(true);
+	        XmlPullParser info = factory.newPullParser();
+	        info.setInput(new StringReader(xmlConfig));
+	        int event = info.getEventType();
+	        while (event != XmlPullParser.END_DOCUMENT) {
+	            if(event == XmlPullParser.START_DOCUMENT) {
+	            } else if(event == XmlPullParser.END_DOCUMENT) {    	
+	            } else if(event == XmlPullParser.START_TAG) {
+	                if (info.getName().equalsIgnoreCase("URL")) {
+//	                	ActivaConfig.URL = info.getAttributeValue(info.getNamespace(), "VALUE");
+	                }
+	                else if (info.getName().equalsIgnoreCase("PATIENTID")) {
+	                	Activa.myMobileManager.user.setId(Integer.parseInt(info.getAttributeValue(info.getNamespace(), "VALUE")));
+	                }
+	                else if (info.getName().equalsIgnoreCase("AGENDARANGE")) {
+	                	ActivaConfig.SCHEDULE_HOURS = Integer.parseInt(info.getAttributeValue(info.getNamespace(), "VALUE"));
+	                }
+	                else if (info.getName().equalsIgnoreCase("USERINFO")) {
+	                	Activa.myMobileManager.user.firstname = info.getAttributeValue(info.getNamespace(), "FIRSTNAME");
+	                	Activa.myMobileManager.user.lastname = info.getAttributeValue(info.getNamespace(), "LASTNAME");
+	                	Activa.myMobileManager.user.setBirthdate(ActivaUtil.XMLDateToDate(info.getAttributeValue(info.getNamespace(), "BIRTHDATE")));
+	                	if (info.getAttributeValue(info.getNamespace(), "TYPE") != null)
+	                		Activa.myMobileManager.user.setType(Integer.parseInt(info.getAttributeValue(info.getNamespace(), "TYPE")));
+	                	String sex = info.getAttributeValue(info.getNamespace(), "SEX");
+	                	if (sex.equalsIgnoreCase("MALE")) Activa.myMobileManager.user.setMale(true);
+	                	else Activa.myMobileManager.user.setMale(false);
+		            }
+	            } else if(event == XmlPullParser.START_TAG) {
+	            	if (info.getName().equalsIgnoreCase("CONFIG")) {
+	            		break;
+	            	}
+	            }
+	            event = info.next();
+	        }
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.connected = false;
+			returned=false;
+			return returned;
+		}
+		return returned;
+	}
+	
+	/**
+	 * This method sends the answers given to a concrete questionnaire, passed as
+	 * parameter, towads the server, returning a boolean value notifying if the sending 
+	 * was succesful or not.
+	 * 
+	 * @param questionnaire
+	 * @return
+	 */
+	public boolean sendQuestAnswered(Questionnaire questionnaire) {
+		byte[] tosend;
+		boolean returned = true;
+		Activa.myMobileManager.device.updateDateTime();
+		QuestMessage questmessage = new QuestMessage(questionnaire);
+//		Message message = new Message(request.toMessageString());
+		try {
+//			tosend = message.toMessageString().getBytes();
+			tosend = questmessage.toMessageString().getBytes();
+			serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+		} catch (IOException e) {
+			Activa.myPendingDataManager.addPendingData(questmessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (ConnectionException e) {
+			Activa.myPendingDataManager.addPendingData(questmessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (LoginException e) {
+			Activa.myPendingDataManager.addPendingData(questmessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (PasswordException e) {
+			Activa.myPendingDataManager.addPendingData(questmessage.toMessageString());
+			returned = false;
+			return returned;
+		}		
+		return returned;
+	}
+	
+	/**
+	 * This method sends the outcome of a concrete event (canceled = 0 if the event has 
+	 * been done and canceled = 1 if it has passed 24 hours since programmed time for 
+	 * the event and it was not done).
+	 * 
+	 * @param event
+	 * @return
+	 */
+	public boolean sendEventOutcome(Event event) {
+		byte[] tosend;
+		boolean returned = true;
+		Activa.myMobileManager.device.updateDateTime();
+		EventMessage eventmessage = new EventMessage(event);
+//		Message message = new Message(request.toMessageString());
+		try {
+//			tosend = message.toMessageString().getBytes();
+			tosend = eventmessage.toMessageString().getBytes();
+			serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+		} catch (IOException e) {
+			Activa.myPendingDataManager.addPendingData(eventmessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (ConnectionException e) {
+			Activa.myPendingDataManager.addPendingData(eventmessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (LoginException e) {
+			Activa.myPendingDataManager.addPendingData(eventmessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (PasswordException e) {
+			Activa.myPendingDataManager.addPendingData(eventmessage.toMessageString());
+			returned = false;
+			return returned;
+		}		
+		return returned;
+	}
+
+	/**
+	 * The method sends an internal message to an user.
+	 * 
+	 * @param message
+	 * @return
+	 */
+	public boolean sendO2Message(O2UnregisteredMessage message) {
+		byte[] tosend;
+		boolean returned = true;
+		Activa.myMobileManager.device.updateDateTime();
+		O2MessageSent o2message = new O2MessageSent(message);
+		try {
+			tosend = o2message.toMessageString().getBytes();
+			serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+		} catch (IOException e) {
+			Activa.myPendingDataManager.addPendingData(o2message.toMessageString());
+			returned = false;
+			return returned;
+		} catch (ConnectionException e) {
+			Activa.myPendingDataManager.addPendingData(o2message.toMessageString());
+			returned = false;
+			return returned;
+		} catch (LoginException e) {
+			Activa.myPendingDataManager.addPendingData(o2message.toMessageString());
+			returned = false;
+			return returned;
+		} catch (PasswordException e) {
+			Activa.myPendingDataManager.addPendingData(o2message.toMessageString());
+			returned = false;
+			return returned;
+		}		
+		return returned;
+	}
+	
+	public void sendPendingData(String pendData) {
+		byte[] tosend;
+//		Message message = new Message(request.toMessageString());
+		try {
+//			tosend = message.toMessageString().getBytes();
+			tosend = pendData.getBytes();
+			serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+		} catch (IOException e) {
+			Activa.myPendingDataManager.addPendingData(pendData);
+		} catch (ConnectionException e) {
+			Activa.myPendingDataManager.addPendingData(pendData);
+		} catch (LoginException e) {
+			Activa.myPendingDataManager.addPendingData(pendData);
+		} catch (PasswordException e) {
+			Activa.myPendingDataManager.addPendingData(pendData);
+		}		
+	}
+
+	@SuppressWarnings("unchecked")
+	public void refresh() {
+		/* The updating of the configuration and the refreshing of connection */
+		Activa.myApp.refreshing = true;
+		boolean success = false;
+		if (!Activa.myMobileManager.user.isCreated()) success = Activa.myProtocolManager.register();
+		else success = Activa.myProtocolManager.login();
+		if (success) {
+			if (!Activa.myMobileManager.user.isCreated()) {
+				Activa.myMobileManager.user.setCreated(true);
+				Activa.myMobileManager.addUserWithPassword(Activa.myMobileManager.user);
+			}
+		    /* Send pending data */
+		    ArrayList<String> tempList = (ArrayList<String>) Activa.myPendingDataManager.pendingData.clone();
+		    Activa.myPendingDataManager.pendingData = new ArrayList<String>();
+		    Iterator<String> it = tempList.iterator();
+		    while (it.hasNext()) {
+		    	String pendData = it.next();
+		    	Activa.myProtocolManager.sendPendingData(pendData);
+		    }
+			/* The updating of the data */
+			Activa.myQuestManager.getQuestionnaires();
+		    Activa.myCalendarManager.getCalendar();
+//		    Activa.myMapManager.getMapMarks();
+		    Activa.myMessageManager.requestContactList();
+		    Date date = new Date();
+		    date.setDate(date.getDate() - 15);
+		    Activa.myMessageManager.requestReceivedMessages(date);
+		    /* Update event status and send event outcomes for canceled events */
+		    Date dateLate = new Date();
+		    dateLate.setHours(dateLate.getHours() - 24);
+		    Enumeration<Event> enumeration = Activa.myCalendarManager.events.elements();
+		    while (enumeration.hasMoreElements()) {
+		    	Event event = enumeration.nextElement();
+		    	event.updateState();
+		    }
+			Activa.myApp.refreshing = false;
+		}
+	}
+
+	public boolean sendSensorMeasurement(Sensor sensor) {
+		byte[] tosend;
+		boolean returned = true;
+		Activa.myMobileManager.device.updateDateTime();
+		SensorMessage sensormessage = new SensorMessage(sensor);
+		try {
+			tosend = sensormessage.toMessageString().getBytes();
+			serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+		} catch (IOException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (ConnectionException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (LoginException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (PasswordException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString());
+			returned = false;
+			return returned;
+		}		
+		return returned;
+	}
+
+	public boolean sendSensorMeasurement(Sensor sensor, int deviceId) {
+		byte[] tosend;
+		boolean returned = true;
+		Activa.myMobileManager.device.updateDateTime();
+		SensorMessage sensormessage = new SensorMessage(sensor);
+		try {
+			tosend = sensormessage.toMessageString(deviceId).getBytes();
+			serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+		} catch (IOException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString(deviceId));
+			returned = false;
+			return returned;
+		} catch (ConnectionException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString(deviceId));
+			returned = false;
+			return returned;
+		} catch (LoginException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString(deviceId));
+			returned = false;
+			return returned;
+		} catch (PasswordException e) {
+			Activa.myPendingDataManager.addPendingData(sensormessage.toMessageString(deviceId));
+			returned = false;
+			return returned;
+		}		
+		return returned;
+	}
+	
+	public boolean getNewsFeeds() {
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+		Request request = new Request(Request.TYPE_FEEDS);
+		try {
+			tosend = request.toMessageString().getBytes();
+			toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+			Activa.myNewsManager.extractNewsFromXML(new String(toreceive));
+			return true;
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			return false;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			return false;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void getNewsFeeds2() {
+		String xmlFeeds = "";
+		try {
+			InputStream fIn = Activa.myApp.getResources().openRawResource(R.raw.feeds);
+	        InputStreamReader isr = new InputStreamReader(fIn,"UTF-8");          
+	        char[] inputBuffer = new char[255];              
+	        while (isr.read(inputBuffer) != -1) {
+	        	xmlFeeds += new String(inputBuffer);
+	        }
+	        Activa.myNewsManager.extractNewsFromXML(xmlFeeds);    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean getNotes() {
+		byte[] tosend, toreceive;
+		Activa.myMobileManager.device.updateDateTime();
+		Request request = new Request(Request.TYPE_NOTES);
+		try {
+			tosend = request.toMessageString().getBytes();
+			toreceive = serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+			Activa.myNotesManager.extractNotesFromXML(new String(toreceive));
+			return true;
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			return false;
+		} catch (LoginException e) {
+			e.printStackTrace();
+			return false;
+		} catch (PasswordException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void getNotes2() {
+		String xmlFeeds = "";
+		try {
+			InputStream fIn = Activa.myApp.getResources().openRawResource(R.raw.notes);
+	        InputStreamReader isr = new InputStreamReader(fIn,"UTF-8");          
+	        char[] inputBuffer = new char[255];              
+	        while (isr.read(inputBuffer) != -1) {
+	        	xmlFeeds += new String(inputBuffer);
+	        }
+	        Activa.myNotesManager.extractNotesFromXML(xmlFeeds);    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean sendNote(String text) {
+		byte[] tosend;
+		boolean returned = true;
+		Activa.myMobileManager.device.updateDateTime();
+		NoteMessage notemessage = new NoteMessage(text);
+		try {
+			tosend = notemessage.toMessageString().getBytes();
+			serverConnection.submitUnsecure(tosend, "?user=" + Activa.myMobileManager.user.getName() + "&pwd=" + Activa.myMobileManager.user.getPassword());
+		} catch (IOException e) {
+			Activa.myPendingDataManager.addPendingData(notemessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (ConnectionException e) {
+			Activa.myPendingDataManager.addPendingData(notemessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (LoginException e) {
+			Activa.myPendingDataManager.addPendingData(notemessage.toMessageString());
+			returned = false;
+			return returned;
+		} catch (PasswordException e) {
+			Activa.myPendingDataManager.addPendingData(notemessage.toMessageString());
+			returned = false;
+			return returned;
+		}		
+		return returned;
+	}
+
+	public String getNewsFromFeed(String link) {
+		HttpGet getMethod = null;
+		InputStream is = null;
+		byte[] data;
+		HttpResponse response = null;
+		HttpClient httpclient = null;
+		int respCode = -9;
+		
+		String url = "http://ajax.googleapis.com/ajax/services/feed/load?q=" + URLEncoder.encode(link) + "&v=1.0";
+		try {	
+	        httpclient = new DefaultHttpClient();
+			getMethod = new HttpGet(url);
+			
+			response = httpclient.execute(getMethod);
+			respCode = response.getStatusLine().getStatusCode();
+			if (respCode!=HttpURLConnection.HTTP_OK) {
+				throw new ConnectionException(Activa.myLanguageManager.PROT_ERR_RESP_CODE, Connection.ERR_SYSTEM_NOT_INITIALIZED);
+			}
+			is = response.getEntity().getContent(); 
+			int len = (int)response.getEntity().getContentLength();
+			if (len > 0) {
+				data = new byte[len];
+				int off = 0;
+				while (off < len) {
+					off += is.read(data, off, len-off);
+				}
+			} else {
+			      ByteBuffer strBuff = new ByteBuffer();
+			      int lenReadData = 1;
+			      while (lenReadData > 0) {
+			            byte [] buffer = new byte [256];
+			            lenReadData = is.read(buffer,0,256);
+			            if (lenReadData > 0) {
+			                  for (int ni = 0 ; ni < lenReadData; ni ++) { 
+			                        strBuff.append(buffer[ni]);
+			                  }
+			            }
+			      }
+			      data = strBuff.getBytes();
+			}
+			return new String(data);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+}

@@ -1,0 +1,10 @@
+<MESSAGES COUNT="4">
+	<MESSAGE ID="1234" SENDER="1456" RECEIVER="156" DATE="20100614110000" TOPIC="Espirometria" TEXT="Te he programado una espirometria para el dia 19
+	 de junio a las 14:00"/>
+	<MESSAGE ID="1235" SENDER="557" RECEIVER="156" DATE="20100616140000" TOPIC="Que tal estas?" TEXT="Hola,
+	No se si te acuerdas de mi, nos conocimos en el hospital. Solo queria saber como estas.
+	Espero que muy bien."/>
+	<MESSAGE ID="1236" SENDER="534" RECEIVER="156" DATE="20100617080000" TOPIC="Desafio a futbol" TEXT="Ei que tal?
+	Te desafio a jugar al futbol con la Wii. Que te parece?"/>
+	<MESSAGE ID="1237" SENDER="4459" RECEIVER="156" DATE="20100618090000" TOPIC="Recordatorio espirometria" TEXT="Hola, simplemente queria recordarte la espirometria de mañana."/>
+</MESSAGES>

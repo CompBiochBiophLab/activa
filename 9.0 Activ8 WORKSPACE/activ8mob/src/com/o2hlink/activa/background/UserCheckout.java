@@ -1,0 +1,80 @@
+package com.o2hlink.activa.background;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Iterator;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.ActivaConfig;
+import com.o2hlink.activa.R;
+import com.o2hlink.activa.data.PendingDataManager;
+import com.o2hlink.activa.data.calendar.Event;
+
+import android.graphics.drawable.AnimationDrawable;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+public class UserCheckout implements Runnable {
+
+	int currentImage = 0;
+	int nextImage = 0;
+	RelativeLayout popupView;
+	TextView popupText;
+	AnimationDrawable animation;
+	
+	public UserCheckout() {
+		popupView = (RelativeLayout) Activa.myApp.findViewById(R.id.popupView);
+		popupView.setVisibility(View.VISIBLE);
+		popupText = (TextView) Activa.myApp.findViewById(R.id.popupText);
+		ImageView animationFrame = (ImageView) Activa.myApp.findViewById(R.id.popupImage);
+		animationFrame.setVisibility(View.VISIBLE);
+		animationFrame.setBackgroundResource(R.drawable.loading);
+		this.animation = (AnimationDrawable) animationFrame.getBackground();
+	}
+
+	@Override
+	public void run() {			
+		this.animation.start();
+		handler.sendEmptyMessage(0);
+		int success = Activa.myProtocolManager.checkUserExistance();
+		if (success == 0) handler.sendEmptyMessage(1);
+		else if (success == 1) handler.sendEmptyMessage(2);
+		else handler.sendEmptyMessage(3);
+	}
+
+	private Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+				case 0:
+					popupText.setText(Activa.myLanguageManager.CONNECTION_CHECKING);
+					break;
+				case 1:		
+					animation.stop();
+					Activa.myMobileManager.user.setCreated(true);
+					Activa.myUIManager.loadMatrixPasswordForRegistering();
+					break;
+				case 2:
+					animation.stop();
+					Activa.myUIManager.loadRegisterDataScreen();
+					break;
+				case 3:
+					animation.stop();
+					Activa.myUIManager.showAmbients(false);
+					Activa.myUIManager.loadInfoPopup(Activa.myLanguageManager.CONNECTION_FAILED);
+					break;
+			}
+		}
+
+	};
+
+}
+

@@ -1,0 +1,351 @@
+<CUESTIONARIOS COUNT="3" COMPRESSED="0">
+	<CUESTIONARIO ID="1" NOMBRE="Cuestionario General" DESCRIPCION="Cuestionario de test nº 1">
+		<ESTADOS COUNT="30">
+			<ESTADO ID="1" NOMBRE="¿Cómo te sientes hoy de salud?" IDSIGUIENTE="2" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="3"> 
+					<RESPUESTA NOMBRE="Bien" PESO="0" /> 
+					<RESPUESTA NOMBRE="Regular" PESO="5" />
+					<RESPUESTA NOMBRE="Mal" PESO="10" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="6" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>
+			<ESTADO ID="2" NOMBRE="¿Problema respiratorio?" IDSIGUIENTE="3" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="15" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>
+			<ESTADO ID="3" NOMBRE="¿Otro problema médico?" IDSIGUIENTE="4" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="4" NOMBRE="¿Problemas de sudor?" IDSIGUIENTE="5" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="5" NOMBRE="¿Otros problemas?" IDSIGUIENTE="6" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="29" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>
+			<ESTADO ID="6" NOMBRE="¿Cómo te sientes de ánimo?" IDSIGUIENTE="7" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="3"> 
+					<RESPUESTA NOMBRE="Bien" PESO="0" /> 
+					<RESPUESTA NOMBRE="Regular" PESO="5" />
+					<RESPUESTA NOMBRE="Mal" PESO="10" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="7" NOMBRE="¿Cómo te sientes de energía?" IDSIGUIENTE="8" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="3"> 
+					<RESPUESTA NOMBRE="Bien" PESO="0" /> 
+					<RESPUESTA NOMBRE="Regular" PESO="5" />
+					<RESPUESTA NOMBRE="Mal" PESO="10" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="8" NOMBRE="¿Has descansado(dormido) bien?" IDSIGUIENTE="9" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="0" /> 
+					<RESPUESTA NOMBRE="No" PESO="10" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="9" NOMBRE="¿Has dejado de tomar la medicación por algún motivo?" IDSIGUIENTE="10" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="11" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>
+			<ESTADO ID="10" NOMBRE="¿Tienes problemas o dudas?" IDSIGUIENTE="11" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="11" NOMBRE="¿Has dejado de realizar las pautas de ejercicio?" IDSIGUIENTE="12" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="13" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>
+			<ESTADO ID="12" NOMBRE="¿Tienes problemas o dudas?" IDSIGUIENTE="13" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="13" NOMBRE="¿Qué grado de ahogo tienes(0-10)?" IDSIGUIENTE="14" IDTIPO="2" SALTABLE="0">
+			</ESTADO>
+			<ESTADO ID="14" NOMBRE="¿Qué grado de fatiga tienes(0-10)?" IDSIGUIENTE="15" IDTIPO="2" SALTABLE="0">
+			</ESTADO>
+			<ESTADO ID="15" NOMBRE="¿Te ha aumentado la tos?" IDSIGUIENTE="16" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="16" NOMBRE="¿Te ha aumentado el ahogo?" IDSIGUIENTE="18" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="17" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>			
+			</ESTADO>
+			<ESTADO ID="17" NOMBRE="Marca tu grado de disnea ahora (0-10)" IDSIGUIENTE="18" IDTIPO="2" SALTABLE="0">
+			</ESTADO>
+			<ESTADO ID="18" NOMBRE="¿Te han aumentado los pitos en el pecho?" IDSIGUIENTE="19" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>			
+			</ESTADO>				
+			<ESTADO ID="19" NOMBRE="¿Te ha aumentado la cantidad de esputos?" IDSIGUIENTE="20" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="20" NOMBRE="¿Arrancas de color diferente a lo habitual?" IDSIGUIENTE="21" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="21" NOMBRE="¿Has tenido fiebre?" IDSIGUIENTE="22" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="22" NOMBRE="¿Se te han hinchado los pies?" IDSIGUIENTE="23" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="23" NOMBRE="¿Has dormido bien por la noche?" IDSIGUIENTE="24" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="0" /> 
+					<RESPUESTA NOMBRE="No" PESO="10" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="25" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>		
+			<ESTADO ID="24" NOMBRE="¿Has precisado estar incorporado?" IDSIGUIENTE="25" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>		
+			<ESTADO ID="25" NOMBRE="¿Has realizado el tratamiento pautado?" IDSIGUIENTE="26" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="0" /> 
+					<RESPUESTA NOMBRE="No" PESO="10" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="27" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>		
+			<ESTADO ID="26" NOMBRE="Anota qué tratamiento has realizado" IDSIGUIENTE="27" IDTIPO="3" SALTABLE="0">
+			</ESTADO>		
+			<ESTADO ID="27" NOMBRE="¿Has precisado ser visitado por algún profesional de la salud?" IDSIGUIENTE="28" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="2" IDESTADOSIGUIENTE="29" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>
+			<ESTADO ID="28" NOMBRE="¿Se ha modificado el tratamiento?" IDSIGUIENTE="29" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="29" NOMBRE="¿Has sudado excesivamente?" IDSIGUIENTE="30" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="30" NOMBRE="¿Has sentido una pérdida excesiva de sales?" IDSIGUIENTE="-1" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+		</ESTADOS>
+	</CUESTIONARIO>
+	<CUESTIONARIO ID="2" NOMBRE="Fin de entrenamiento" DESCRIPCION="Cuestionario de test nº 2">
+	<ESTADOS COUNT="4">
+			<ESTADO ID="1" NOMBRE="¿Cómpletaste el programa de ejercicios planificado?" IDSIGUIENTE="2" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="0" /> 
+					<RESPUESTA NOMBRE="No" PESO="10" />
+				</RESPUESTAS>			</ESTADO>
+			<ESTADO ID="2" NOMBRE="¿Cómo te has sentido físicamente durante el ejercicio?" IDSIGUIENTE="3" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="3"> 
+					<RESPUESTA NOMBRE="Bien" PESO="0" /> 
+					<RESPUESTA NOMBRE="Regular" PESO="5" />
+					<RESPUESTA NOMBRE="Mal" PESO="10" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="3" NOMBRE="¿Cómo te has sentido de ahogo durante el ejercicio?" IDSIGUIENTE="4" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="3"> 
+					<RESPUESTA NOMBRE="Bien" PESO="0" /> 
+					<RESPUESTA NOMBRE="Regular" PESO="5" />
+					<RESPUESTA NOMBRE="Mal" PESO="10" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="4" NOMBRE="¿Cómo te has sentido de cansancio muscular durante el ejercicio?" IDSIGUIENTE="-1" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="3"> 
+					<RESPUESTA NOMBRE="Bien" PESO="0" /> 
+					<RESPUESTA NOMBRE="Regular" PESO="5" />
+					<RESPUESTA NOMBRE="Mal" PESO="10" />
+				</RESPUESTAS>
+			</ESTADO>
+		</ESTADOS>
+	</CUESTIONARIO>
+	<CUESTIONARIO ID="3" NOMBRE="Exacerbación" DESCRIPCION="Cuestionario de Exacerbación">
+	<ESTADOS COUNT="15">
+		<ESTADO ID="1" NOMBRE="¿Te ha aumentado la tos?" IDSIGUIENTE="2" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="2" NOMBRE="¿Te ha aumentado el ahogo?" IDSIGUIENTE="4" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="3" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>			
+			</ESTADO>
+			<ESTADO ID="3" NOMBRE="Marca tu grado de disnea ahora (0-10)" IDSIGUIENTE="4" IDTIPO="2" SALTABLE="0">
+			</ESTADO>
+			<ESTADO ID="4" NOMBRE="¿Te han aumentado los pitos en el pecho?" IDSIGUIENTE="5" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>			
+			</ESTADO>				
+			<ESTADO ID="5" NOMBRE="¿Te ha aumentado la cantidad de esputos?" IDSIGUIENTE="6" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="6" NOMBRE="¿Arrancas de color diferente a lo habitual?" IDSIGUIENTE="7" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="7" NOMBRE="¿Has tenido fiebre?" IDSIGUIENTE="8" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="8" NOMBRE="¿Se te han hinchado los pies?" IDSIGUIENTE="9" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>			
+			<ESTADO ID="9" NOMBRE="¿Has dormido bien por la noche?" IDSIGUIENTE="10" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="0" /> 
+					<RESPUESTA NOMBRE="No" PESO="10" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="11" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>		
+			<ESTADO ID="10" NOMBRE="¿Has precisado estar incorporado?" IDSIGUIENTE="11" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>		
+			<ESTADO ID="11" NOMBRE="¿Has realizado el tratamiento pautado?" IDSIGUIENTE="12" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="0" /> 
+					<RESPUESTA NOMBRE="No" PESO="10" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="13" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>		
+			<ESTADO ID="12" NOMBRE="Anota qué tratamiento has realizado" IDSIGUIENTE="13" IDTIPO="3" SALTABLE="0">
+			</ESTADO>		
+			<ESTADO ID="13" NOMBRE="¿Has precisado ser visitado por algún profesional de la salud?" IDSIGUIENTE="-1" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+				<CONDICIONES COUNT="1">
+					<CONDICION RESPUESTAS="1" IDESTADOSIGUIENTE="14" VALORCOMPARADOR="-1" TIPO="0">
+					</CONDICION>
+				</CONDICIONES>
+			</ESTADO>
+			<ESTADO ID="14" NOMBRE="¿Se ha modificado el tratamiento?" IDSIGUIENTE="-1" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>	
+	</ESTADOS>
+	</CUESTIONARIO>
+	<CUESTIONARIO ID="4" NOMBRE="Sudor" DESCRIPCION="Cuestionario de Sudor">
+		<ESTADOS COUNT="2">
+			<ESTADO ID="1" NOMBRE="¿Has sudado excesivamente?" IDSIGUIENTE="2" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+			<ESTADO ID="2" NOMBRE="¿Has sentido una pérdida excesiva de sales?" IDSIGUIENTE="-1" IDTIPO="0" SALTABLE="0">
+				<RESPUESTAS COUNT="2"> 
+					<RESPUESTA NOMBRE="Sí" PESO="10" /> 
+					<RESPUESTA NOMBRE="No" PESO="0" />
+				</RESPUESTAS>
+			</ESTADO>
+		</ESTADOS>
+	</CUESTIONARIO>
+</CUESTIONARIOS>
