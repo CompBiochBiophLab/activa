@@ -1,0 +1,131 @@
+Index: src-integration-test/com/gdevelop/gwt/syncrpc/RemoteServiceSyncProxy.java
+===================================================================
+--- src-integration-test/com/gdevelop/gwt/syncrpc/RemoteServiceSyncProxy.java	(revision 3858)
++++ src-integration-test/com/gdevelop/gwt/syncrpc/RemoteServiceSyncProxy.java	(working copy)
+@@ -35,7 +35,7 @@
+  * Base on com.google.gwt.user.client.rpc.impl.RemoteServiceProxy
+  */
+ public class RemoteServiceSyncProxy implements SerializationStreamFactory {
+-  private static class DummySerializationPolicy extends SerializationPolicy {
++  static class DummySerializationPolicy extends SerializationPolicy {
+     @Override
+     public boolean shouldDeserializeFields(Class<?> clazz) {
+       return clazz != null;
+Index: src-integration-test/com/gdevelop/gwt/syncrpc/SyncClientSerializationStreamReader.java
+===================================================================
+--- src-integration-test/com/gdevelop/gwt/syncrpc/SyncClientSerializationStreamReader.java	(revision 3858)
++++ src-integration-test/com/gdevelop/gwt/syncrpc/SyncClientSerializationStreamReader.java	(working copy)
+@@ -15,6 +15,7 @@
+  */
+ package com.gdevelop.gwt.syncrpc;
+ 
++import com.gdevelop.gwt.syncrpc.RemoteServiceSyncProxy.DummySerializationPolicy;
+ import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
+ import com.google.gwt.user.client.rpc.SerializationException;
+ import com.google.gwt.user.client.rpc.impl.AbstractSerializationStreamReader;
+@@ -24,6 +25,8 @@
+ import com.google.gwt.user.server.rpc.impl.SerializabilityUtil;
+ import com.google.gwt.user.server.rpc.impl.SerializedInstanceReference;
+ 
++import java.io.BufferedReader;
++import java.io.FileReader;
+ import java.lang.reflect.Array;
+ import java.lang.reflect.Constructor;
+ import java.lang.reflect.Field;
+@@ -37,6 +40,9 @@
+ import java.util.List;
+ import java.util.Map;
+ 
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++
+ /**
+  * @see com.google.gwt.user.client.rpc.impl.ClientSerializationStreamWriter
+  * @see com.google.gwt.user.client.rpc.impl.ClientSerializationStreamReader
+@@ -44,8 +50,12 @@
+  * @see com.google.gwt.user.server.rpc.impl.ServerSerializationStreamReader
+  */
+ public class SyncClientSerializationStreamReader extends AbstractSerializationStreamReader {
++  private static final Log LOG = LogFactory.getLog(SyncClientSerializationStreamReader.class);
+   private static final char JS_ESCAPE_CHAR = '\\';
+ 
++  private static final String POSTLUDE = "])";
++  private static final String PRELUDE = "].concat([";
++
+   /**
+    * Used to accumulate elements while deserializing array types. The generic type of the
+    * BoundedList will vary from the component type of the array it is intended to create when the
+@@ -366,9 +376,18 @@
+ 
+   @Override
+   public void prepareToRead(String encoded) throws SerializationException {
+-    parse(encoded);
++    encoded = parse(encoded);
+     index = results.size();
+-    super.prepareToRead(encoded);
++    boolean success = false;
++    try {
++      super.prepareToRead(encoded);
++      success = true;
++    }
++    finally {
++      if (!success) {
++        LOG.error("Error decoding response: " + encoded);
++      }
++    }
+ 
+     if (getVersion() != SERIALIZATION_STREAM_VERSION) {
+       throw new IncompatibleRemoteServiceException("Expecting version "
+@@ -489,7 +508,8 @@
+    * 
+    * @param encoded
+    */
+-  private void parse(String encoded) {
++  private String parse(String encoded) {
++    encoded = deconcat(encoded);
+     encoded = encoded.substring(1, encoded.length() - 1);
+     StringBuffer token = new StringBuffer();
+     for (int i = 0; i < encoded.length(); i++) {
+@@ -513,8 +533,26 @@
+     if (token.length() > 0) {
+       results.add(token.toString());
+     }
++    return encoded;
+   }
+ 
++  private String deconcat(String encoded) {
++    if(encoded.endsWith(POSTLUDE)) {
++      
++      int prelude = encoded.indexOf(PRELUDE);
++      if(prelude > 0)  {
++        StringBuffer ret = new StringBuffer(encoded.length() - PRELUDE.length());
++        ret.append(encoded.substring(0, prelude));
++        ret.append(",");
++        ret.append(encoded.substring(prelude + PRELUDE.length(), encoded.length() - 1));
++        return deconcat(ret.toString());
++      }
++    }
++    return encoded;
++    
++  }
++  
++  
+   private Object instantiate(Class<?> customSerializer, Class<?> instanceClass)
+       throws InstantiationException, IllegalAccessException, IllegalArgumentException,
+       InvocationTargetException, NoSuchMethodException, SerializationException {
+@@ -726,4 +764,15 @@
+ 
+     return -1;
+   }
++  
++  public static final void main(String [] args) throws Exception {
++    BufferedReader reader = new BufferedReader(new FileReader("C:/temp/large.txt"));
++    String encoded = reader.readLine();
++    
++    
++    SyncClientSerializationStreamReader s = new SyncClientSerializationStreamReader(new DummySerializationPolicy());
++    s.prepareToRead(encoded);
++    
++    
++  }
+ }

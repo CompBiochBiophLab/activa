@@ -1,0 +1,54 @@
+Index: src-integration-test/com/gdevelop/gwt/syncrpc/SyncClientSerializationStreamReader.java
+===================================================================
+--- src-integration-test/com/gdevelop/gwt/syncrpc/SyncClientSerializationStreamReader.java	(revision 3861)
++++ src-integration-test/com/gdevelop/gwt/syncrpc/SyncClientSerializationStreamReader.java	(working copy)
+@@ -55,6 +55,8 @@
+ 
+   private static final String POSTLUDE = "])";
+   private static final String PRELUDE = "].concat([";
++  
++  private String origEncoded;
+ 
+   /**
+    * Used to accumulate elements while deserializing array types. The generic type of the
+@@ -376,6 +378,7 @@
+ 
+   @Override
+   public void prepareToRead(String encoded) throws SerializationException {
++    origEncoded = encoded;
+     encoded = parse(encoded);
+     index = results.size();
+     boolean success = false;
+@@ -487,7 +490,14 @@
+   }
+ 
+   public int readInt() {
+-    return Integer.parseInt(results.get(--index));
++    
++    try {
++      return Integer.parseInt(results.get(--index));
++    }
++    catch (NumberFormatException nfe) {
++      LOG.error("Serialiazation error " + nfe.getMessage() + " - " + origEncoded);
++      throw nfe;
++    }
+   }
+ 
+   public long readLong() {
+@@ -519,7 +529,16 @@
+         token = new StringBuffer();
+         continue;
+       }
++      
++      if (ch == ']' && encoded.indexOf('[', i) == i + 2 && encoded.charAt(i+1) == ',') {
++        i+=2;
++        results.add(token.toString());
++        token = new StringBuffer();
++        continue;
++      }
++      
+       if (ch == '[') {
++        
+         int pos = encoded.lastIndexOf(']');
+         if (pos < 0) {
+           // TODO: throw exeption

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+android:id="@+id/layout"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+	<LinearLayout
+	android:id="@+id/mainLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/bg"
+	android:orientation="vertical"
+	android:gravity="center"
+	>
+		<TextView
+		android:id="@+id/startText"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="Activa movil"
+		android:textColor="#000000"
+		android:textSize="30sp"
+		android:typeface="sans"
+		android:textStyle="bold"
+		android:gravity="center"
+		android:layout_marginTop="20px"
+		android:visibility="gone"
+		>
+		</TextView>
+		<ImageView
+		android:id="@+id/progress"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20px"
+		android:src="@drawable/activa"
+		>
+		</ImageView>
+		<TextView
+		android:id="@+id/startText"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/app_version"
+		android:textColor="#000000"
+		android:textSize="14sp"
+		android:typeface="sans"
+		android:textStyle="bold"
+		android:gravity="center"
+		android:layout_marginTop="20px"
+		>
+		</TextView>
+	</LinearLayout>
+</AbsoluteLayout>

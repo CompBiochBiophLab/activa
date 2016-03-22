@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/tocreatesite"
+        android:title="@string/addsite"
+        android:icon="@drawable/plusmenu" />
+    <item android:id="@+id/toseachsite"
+        android:title="@string/linksite"
+        android:icon="@drawable/searchmenu" />
+    <item android:id="@+id/toremovesite"
+        android:title="@string/deletesite"
+        android:icon="@drawable/deletemenu" />
+</menu>

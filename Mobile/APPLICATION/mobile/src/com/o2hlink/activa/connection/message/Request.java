@@ -1,0 +1,149 @@
+/**
+ * @author Adrian Rejas
+ * 
+ * This class deals with the creation of request from the mobile device to the server. This is one
+ * of the three basic messages a mobile Activa device have to treat.
+*/
+
+package com.o2hlink.activa.connection.message;
+
+import java.util.Enumeration;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.ActivaUtil;
+import com.o2hlink.activa.data.calendar.Event;
+import com.o2hlink.activa.mobile.Device;
+
+public class Request {
+	
+	/**
+	 * Some constant representing the different types of requests.
+	 */
+	public static final String TYPE_CONFIG = "CONFIG";
+	public static final String TYPE_AGENDA = "AGENDA";
+	public static final String TYPE_QUEST = "QUEST";
+	public static final String TYPE_CONTACTS = "CONTACTS";
+	public static final String TYPE_FEEDS = "FEEDS";
+	public static final String TYPE_NOTES = "NOTES";
+	
+	/**
+	 * Type of the request
+	 */
+	private String type;
+	
+	private boolean register;
+	
+	private boolean check;
+	
+	/**
+	 * The constructor to the object without parameters.	
+	 */
+	public Request() {
+		this.type = null;
+		this.register = false;
+		this.check = false;
+	}
+	
+	/**
+	 * The constructor to the object with parameters.
+	 * 
+	 * @param type
+	 */
+	public Request(String type) {
+		this.type = type;
+		this.register = false;
+		this.check = false;
+	}
+	
+	/**
+	 * The constructor to the object with parameters for the case of registering or checking 
+	 * user existance.
+	 * 
+	 * @param type The type of the request.
+	 * @param register If it will be a register or a user existance request.
+	 */
+	public Request(String type, boolean register) {
+		this.type = type;
+		if (register) this.register = true;
+		else this.check = true;
+	}
+	
+	/**
+	 * Pass the object to a string, used for testing purposes.
+	 * 
+	 * @return The String representation.
+	 */
+	public String toString() {
+		String returned;
+		returned = "Request of type" + this.type + "\n";
+		returned += "Done by " + Activa.myMobileManager.device.toString();
+		return returned;	
+	}
+	
+	/**
+	 * Create the data field of the corresponding message to the request.
+	 * 
+	 * @return The message data field.
+	 */
+	public String toMessageString() {
+		String returned;
+		returned = "<MOBILEREQUEST><TYPEOFREQUEST VALUE=\"" + this.type + "\"/>";
+		if (this.register) returned += "<PATIENT ID=\"-1\"/>";
+		else if (this.check) returned += "<PATIENT ID=\"-1\"/>";
+		else returned += "<PATIENT ID=\"" + Activa.myMobileManager.user.getId() + "\"/>";
+		returned += "<MOBILEDEVICE><IDNUMBER VALUE=\"" + Activa.myMobileManager.device.getIdnumber() + "\"/>";
+		returned += "<DATETIME VALUE=\"";
+		if(this.type == Request.TYPE_AGENDA) {
+			long selected = 0;
+			long temp = 0;
+			Event temp2;
+			Enumeration<Event> enumer = Activa.myCalendarManager.events.elements();
+			if (enumer.hasMoreElements()) {
+				while (enumer.hasMoreElements()) {
+					temp2 = enumer.nextElement();
+					long aux = temp2.id;
+					if (temp2.id > temp) {
+						temp = temp2.id;
+						selected = temp2.id;
+					}
+				}
+			}
+			returned += selected + "\"/>";
+		}
+		else returned += Activa.myMobileManager.device.getDateTime() + "\"/>";
+		if (this.register) {
+			returned += "<REGISTERING USERNAME=\"" + Activa.myMobileManager.user.getName() + "\"" + 
+				" PASSWORD=\"" + Activa.myMobileManager.user.getPassword() + "\"" +
+				" FIRSTNAME=\"" + Activa.myMobileManager.user.getFirstname() + "\"" +
+				" LASTNAME=\"" + Activa.myMobileManager.user.getLastname() + "\"" +
+				" BIRTHDATE=\"" + ActivaUtil.dateToXMLDate(Activa.myMobileManager.user.getBirthdate()) + "\"" +
+				" SEX=\"" + (Activa.myMobileManager.user.isMale()?"MALE":"FEMALE") + "\"" +
+				" TYPE=\"" + Activa.myMobileManager.user.getType() + "\"/>";
+		}
+		else if (this.check) {
+			returned += "<CHECKING USERNAME=\"" + Activa.myMobileManager.user.getName() + 
+				"\" PASSWORD=\"" + Activa.myMobileManager.user.getPassword() + "\"/>";
+		}
+		returned += "</MOBILEDEVICE></MOBILEREQUEST>";
+		return returned;	
+	}
+
+	/**
+	 * Getter for type of the message.
+	 * 
+	 * @return A string representing the type.
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * Setter for type.
+	 * 
+	 * @param type A string representing the type.
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+}

@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/paypalroot"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:padding="10dp"
+android:gravity="center_horizontal"
+>
+    <TextView android:id="@+id/paypaltext"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:textSize="18dp"
+    android:layout_marginBottom="10dp"
+    />
+    <ImageButton android:id="@+id/paypalbutton"
+    android:src="@drawable/paypal"
+    android:background="@drawable/paypalbg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp"
+    />
+</LinearLayout>

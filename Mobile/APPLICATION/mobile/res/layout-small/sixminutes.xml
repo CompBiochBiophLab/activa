@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:keepScreenOn="true"
+>
+    <LinearLayout 
+	android:id="@+id/mainLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:gravity="center_horizontal"
+	android:background="@drawable/bg"
+	>
+		<TextView
+		android:id="@+id/startText"
+		android:layout_width="fill_parent"
+		android:layout_height="26sp"
+		android:textColor="#000000"
+		android:textSize="20sp"
+		android:typeface="sans"
+		android:textStyle="bold"
+		android:gravity="center"
+		android:text="Ejercicio"
+		>
+		</TextView>
+		<AbsoluteLayout
+		android:id="@+id/separator"
+		android:layout_width="fill_parent"
+		android:layout_height="3sp"
+		android:background="#000000"
+		>
+		</AbsoluteLayout>
+	    <LinearLayout  
+		android:id="@+id/result"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+		android:orientation="horizontal"
+		android:gravity="center_horizontal"
+		android:textColor="#000000"
+		android:textSize="20sp"
+		android:typeface="sans"
+		android:layout_marginTop="10sp"
+		android:layout_marginBottom="5sp"
+		android:layout_marginLeft="10sp"
+		android:layout_marginRight="10sp"
+		>
+			<LinearLayout  
+			android:id="@+id/hrresult"
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+			android:orientation="vertical"
+			android:gravity="center_horizontal"
+			android:background="@drawable/exercisedatabox"
+			android:layout_marginLeft="5sp"
+			android:layout_marginRight="5sp"
+			>
+				<TextView
+				android:id="@+id/hrTitle"
+			    android:layout_width="90sp" 
+			    android:layout_height="15sp" 
+				android:textColor="#FFFFFF"
+				android:textSize="12sp"
+				android:typeface="sans"
+				android:gravity="center"
+				android:text="Heart rate"
+				/>
+				<TextView
+				android:id="@+id/hrText"
+			    android:layout_width="90sp" 
+			    android:layout_height="30sp" 
+				android:textColor="#FFFFFF"
+				android:textSize="20sp"
+				android:typeface="sans"
+				android:gravity="center"
+				android:text="101 bpm"
+				/>
+			</LinearLayout>
+			<LinearLayout  
+			android:id="@+id/so2result"
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+			android:orientation="vertical"
+			android:gravity="center_horizontal"
+			android:background="@drawable/exercisedatabox"
+			android:layout_marginLeft="5sp"
+			android:layout_marginRight="5sp"
+			>
+				<TextView
+				android:id="@+id/so2Title"
+			    android:layout_width="90sp" 
+			    android:layout_height="15sp" 
+				android:textColor="#FFFFFF"
+				android:textSize="12sp"
+				android:typeface="sans"
+				android:gravity="center"
+				android:text="O2 Saturation"
+				/>
+				<TextView
+				android:id="@+id/so2Text"
+			    android:layout_width="90sp" 
+			    android:layout_height="30sp" 
+				android:textColor="#FFFFFF"
+				android:textSize="20sp"
+				android:typeface="sans"
+				android:gravity="center"
+				android:text="96 %"
+				/>
+			</LinearLayout>
+			<LinearLayout  
+			android:id="@+id/stepsresult"
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+			android:orientation="vertical"
+			android:gravity="center_horizontal"
+			android:background="@drawable/exercisedatabox"
+			android:layout_marginLeft="5sp"
+			android:layout_marginRight="5sp"
+			>
+				<TextView
+				android:id="@+id/stepsTitle"
+			    android:layout_width="90sp" 
+			    android:layout_height="15sp" 
+				android:textColor="#FFFFFF"
+				android:textSize="12sp"
+				android:typeface="sans"
+				android:gravity="center"
+				android:text="Steps/stops"
+				/>
+				<TextView
+				android:id="@+id/stepsText"
+			    android:layout_width="90sp" 
+			    android:layout_height="30sp" 
+				android:textColor="#FFFFFF"
+				android:textSize="20sp"
+				android:typeface="sans"
+				android:gravity="center"
+				android:text="1214/5"
+				/>
+			</LinearLayout>
+		</LinearLayout>
+	    <TextView  
+		android:id="@+id/textGlobal"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+		android:textColor="#000000"
+		android:textSize="15sp"
+		android:typeface="sans"
+		android:gravity="left"
+		android:layout_marginBottom="10sp"
+		android:layout_marginLeft="25sp"
+		android:layout_marginRight="25sp"
+		android:text="SE ESTAN OBTENIENDO MEDICIONES DE BAJA CALIDAD. COMPRUEBE QUE TODO FUNCIONA CORRECTAMENTE."
+		/>
+		<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical"
+		android:gravity="center_horizontal|bottom"
+		>
+			<AbsoluteLayout
+			android:id="@+id/layout"
+			android:layout_width="110sp"
+			android:layout_height="110sp"
+			android:layout_marginLeft="25sp"
+			android:layout_marginRight="25sp"
+			android:layout_marginBottom="10sp"
+			>
+				<ImageView  
+				android:id="@+id/resultgreen"
+				android:src="@drawable/lightgreen"
+				android:layout_x="0px"
+				android:layout_y="0px"
+			    android:layout_width="110sp" 
+			    android:layout_height="110sp"
+			    android:scaleType="fitXY"
+				android:visibility="visible"
+			    />
+			    <ImageView  
+				android:id="@+id/resultorange"
+				android:src="@drawable/lightorange"
+				android:layout_x="0px"
+				android:layout_y="0px"
+			    android:layout_width="110sp" 
+			    android:layout_height="110sp"
+			    android:scaleType="fitXY"
+				android:visibility="invisible"
+			    />
+			    <ImageView  
+				android:id="@+id/resultwhite"
+				android:src="@drawable/lightwhite"
+				android:layout_x="0px"
+				android:layout_y="0px"
+			    android:layout_width="110sp" 
+			    android:layout_height="110sp"
+			    android:scaleType="fitXY"
+				android:visibility="invisible"
+			    />
+			</AbsoluteLayout>
+			<TextView
+			android:id="@+id/timerText"
+			android:layout_width="130sp"
+			android:layout_height="wrap_content"
+			android:textColor="#000000"
+			android:textSize="24sp"
+			android:typeface="sans"
+			android:textStyle="bold"
+			android:gravity="center"
+			android:text="00:00"
+			/>
+				<SeekBar
+				android:id="@+id/metronome" 
+				android:visibility="invisible"
+				android:layout_width="240sp" 
+				android:layout_height="30sp"
+				android:paddingLeft="10px"
+				android:paddingRight="10px"
+				android:clickable="true"
+				>
+				</SeekBar><RelativeLayout android:layout_width="fill_parent" android:layout_height="35sp" android:orientation="horizontal" android:layout_marginBottom="5sp">
+				<ImageButton android:id="@+id/soundoff" android:src="@drawable/soundoff" android:background="@drawable/iconbg" android:layout_width="30px" android:layout_height="30px" android:textColor="#000000" android:typeface="sans" android:textStyle="bold" android:gravity="center" android:layout_marginLeft="5sp" android:layout_alignParentLeft="true" />
+			    <ImageButton android:id="@+id/soundon" android:src="@drawable/soundon" android:visibility="gone" android:background="@drawable/iconbg" android:layout_width="30px" android:layout_height="30sp" android:textColor="#000000" android:typeface="sans" android:textStyle="bold" android:gravity="center" android:layout_marginLeft="5sp" android:layout_alignParentLeft="true" />
+			    <LinearLayout android:layout_width="wrap_content" android:layout_height="30sp" android:orientation="horizontal" android:layout_centerHorizontal="true">
+					<ImageButton android:id="@+id/stop" android:src="@drawable/nosmall" android:background="@drawable/iconbg" android:layout_width="30sp" android:layout_height="30sp" android:textColor="#000000" android:typeface="sans" android:textStyle="bold" android:gravity="center" android:layout_marginLeft="35sp" android:layout_marginRight="35sp" />
+					<ImageView android:id="@+id/loadingView" android:layout_width="30sp" android:layout_height="30sp">
+					</ImageView>
+					<ImageButton android:id="@+id/good" android:src="@drawable/good" android:background="@drawable/iconbg" android:layout_width="30sp" android:layout_height="30sp" android:textColor="#000000" android:typeface="sans" android:textStyle="bold" android:gravity="center" android:layout_marginLeft="35sp" android:layout_marginRight="35sp" />
+				</LinearLayout>
+				<ImageButton android:id="@+id/metronomeoff" android:src="@drawable/metronomeoff" android:visibility="gone" android:background="@drawable/iconbg" android:layout_width="30px" android:layout_height="30px" android:textColor="#000000" android:typeface="sans" android:textStyle="bold" android:gravity="center" android:layout_marginRight="5sp" android:layout_alignParentRight="true" />
+			    <ImageButton android:id="@+id/metronomeon" android:src="@drawable/metronome" android:background="@drawable/iconbg" android:layout_width="30px" android:layout_height="30px" android:textColor="#000000" android:typeface="sans" android:textStyle="bold" android:gravity="center" android:layout_marginRight="5sp" android:layout_alignParentRight="true" />
+			</RelativeLayout>
+		    
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

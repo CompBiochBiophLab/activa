@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/toasonefieldsroot"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+>
+	<ScrollView
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:scrollbarFadeDuration="60000"
+	android:padding="5dp"
+	>
+		<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="5dp"
+		android:orientation="vertical"
+		android:gravity="center_horizontal"
+		>
+			<TextView android:id="@+id/addtitle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="24dp"
+			android:layout_marginBottom="10dp"
+			/>
+			<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			    <TextView android:id="@+id/fieldonerequested"
+			    android:layout_width="100sp"
+			    android:layout_height="wrap_content"
+			    android:textSize="14dp"
+			    android:layout_marginBottom="10dp"
+			    />
+			    <EditText android:id="@+id/fieldone"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="10dp"
+			    android:layout_marginRight="10dp"
+			    android:layout_marginBottom="10dp"
+			    />		
+			</LinearLayout>
+		    <ImageButton android:id="@+id/addeventok"
+			android:layout_width="60px"
+			android:layout_height="60px"
+			android:src="@drawable/ok"
+			android:background="@drawable/iconbg"
+		    />
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>

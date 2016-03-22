@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/toastaccountsroot"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+>
+	<ScrollView
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:scrollbarFadeDuration="60000"
+	android:padding="5dp"
+	>
+		<LinearLayout 
+		android:id="@+id/mainlayout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="5dp"
+		android:orientation="vertical"
+		android:gravity="left"
+		>
+			<TextView android:id="@+id/addtitle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="24dp"
+			android:layout_marginBottom="10dp"
+			/>
+			<TextView android:id="@+id/explanation"
+			android:layout_width="fill_parent"
+			android:text="@string/accountwarning"
+			android:layout_height="wrap_content"
+			android:textSize="14dp"
+			android:layout_marginBottom="10dp"
+			/>
+			<Spinner 
+			android:id="@+id/spinner"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+			/>
+			<LinearLayout 
+			android:id="@+id/container"
+			android:layout_marginTop="25px"
+			android:orientation="vertical"
+			android:gravity="center_horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+		    >
+		    </LinearLayout>
+		    <RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+		    >
+		    	<ImageButton
+				android:id="@+id/ok"
+		    	android:background="@drawable/iconbg"
+		    	android:src="@drawable/ok"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+		    	>
+		    	</ImageButton>
+		    	<ImageButton
+				android:id="@+id/add"
+		    	android:background="@drawable/iconbg"
+		    	android:src="@drawable/plus"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+		    	>
+		    	</ImageButton>
+		    </RelativeLayout>
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>

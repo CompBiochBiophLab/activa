@@ -1,0 +1,89 @@
+/**
+ * @author Adrian Rejas
+ * 
+ * This class deals with the creation of messages reporting about the outcome of an 
+ * event programmed for the patient.
+*/
+
+package com.o2hlink.activa.connection.message;
+
+import java.util.Enumeration;
+
+import com.o2hlink.activa.Activa;
+import com.o2hlink.activa.data.calendar.Event;
+import com.o2hlink.activa.mobile.Device;
+
+public class EventMessage {
+	
+	/**
+	 * The event with an outcome to be reported.
+	 */
+	public Event event;
+	
+	/**
+	 * The constructor to the object without parameters.	
+	 */
+	public EventMessage() {
+		this.event = null;
+	}
+	
+	/**
+	 * The constructor to the object with parameters.
+	 * 
+	 * @param type
+	 */
+	public EventMessage(Event event) {
+		this.event = event;
+	}
+	
+	/**
+	 * Pass the object to a string, used for testing purposes.
+	 * 
+	 * @return The String representation.
+	 */
+	public String toString() {
+		String returned;
+		returned = "Sending of Event outcome: " + this.event.name + "\n";
+		returned += "Done by " + Activa.myMobileManager.device.toString();
+		return returned;	
+	}
+	
+	/**
+	 * Create the data field of the corresponding message\.
+	 * 
+	 * @return The message data field.
+	 */
+	public String toMessageString() {
+		String returned = "";
+		returned += "<RESULTAGENDA COMPRESSED=\"0\"><MOBILEDEVICE>" +
+				"<IDNUMBER VALUE=" + Activa.myMobileManager.device.getIdnumber() + "/>";
+		returned += "<DATETIME VALUE=\"" + Activa.myMobileManager.device.getDateTime() + "\">" +
+				"</MOBILEDEVICE><PATIENT ID=\"" + Activa.myMobileManager.user.getId() + "\">";
+		returned += "<EVENTS COUNT=\"1\">";
+		returned += "<EVENT><IDACCION VALUE=\"" + event.id + "\"/>";
+		int cancelled = event.state;
+		if (cancelled > 1) cancelled = 1;
+		returned += "<CANCELLED VALUE=\"" + cancelled + "\"/>";
+		returned += "</EVENT></EVENTS></PATIENT></RESULTAGENDA>";
+		return returned;	
+	}
+
+	/**
+	 * Getter for event of the message.
+	 * 
+	 * @return
+	 */
+	public Event getEvent() {
+		return this.event;
+	}
+
+	/**
+	 * Setter for event.
+	 * 
+	 * @param
+	 */
+	public void setQuestionnaire(Event event) {
+		this.event = event;
+	}
+
+}
