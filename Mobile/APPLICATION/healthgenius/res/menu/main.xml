@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/too2hlink"
+        android:title="O2H™"
+        android:icon="@drawable/logomenu" />
+    <item android:id="@+id/toconf"
+        android:title="@string/conf"
+        android:icon="@drawable/toolsmenu" />
+    <item android:id="@+id/tocontact"
+        android:title="@string/contactus"
+        android:icon="@drawable/contactmenu" />
+    <item android:id="@+id/tomobile"
+        android:title="@string/tutorials"
+        android:icon="@drawable/mobilemenu" />
+    <item android:id="@+id/toaboutus"
+        android:title="@string/about"
+        android:icon="@drawable/infomenu" />
+</menu>

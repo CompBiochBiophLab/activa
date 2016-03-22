@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+android:id="@+id/layout"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+	<LinearLayout
+	android:id="@+id/mainLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/bg"
+	android:orientation="vertical"
+	android:gravity="center"
+	>
+		<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="380dip"
+		android:layout_marginTop="10dp"
+		android:scrollbars="vertical"
+		android:scrollbarFadeDuration="60000"
+		>
+			<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:gravity="center"
+			android:layout_marginLeft="3dp"
+			android:layout_marginRight="3dp"
+			>
+				<TextView
+				android:id="@+id/questionText"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textColor="#000000"
+				android:textSize="20sp"
+				android:typeface="sans"
+				android:textStyle="bold"
+				android:gravity="center"
+				>
+				</TextView>
+				<RadioGroup
+				android:id="@+id/options"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="25dp"
+				android:layout_marginLeft="25dp"
+				android:layout_marginRight="25dp"
+				>
+				</RadioGroup>
+			</LinearLayout>
+		</ScrollView>
+		<RelativeLayout
+		android:id="@+id/questcontrol"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		>
+			<ImageButton
+			android:id="@+id/previous"
+			android:src="@drawable/previous"
+			android:layout_width="60px"
+			android:layout_height="60px"
+			android:background="@drawable/iconbg"
+			android:visibility="visible"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentBottom="true"
+			android:layout_marginLeft = "5px"
+			android:layout_marginBottom = "5px"
+			>
+			</ImageButton>
+			<ImageButton
+			android:id="@+id/quit"
+			android:src="@drawable/goback"
+			android:background="@drawable/iconbg"
+			android:layout_width="60px"
+			android:layout_height="60px"
+			android:layout_marginBottom="5px"
+			android:visibility="invisible"
+			android:layout_centerHorizontal="true"
+			android:layout_alignParentBottom="true"
+			>
+			</ImageButton>
+			<ImageButton
+			android:id="@+id/next"
+			android:src="@drawable/next"
+			android:layout_width="60px"
+			android:layout_height="60px"
+			android:background="@drawable/iconbg"
+			android:visibility="visible"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentBottom="true"
+			android:layout_marginLeft = "5px"
+			android:layout_marginBottom = "5px"
+			>
+			</ImageButton>
+		</RelativeLayout>
+	</LinearLayout>
+</AbsoluteLayout>

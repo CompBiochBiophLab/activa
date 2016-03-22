@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item android:drawable="@drawable/botiquin13" android:duration="40" />
+    <item android:drawable="@drawable/botiquin12" android:duration="40" />
+    <item android:drawable="@drawable/botiquin11" android:duration="40" />
+    <item android:drawable="@drawable/botiquin10" android:duration="40" />
+    <item android:drawable="@drawable/botiquin09" android:duration="40" />
+    <item android:drawable="@drawable/botiquin08" android:duration="40" />
+    <item android:drawable="@drawable/botiquin07" android:duration="40" />
+    <item android:drawable="@drawable/botiquin06" android:duration="40" />
+    <item android:drawable="@drawable/botiquin05" android:duration="40" />
+    <item android:drawable="@drawable/botiquin04" android:duration="40" />
+    <item android:drawable="@drawable/botiquin03" android:duration="40" />
+    <item android:drawable="@drawable/botiquin02" android:duration="40" />
+    <item android:drawable="@drawable/botiquin01" android:duration="40" />
+</animation-list>

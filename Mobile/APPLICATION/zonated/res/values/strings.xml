@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zurvey Beta</string>
+    <string name="app_version">1.0</string>
+	<string name="calendar">Calendar</string>
+	<string name="programs">Programs</string>
+	<string name="quest">Questionnaires</string>
+	<string name="sensors">Sensors</string>
+	<string name="map">Map</string>
+	<string name="messages">Messages</string>
+	<string name="conf">Configuration</string>
+	<string name="news">News</string>
+	<string name="notes">Notes</string>
+	<string name="patients">Patients</string>
+	<string name="projects">Projects</string>
+	<string name="papers">Papers</string>
+	<string name="tools">Tools</string>
+	<string name="micro">Biological scenarios</string>
+	<string name="day">Day</string>
+	<string name="week">Week</string>
+	<string name="month">Month</string>
+	<string name="autocalibration">Auto calibration</string>
+	<string name="manualcalibration">Manual calibration</string>
+	<string name="addsite">Create site</string>
+	<string name="deletesite">Delete sites</string>
+	<string name="linksite">Link sites</string>
+	<string name="unlinksite">Unlink sites</string>
+	<string name="msgrec">Received messages</string>
+	<string name="msgsent">Sent messages</string>
+	<string name="contacts">Contacts</string>
+	<string name="refresh">Refresh data</string>
+	<string name="contactus">Contact with us</string>
+	<string name="tutorials">Tutorials and videos</string>
+	<string name="about">About ...</string>
+    <string name="accountwarning">The synchronization of external accounts with Zurvey network is an optional proccess, although it will help you to improve your experience at future versions. If you want to skip this process, press the OK button or close the windown by pressing BACK mobile button.</string>
+    <string name="registerwarning">Welcome to Zurvey application. Before starting to use the application, you must first create an Zurvey account or enter an existed one</string>
+    <string name="registerwarning1">Create account</string>
+    <string name="registerwarning2">Enter existed account</string>
+    <string name="passwordwarning">In order to make you easier to use the application at following times without losing security, it\'s required to enter a password pattern which will be asked every time you start the application.</string>
+    <string name="passwordwarning1">Draw your pattern</string>
+    <string name="usertypeexpl">Choose user type</string>
+    <string name="registerewebdatastart">Configure application</string>
+    <string name="languagerequest">Language: </string>
+    <string name="timezonerequest">Timezone: </string>
+    <string name="privacyrequest">Privacy level: </string>
+    <string name="addlink">Add link</string>
+    <string name="removelink">Remove link</string>
+    <string name="oklink">Ok</string>
+    <string name="cancellink">Cancel</string>
+    <string name="tomarketlink">Go to market</string>
+    <string name="toastexternallinks">For coming back to the environment, press BACK button</string>
+    <string name="initialhelp">Welcome to ActivaCentral.\n\nSlice the finger over the screen for moving on the environment and press over the highlighted areas for zoom in to the different widgets of the room.\n\nOnce zoomed in, press over the widgets for accessing their functionalities, keep pressed for changing their functionality or press the return button for coming back to the room.\n\nEnjoy ActivaCentral</string>
+    <string-array name="freqarray">
+		<item>None</item>
+		<item>Daily</item>
+		<item>Weekly</item>
+		<item>Monthly</item>
+		<item>Yearly</item>
+		<item>Mondays, wednesdays and fridays</item>
+		<item>Tuesdays and thursdays</item>
+		<item>Weekdays</item>
+	</string-array>
+    <string-array name="questtype">
+		<item>Simple</item>
+		<item>Multiple</item>
+		<item>Numeric</item>
+		<item>Text</item>
+		<item>Informative</item>
+	</string-array>
+    <string-array name="usertype">
+		<item>Patient</item>
+		<item>Clinician</item>
+	</string-array>
+    <string-array name="sextype">
+		<item>Not specified</item>
+		<item>Male</item>
+		<item>Female</item>
+	</string-array>
+    <string-array name="meastype">
+		<item>Pulseoximetry</item>
+		<item>Spirometry</item>
+		<item>Six minutes walking</item>
+		<item>Weight and height</item>
+		<item>Exercise</item>
+	</string-array>
+    <string-array name="usertypewarn">
+		<item>Enter your patient environmet and you’ll discover a new way to manage your personal and medical information or how to take control over you illness. Reach your doctor with a single mouse click! And if you want to go mobile… Do so!</item>
+		<item>Enter clinicians environment and you’ll be able to set up your own virtual office. Manage your patients, stay in touch with researchers and get the latest academic information you need to stay updated.</item>
+	</string-array>
+    <string-array name="privacylevel">
+		<item>Public</item>
+		<item>Private</item>
+	</string-array>
+</resources>
